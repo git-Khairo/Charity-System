@@ -2,13 +2,17 @@
 
 namespace App\Application\Volunteer\UseCases;
 
-use Endroid\QrCode\QrCode;
-use Endroid\QrCode\Writer\PngWriter;
-use Endroid\QrCode\Encoding\Encoding;
-use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
-use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
 use App\Domain\Volunteer\Repositories\VolunteerRepositoryInterface;
+
+use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel;
+use Endroid\QrCode\RoundBlockSizeMode;
+use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\Writer\SvgWriter;
+
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class LoginOrRegister
 {
@@ -19,34 +23,39 @@ class LoginOrRegister
         $this->repo = $repo;
     }
 
+    public function generateAndSaveVolunteerQrCode(int $volunteerId)
+    {
+        $url = '127.0.0.1:8000' . '/volunteer/' . $volunteerId;
+
+        $builder = new Builder(
+            writer: new SvgWriter(),
+            data: $url,
+            encoding: new Encoding('UTF-8'),
+            errorCorrectionLevel: ErrorCorrectionLevel::High,
+            size: 300,
+            margin: 10,
+            roundBlockSizeMode: RoundBlockSizeMode::Margin
+        );
+
+        $result = $builder->build();
+
+        $filename = 'qrcodes/volunteer_' . $volunteerId . '.svg';
+
+        // Save SVG string to storage/app/public/qrcodes/volunteer_{id}.svg
+        Storage::disk('public')->put($filename, $result->getString());
+
+        // Return the publicly accessible URL to the stored QR code
+        return Storage::url($filename); // typically "/storage/qrcodes/volunteer_{id}.svg"
+    }
+
     public function Register(array $data){
 
         $response=$this->repo->Register($data);
 
         $volunteer=$response['user'];
 
-        $profileUrl = url("/users/{$volunteer->id}");
-
-        // ✅ Create QR code object (only 1 parameter)
-        $qrCode = QrCode::create($profileUrl)
-            ->setEncoding(new Encoding('UTF-8'))
-            ->setErrorCorrectionLevel(new ErrorCorrectionLevelHigh())
-            ->setSize(300)
-            ->setMargin(10)
-            ->setRoundBlockSizeMode(new RoundBlockSizeModeMargin());
-
-        // ✅ Create image using PNG writer
-        $writer = new PngWriter();
-        $result = $writer->write($qrCode);
-
-        // ✅ Save image to disk
-        $filename = "user-{$volunteer->id}.png";
-        $path = "public/qrcodes/{$filename}";
-        Storage::put($path, $result->getString());
-
-        // ✅ Save image path in DB
-        $volunteer->qr_code_path = "storage/qrcodes/{$filename}";
-        $volunteer->save();
+        $qrCodePath=$this->generateAndSaveVolunteerQrCode($volunteer->id);
+        $volunteer->update(['qr_code_path' => $qrCodePath]);
 
         $response['user']=$volunteer;
 
