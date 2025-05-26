@@ -7,7 +7,7 @@ namespace App\Providers;
 use App\Domain\Repositories\BaseRepositoryInterface;
 use App\Domain\Volunteer\Repositories\VolunteerRepositoryInterface;
 use App\Infrastructure\Persistence\Eloquent\Beneficiary\EloquentBeneficiaryRepository;
-use App\Infrastructure\Persistence\Eloquent\Events\EloquentEventRepository;
+use App\Infrastructure\Persistence\Eloquent\Admins\EloquentEventRepository;
 use App\Infrastructure\Persistence\Eloquent\Volunteer\EloquentVolunteerRepository;
 use Illuminate\Support\ServiceProvider;
 

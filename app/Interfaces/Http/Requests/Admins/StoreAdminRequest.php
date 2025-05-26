@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Interfaces\Http\Requests\Events;
+namespace App\Interfaces\Http\Requests\Admins;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateEventRequest extends FormRequest
+class StoreAdminRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -41,7 +41,7 @@ class LoginOrRegister
 
         $filename = 'qrcodes/volunteer_' . $volunteerId . '.svg';
 
-        // Save SVG string to storage/app/public/qrcodes/volunteer_{id}.svg
+
         Storage::disk('public')->put($filename, $result->getString());
 
         // Return the publicly accessible URL to the stored QR code

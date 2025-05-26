@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Domain\volunteer\Models;
+namespace App\Domain\Admins\Models;
 
-
-use App\Domain\Admins\Models\Event;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Volunteer extends Authenticatable
+class Admin extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\VolunteerFactory> */
     use HasFactory,HasApiTokens,Notifiable;
@@ -24,10 +22,6 @@ class Volunteer extends Authenticatable
         'email',
         'password',
         'phoneNumber',
-        'study',
-        'address',
-        'qr_code_path',
-        'skills',
     ];
 
     /**
@@ -53,13 +47,4 @@ class Volunteer extends Authenticatable
         ];
     }
 
-    public function feedback(){
-        return $this->hasMany(Volunteer_feddback::class);
-    }
-
-    public function event(){
-        return $this->belongsToMany(Event::class, 'participations', 'volunteer_id', 'event_id')
-            ->withPivot('signup_date', 'status')
-            ->withTimestamps();
-    }
 }

@@ -5,7 +5,7 @@ namespace App\Application\Volunteer\UseCases;
 use App\Domain\Volunteer\Repositories\VolunteerRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 
-class Feedback
+class GetVolunteer
 {
     protected VolunteerRepositoryInterface $repo ;
 
@@ -14,19 +14,9 @@ class Feedback
         $this->repo = $repo;
     }
 
-    public function makeFeedback(array $data){
+    public function getUser($id){
 
-        return $this->repo->createFeedback($data);
-    }
-
-    public function myFeedback(){
-
-        $volunteer=Auth::user();
-
-
-        $volunteer->feedback;
-
-        return $volunteer;
+        return $this->repo->find($id);
 
     }
 
