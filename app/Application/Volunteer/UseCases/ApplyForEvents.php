@@ -3,23 +3,24 @@
 namespace App\Application\Volunteer\UseCases;
 
 use App\Domain\Volunteer\Repositories\VolunteerRepositoryInterface;
-use App\Infrastructure\Persistence\Eloquent\Beneficiary\EloquentBeneficiaryRepository;
+use App\Infrastructure\Persistence\Eloquent\Events\EloquentEventRepository;
 use Illuminate\Support\Facades\Auth;
 
 class ApplyForEvents
 {
 
-    protected VolunteerRepositoryInterface $repo ;
-
-    public function __construct(VolunteerRepositoryInterface $repo,EloquentBeneficiaryRepository $repo2)
+    protected VolunteerRepositoryInterface $volunteerRepo ;
+    protected BaseRepositoryInterface $eventRepo;
+    public function __construct(VolunteerRepositoryInterface $volunteerRepo,EloquentEventRepository $eventRepo)
     {
-        $this->repo = $repo;
+        $this-> volunteerRepo = $volunteerRepo;
+        $this->eventRepo=$eventRepo;
     }
 
     public function applyForEvent(array $data,$id){
 
       $volunteer=Auth::user();
-      $event=$this->repo->findEvent($id);
+      $event=$this->eventRepo->find($id);
 
         // Check for duplicate application
         if ($volunteer->event()->where('participations.event_id', $event->id)->exists()) {
@@ -33,7 +34,7 @@ class ApplyForEvents
         $data['volunteer']=$volunteer;
         $data['event_id']=$id;
 
-      return $this->repo->apply($data);
+      return $this->volunteerRepo->apply($data);
 
     }
 

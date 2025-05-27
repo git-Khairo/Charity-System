@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Admins\Models;
+namespace App\Domain\Events\Models;
 
 use App\Domain\volunteer\Models\Volunteer;
 use App\Domain\Volunteer\Models\Volunteer_feddback;

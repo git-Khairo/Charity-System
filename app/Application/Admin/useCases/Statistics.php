@@ -2,7 +2,7 @@
 
 namespace App\Application\Admin\useCases;
 
-class AddEvent
+class Statistics
 {
 
 }

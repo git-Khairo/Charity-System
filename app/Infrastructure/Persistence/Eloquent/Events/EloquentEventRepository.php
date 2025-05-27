@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Infrastructure\Persistence\Eloquent\Admins;
+namespace App\Infrastructure\Persistence\Eloquent\Events;
 
 
-use App\Domain\Admins\Models\Event;
+
+use App\Domain\Events\Models\Event;
 use App\Domain\Repositories\BaseRepositoryInterface;
 use App\Domain\volunteer\Models\Volunteer;
 
