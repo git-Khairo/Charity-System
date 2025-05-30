@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Interfaces\Http\Requests\Admins;
+namespace App\Interfaces\Http\Requests\Events;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -11,7 +11,7 @@ class StoreEventRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class StoreEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:1000',
+            'location' => 'required|string|max:255',
+            'status' => 'required|string|in:active,inactive,pending', // adjust statuses as needed
+            'capacity' => 'required|integer|min:1',
+
         ];
     }
 }

@@ -3,7 +3,8 @@
 namespace App\Domain\volunteer\Models;
 
 
-use App\Domain\Admins\Models\Event;
+
+use App\Domain\Events\Models\Event;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -58,8 +59,13 @@ class Volunteer extends Authenticatable
     }
 
     public function event(){
-        return $this->belongsToMany(Event::class, 'participations', 'volunteer_id', 'event_id')
-            ->withPivot('signup_date', 'status')
+        return $this->belongsToMany(Event::class, 'participations')
+            ->withPivot( 'status')
             ->withTimestamps();
+    }
+
+    protected static function newFactory()
+    {
+        return \Database\Factories\VolunteerFactory::new();
     }
 }

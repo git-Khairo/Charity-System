@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('volunteer_id')->constrained('volunteers')->cascadeOnDelete();
             $table->foreignId('event_id')->constrained('events')->cascadeOnDelete();
             $table->string('title');
-            $table->string('description');
+            $table->longText('description');
             $table->timestamps();
         });
     }

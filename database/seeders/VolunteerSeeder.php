@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Domain\volunteer\Models\Volunteer;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class VolunteerSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Volunteer::factory()->count(50)->create();
     }
 }

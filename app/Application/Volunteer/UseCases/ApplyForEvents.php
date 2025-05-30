@@ -2,6 +2,7 @@
 
 namespace App\Application\Volunteer\UseCases;
 
+use App\Domain\Repositories\BaseRepositoryInterface;
 use App\Domain\Volunteer\Repositories\VolunteerRepositoryInterface;
 use App\Infrastructure\Persistence\Eloquent\Events\EloquentEventRepository;
 use Illuminate\Support\Facades\Auth;

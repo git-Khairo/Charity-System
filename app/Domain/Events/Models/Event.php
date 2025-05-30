@@ -33,8 +33,13 @@ class Event extends Model
     }
 
     public function volunteer(){
-        return $this->hasMany(Volunteer::class, 'participations', 'volunteer_id', 'event_id')
-            ->withPivot('signup_date', 'status')
+        return $this->belongsToMany(Volunteer::class, 'participations')
+            ->withPivot('status')
             ->withTimestamps();
+    }
+
+    protected static function newFactory()
+    {
+        return \Database\Factories\EventFactory::new();
     }
 }
