@@ -13,6 +13,7 @@ use Endroid\QrCode\Writer\SvgWriter;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class LoginOrRegister
 {
@@ -53,6 +54,10 @@ class LoginOrRegister
         $response=$this->repo->Register($data);
 
         $volunteer=$response['user'];
+
+        $volunteerRole=Role::firstOrCreate(['name' => 'Volunteer','guard_name' => 'api']);
+
+        $volunteer->assignRole($volunteerRole);
 
         $qrCodePath=$this->generateAndSaveVolunteerQrCode($volunteer->id);
         $volunteer->update(['qr_code_path' => $qrCodePath]);

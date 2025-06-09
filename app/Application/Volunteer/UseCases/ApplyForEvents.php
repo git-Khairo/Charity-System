@@ -28,11 +28,16 @@ class ApplyForEvents
             return ['message' => 'You have already applied to this event.'];
         }
         // Check event status and capacity
-        if ($event->status !== 'open' || $event->NumOfVolunteer >= $event->capacity) {
+        if ($event->status !== 'upcoming' || $event->NumOfVolunteer >= $event->capacity) {
             return ['message' => 'Cannot apply: Event is closed or full.'];
         }
 
         $data['volunteer']=$volunteer;
+        $data['full_name']= $volunteer->name;
+        $data['phone_number']= $volunteer->phoneNumber;
+        $data['study']= $volunteer->study;
+        $data['address']= $volunteer->address;
+        $data['email']= $volunteer->email;
         $data['event_id']=$id;
 
       return $this->volunteerRepo->apply($data);

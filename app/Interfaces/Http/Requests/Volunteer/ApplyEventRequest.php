@@ -23,8 +23,13 @@ class ApplyEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'signup_date' => 'required',
             'status' => 'required',
+            'national_number'=>'required',
+            'gender' => 'required',
+            'why_charity' => 'required',
+            'availability_for_volunteering' => 'required',
+            'preferred_time' => 'required',
+
         ];
     }
 }

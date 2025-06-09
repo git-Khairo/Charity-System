@@ -38,7 +38,7 @@ class EloquentVolunteerRepository implements VolunteerRepositoryInterface
 
         $volunteer['skills']=json_decode( $volunteer['skills'],true);
 
-        $token=$volunteer->createToken($volunteer->email,['Volunteer'])->plainTextToken;
+        $token=$volunteer->createToken($volunteer->email)->plainTextToken;
 
         $response=[
             'user'=>$volunteer,
@@ -92,8 +92,30 @@ class EloquentVolunteerRepository implements VolunteerRepositoryInterface
 
         // Attach the user to the event
         $volunteer->event()->attach($data['event_id'], [
-            'volunteer_id' => $volunteer->id,
-            'signup_date' => $data['signup_date'],
+            'full_name' => $data['full_name'],
+            'phone_number' => $data['phone_number'],
+            'address' => $data['address'],
+            'email' => $data['email'],
+            'study' => $data['study'],
+            'national_number' => $data['national_number'],
+            'gender' => $data['gender'],
+            'why_charity' => $data['why_charity'],
+            'availability_for_volunteering' => $data['availability_for_volunteering'],
+            'preferred_time' => $data['preferred_time'],
+
+            // Only one of these booleans is required
+            'Developmental' => $data['Developmental'] ?? false,
+            'Child_care' => $data['Child_care'] ?? false,
+            'Training' => $data['Training'] ?? false,
+            'Shelter_and_relief' => $data['Shelter_and_relief'] ?? false,
+            'Events_and_conferences' => $data['Events_and_conferences'] ?? false,
+            'Awareness_campaigns' => $data['Awareness_campaigns'] ?? false,
+            'Elderly_care' => $data['Elderly_care'] ?? false,
+            'Supporting_women' => $data['Supporting_women'] ?? false,
+            'Maintenance_technician' => $data['Maintenance_technician'] ?? false,
+            'field_media_photography' => $data['field_media_photography'] ?? false,
+            'Administrative_field' => $data['Administrative_field'] ?? false,
+
             'status' => $data['status'],
         ]);
         return ['message' =>'applied done successfully'];

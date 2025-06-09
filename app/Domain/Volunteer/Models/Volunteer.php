@@ -10,11 +10,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class Volunteer extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\VolunteerFactory> */
-    use HasFactory,HasApiTokens,Notifiable;
+    use HasFactory,HasApiTokens,Notifiable,HasRoles;
     /**
      * The attributes that are mass assignable.
      *
@@ -41,6 +42,7 @@ class Volunteer extends Authenticatable
         'remember_token',
     ];
 
+    protected $guard_name = 'api';
     /**
      * Get the attributes that should be cast.
      *
