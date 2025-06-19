@@ -15,8 +15,13 @@ use App\Http\Controllers\VolunteerController;
 Route::post('/register',[VolunteerController::class,'register']);
 Route::post('/login',[VolunteerController::class,'login']);
 Route::get('/volunteer/{id}',[VolunteerController::class,'show']);//
+
+
 Route::get('/charities', [CharityController::class, 'getAllCharities']);
 Route::get('/charity/{id}', [CharityController::class, 'getCharity']);
+Route::post('/charity/create', [CharityController::class, 'createCharity']);
+Route::put('/charity/update/{id}', [CharityController::class, 'updateCharity']);
+Route::delete('/charity/delete/{id}', [CharityController::class, 'deleteCharity']);
 
 
 

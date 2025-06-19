@@ -23,12 +23,12 @@ class CharityController extends Controller
     }
 
     public function updateCharity($id, UpdateCharityRequest $request, UpdateCharity $usecase){
-        $charity = $usecase->updateCharity($id, $request);
+        $charity = $usecase->updateCharity($id, $request->validated());
         return response()->json(['message' => 'updated charity', 'charity' => $charity], 201);
     }
 
     public function createCharity(CreateCharityRequest $request, CreateCharity $usecase){
-        $charity = $usecase->createCharity($request);
+        $charity = $usecase->createCharity($request->validated());
         return response()->json(['message' => 'created charity', 'charity' => $charity], 201);
     }
 

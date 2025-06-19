@@ -11,7 +11,7 @@ class UpdateCharityRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,15 +22,15 @@ class UpdateCharityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'admin_id' => 'required|exists:admins,id',
-            'category_id' => 'required|exists:category,id',
-            'name' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-            'description' => 'required|string',
-            'images' => 'required|array',
+            'admin_id' => 'exists:admins,id',
+            'category_id' => 'exists:category,id',
+            'name' => 'string|max:255',
+            'address' => 'string|max:255',
+            'description' => 'string',
+            'images' => 'array',
             'images.*' => 'string|url',
-            'phonenumber' => 'required|string|max:20',
-            'email' => 'required|email|max:255',
+            'phonenumber' => 'string|max:20',
+            'email' => 'email|max:255',
         ];
     }
 }

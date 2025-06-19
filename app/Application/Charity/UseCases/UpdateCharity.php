@@ -16,6 +16,9 @@ class UpdateCharity
     }
 
     public function updateCharity($id, $data){
+        if(array_key_exists('images', $data)){
+            $data['images'] = json_encode($data['images']);
+        }
         return $this->repo->update($id, $data);
     }
 }

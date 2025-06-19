@@ -16,6 +16,7 @@ class CreateCharity
     }
 
     public function createCharity($data){
+        $data['images'] = json_encode($data['images']);
         return $this->repo->create($data);
     }
 

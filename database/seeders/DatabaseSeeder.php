@@ -33,7 +33,5 @@ class DatabaseSeeder extends Seeder
         }
         Charity::factory()->count(1)->create();
         Event::factory()->count(5)->create();
-
-
     }
 }
