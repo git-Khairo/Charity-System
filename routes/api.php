@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CharityController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VolunteerController;
@@ -14,6 +15,8 @@ use App\Http\Controllers\VolunteerController;
 Route::post('/register',[VolunteerController::class,'register']);
 Route::post('/login',[VolunteerController::class,'login']);
 Route::get('/volunteer/{id}',[VolunteerController::class,'show']);//
+Route::get('/charities', [CharityController::class, 'getAllCharities']);
+Route::get('/charity/{id}', [CharityController::class, 'getCharity']);
 
 
 

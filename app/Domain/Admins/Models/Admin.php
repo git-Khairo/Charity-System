@@ -2,6 +2,7 @@
 
 namespace App\Domain\Admins\Models;
 
+use App\Domain\Charity\Models\Charity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -45,6 +46,15 @@ class Admin extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function charity(){
+        return $this->belongsTo(Charity::class);
+    }
+
+    protected static function newFactory()
+    {
+        return \Database\Factories\AdminFactory::new();
     }
 
 }

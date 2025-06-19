@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Domain\Charity\Models\Charity;
 use App\Domain\Events\Models\Event;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -23,6 +24,7 @@ class EventFactory extends Factory
             'title' => $this->faker->sentence(3),
             'description' => $this->faker->paragraph,
             'location' => $this->faker->city,
+            'charity_id' => 1,
             'status' => $this->faker->randomElement(['upcoming', 'completed']),
             'capacity' => $this->faker->numberBetween(20, 100),
             'NumOfVolunteer' => 0,

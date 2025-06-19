@@ -2,6 +2,7 @@
 
 namespace App\Domain\Events\Models;
 
+use App\Domain\Charity\Models\Charity;
 use App\Domain\volunteer\Models\Volunteer;
 use App\Domain\Volunteer\Models\Volunteer_feddback;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -30,6 +31,10 @@ class Event extends Model
 
     public function feedback(){
         return $this->hasMany(Volunteer_feddback::class);
+    }
+
+    public function charity(){
+        return $this->belongsTo(Charity::class);
     }
 
     public function volunteer(){
