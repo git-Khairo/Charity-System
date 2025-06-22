@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CharityController;
+use App\Http\Controllers\EventController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VolunteerController;
@@ -22,6 +23,13 @@ Route::get('/charity/{id}', [CharityController::class, 'getCharity']);
 Route::post('/charity/create', [CharityController::class, 'createCharity']);
 Route::put('/charity/update/{id}', [CharityController::class, 'updateCharity']);
 Route::delete('/charity/delete/{id}', [CharityController::class, 'deleteCharity']);
+
+Route::get('/events', [EventController::class, 'getAllEvents']);
+Route::get('/event/{id}', [EventController::class, 'getEvent']);
+Route::get('/charity/events/{id}', [EventController::class, 'getEventByCharity']);
+Route::post('/event/create', [EventController::class, 'createEvent']);
+Route::put('/event/update/{id}', [EventController::class, 'updateEvent']);
+Route::delete('/event/delete/{id}', [EventController::class, 'deleteEvent']);
 
 
 

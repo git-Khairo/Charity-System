@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Domain\Charity\Repositories\CharityRepositoryInterface;
+use App\Domain\Events\Repositories\EventRepositoryInterface;
 use App\Domain\Repositories\BaseRepositoryInterface;
 use App\Domain\Volunteer\Repositories\VolunteerRepositoryInterface;
 use App\Infrastructure\Persistence\Eloquent\Charity\EloquentCharityRepository;
@@ -20,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(VolunteerRepositoryInterface::class, EloquentVolunteerRepository::class);
         $this->app->bind(BaseRepositoryInterface::class, EloquentEventRepository::class);
         $this->app->bind(CharityRepositoryInterface::class, EloquentCharityRepository::class);
+        $this->app->bind(EventRepositoryInterface::class, EloquentEventRepository::class);
     }
 
     /**

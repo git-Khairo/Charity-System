@@ -2,24 +2,23 @@
 
 namespace App\Application\Events\useCases;
 
+use App\Domain\Events\Repositories\EventRepositoryInterface;
 use App\Infrastructure\Persistence\Eloquent\Events\EloquentEventRepository;
 
 class AddEvent
 {
 
-    protected BaseRepositoryInterface $eventRepo;
-    public function __construct(EloquentEventRepository $eventRepo)
+    protected EventRepositoryInterface $repo;
+    public function __construct(EventRepositoryInterface $repo)
     {
-        $this->eventRepo=$eventRepo;
+        $this->repo=$repo;
     }
 
 
-    public function creatEvent(array $data){
-
-        $data['NumOfVolunteer']=0;
-
-        return $this->eventRepo->create($data);
-
+    public function createEvent($data){
+        $data['NumOfVolunteer'] = 0;
+        $data = $data->toArray();
+        return $this->repo->create($data);
     }
 
 }

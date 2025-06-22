@@ -22,12 +22,12 @@ class StoreEventRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'charity_id' => 'required|exists:charities,id',
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:1000',
             'location' => 'required|string|max:255',
-            'status' => 'required|string|in:active,inactive,pending', // adjust statuses as needed
+            'status' => 'required|string|in:active,inactive,pending',
             'capacity' => 'required|integer|min:1',
-
         ];
     }
 }

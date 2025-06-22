@@ -11,7 +11,7 @@ class UpdateEventRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,11 +22,13 @@ class UpdateEventRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'charity_id' => 'required|exists:charities,id',
             'title' => 'sometimes|required|string|max:255',
             'description' => 'sometimes|required|string|max:1000',
             'location' => 'sometimes|required|string|max:255',
             'status' => 'sometimes|required|string|in:active,inactive,pending', // adjust as needed
             'capacity' => 'sometimes|required|integer|min:1',
+            'NumOfVolunteer' => 'sometimes|integer|'
         ];
     }
 }

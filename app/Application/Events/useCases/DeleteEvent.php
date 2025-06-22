@@ -2,21 +2,18 @@
 
 namespace App\Application\Events\useCases;
 
-use App\Domain\Volunteer\Repositories\VolunteerRepositoryInterface;
-use App\Infrastructure\Persistence\Eloquent\Events\EloquentEventRepository;
+use App\Domain\Events\Repositories\EventRepositoryInterface;
 
 class DeleteEvent
 {
-    protected BaseRepositoryInterface $eventRepo;
-    public function __construct(EloquentEventRepository $eventRepo)
+    protected EventRepositoryInterface $repo;
+    public function __construct(EventRepositoryInterface $repo)
     {
-        $this->eventRepo=$eventRepo;
+        $this->repo=$repo;
     }
 
     public function deleteEvent($id){
-
-        return $this->eventRepo->delete($id);
-
+        return $this->repo->delete($id);
     }
 
 }

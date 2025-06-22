@@ -22,15 +22,15 @@ class UpdateCharityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'admin_id' => 'exists:admins,id',
-            'category_id' => 'exists:category,id',
-            'name' => 'string|max:255',
-            'address' => 'string|max:255',
-            'description' => 'string',
-            'images' => 'array',
+            'admin_id' => 'sometimes|exists:admins,id',
+            'category_id' => 'sometimes|exists:category,id',
+            'name' => 'sometimes|string|max:255',
+            'address' => 'sometimes|string|max:255',
+            'description' => 'sometimes|string',
+            'images' => 'sometimes|array',
             'images.*' => 'string|url',
-            'phonenumber' => 'string|max:20',
-            'email' => 'email|max:255',
+            'phonenumber' => 'sometimes|string|max:20',
+            'email' => 'sometimes|email|max:255',
         ];
     }
 }

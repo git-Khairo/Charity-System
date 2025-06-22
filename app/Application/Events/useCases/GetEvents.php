@@ -3,20 +3,16 @@
 namespace App\Application\Events\useCases;
 
 use App\Domain\Events\Repositories\EventRepositoryInterface;
-use App\Infrastructure\Persistence\Eloquent\Events\EloquentEventRepository;
 
-class UpdateEvent
+class GetEvents
 {
-
     protected EventRepositoryInterface $repo;
     public function __construct(EventRepositoryInterface $repo)
     {
-        $this->repo=$repo;
+        $this->repo = $repo;
     }
 
-
-    public function updateEvent($id,$data){
-        return $this->repo->update($id,$data->toArray());
+    public function getEvents(){
+        return $this->repo->all();
     }
-
 }
