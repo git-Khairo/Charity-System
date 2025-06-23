@@ -3,9 +3,8 @@
 namespace App\Infrastructure\Persistence\Eloquent\Volunteer;
 
 
-use App\Domain\Admins\Models\Event;
+use App\Domain\Events\Models\Event;
 use App\Domain\volunteer\Models\Volunteer;
-
 use App\Domain\Volunteer\Models\Volunteer_feddback;
 use App\Domain\Volunteer\Repositories\VolunteerRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
@@ -76,7 +75,7 @@ class EloquentVolunteerRepository implements VolunteerRepositoryInterface
     public function createFeedback(array $data)
     {
         $feedback=Volunteer_feddback::create([
-            'volunteer_id' => auth()->id(), // Volunteer
+            'volunteer_id' => Auth::id(), // Volunteer
             'event_id' => $data['event_id'],
             'title' => $data['title'],
             'description'=>$data['description']

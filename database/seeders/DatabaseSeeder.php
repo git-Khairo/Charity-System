@@ -3,13 +3,10 @@
 namespace Database\Seeders;
 
 use App\Domain\Admins\Models\Admin;
+use App\Domain\Beneficiary\Models\Beneficiary;
 use App\Domain\Charity\Models\Charity;
 use App\Domain\Events\Models\Event;
 use App\Domain\volunteer\Models\Volunteer;
-use App\Domain\Volunteer\Models\Volunteer_feddback;
-use App\Models\User;
-use Database\Factories\CategoryFactory;
-use Faker\Factory;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -33,5 +30,6 @@ class DatabaseSeeder extends Seeder
         }
         Charity::factory()->count(1)->create();
         Event::factory()->count(5)->create();
+        Beneficiary::factory()->count(5)->create();
     }
 }

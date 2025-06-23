@@ -4,9 +4,9 @@ namespace App\Application\Beneficiary\UseCases;
 
 use App\Domain\Beneficiary\Repositories\BeneficiaryRepositoryInterface;
 
-class UpdateInfo
+class ApplyForCharity
 {
-    protected BeneficiaryRepositoryInterface $repo;
+       protected BeneficiaryRepositoryInterface $repo;
     /**
      * Create a new class instance.
      */
@@ -15,7 +15,7 @@ class UpdateInfo
         $this->repo = $repo;
     }
 
-    public function updateInfo($id, $data){
-        return $this->repo->update($id, $data->toArray());
+    public function applyForCharity($id, $data){
+        return $this->repo->apply($id, $data->toArray());
     }
 }

@@ -1,0 +1,54 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Application\Beneficiary\UseCases\ApplyForCharity;
+use App\Application\Beneficiary\UseCases\CreateFeedback;
+use App\Application\Beneficiary\UseCases\GetBeneficiaries;
+use App\Application\Beneficiary\UseCases\GetBeneficiary;
+use App\Application\Beneficiary\UseCases\Login;
+use App\Application\Beneficiary\UseCases\Register;
+use App\Application\Beneficiary\UseCases\UpdateInfo;
+use App\Interfaces\Http\Requests\Beneficiary\ApplyForCharityRequest;
+use App\Interfaces\Http\Requests\Beneficiary\BeneficiaryFeedbackRequest;
+use App\Interfaces\Http\Requests\Beneficiary\LoginBeneficiaryRequest;
+use App\Interfaces\Http\Requests\Beneficiary\RegisterBeneficiaryRequest;
+use App\Interfaces\Http\Requests\Beneficiary\UpdateBeneficiaryRequest;
+
+class BeneficiaryController extends Controller
+{
+    public function getAllBeneficiaries(GetBeneficiaries $usecase){
+        $beneficiaries = $usecase->getBeneficairies();
+        return response()->json(['message' => 'All beneficiaries', 'beneficiaries' => $beneficiaries],201);
+    }
+
+    public function getBeneficairy($id, GetBeneficiary $usecase){
+        $beneficiary = $usecase->getBeneficiary($id);
+        return response()->json(['message' => `beneficiary $id`, 'beneficiaries' => $beneficiary],201);
+    }
+
+    public function registerBeneficiary(RegisterBeneficiaryRequest $request, Register $usecase){
+        $beneficiary = $usecase->register($request);
+        return response()->json(['message' => 'beneficiary added', 'beneficiaries' => $beneficiary],201);
+    }
+
+    public function loginBeneficiary(LoginBeneficiaryRequest $request, Login $usecase){
+        $beneficiary = $usecase->login($request);
+        return response()->json(['message' => 'beneficiary logged in', 'beneficiaries' => $beneficiary],201);
+    }
+
+    public function updateBeneficiary($id, UpdateBeneficiaryRequest $request, UpdateInfo $usecase){
+        $beneficiary = $usecase->updateInfo($id, $request);
+        return response()->json(['message' => 'beneficiary logged in', 'beneficiaries' => $beneficiary],201);
+    }
+
+    public function applyForCharity($id, ApplyForCharityRequest $request, ApplyForCharity $usecase){
+        $beneficiary = $usecase->applyForCharity($id, $request);
+        return response()->json(['message' => 'beneficiary logged in', 'beneficiaries' => $beneficiary],201);
+    }
+
+    public function createBeneficiaryFeedback($id, BeneficiaryFeedbackRequest $request, CreateFeedback $usecase){
+        $beneficiary = $usecase->createFeedback($id, $request);
+        return response()->json(['message' => 'beneficiary logged in', 'beneficiaries' => $beneficiary],201);
+    }
+}

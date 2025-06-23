@@ -4,9 +4,9 @@ namespace App\Application\Beneficiary\UseCases;
 
 use App\Domain\Beneficiary\Repositories\BeneficiaryRepositoryInterface;
 
-class UpdateInfo
+class CreateFeedback
 {
-    protected BeneficiaryRepositoryInterface $repo;
+        protected BeneficiaryRepositoryInterface $repo;
     /**
      * Create a new class instance.
      */
@@ -15,7 +15,7 @@ class UpdateInfo
         $this->repo = $repo;
     }
 
-    public function updateInfo($id, $data){
-        return $this->repo->update($id, $data->toArray());
+     public function createFeedback($id, $data){
+        return $this->repo->createFeedback($id, $data->toArray());
     }
 }

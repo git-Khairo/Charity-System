@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BeneficiaryController;
 use App\Http\Controllers\CharityController;
 use App\Http\Controllers\EventController;
 use Illuminate\Http\Request;
@@ -30,6 +31,14 @@ Route::get('/charity/events/{id}', [EventController::class, 'getEventByCharity']
 Route::post('/event/create', [EventController::class, 'createEvent']);
 Route::put('/event/update/{id}', [EventController::class, 'updateEvent']);
 Route::delete('/event/delete/{id}', [EventController::class, 'deleteEvent']);
+
+Route::get('/beneficiaries', [BeneficiaryController::class, 'getAllBeneficiaries']);
+Route::get('/beneficiary/{id}', [BeneficiaryController::class, 'getBeneficairy']);
+Route::post('beneficiary/register', [BeneficiaryController::class, 'registerBeneficiary']);
+Route::post('beneficiary/login', [BeneficiaryController::class, 'loginBeneficiary']);
+Route::put('/beneficiary/update/{id}', [BeneficiaryController::class, 'updateBeneficiary']);
+Route::post('/beneficiary/charity', [BeneficiaryController::class, 'applyForCharity']);
+Route::post('/beneficiary/feedback', [BeneficiaryController::class, 'createBeneficiaryFeedback']);
 
 
 

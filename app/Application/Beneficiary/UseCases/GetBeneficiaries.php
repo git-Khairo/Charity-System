@@ -4,7 +4,7 @@ namespace App\Application\Beneficiary\UseCases;
 
 use App\Domain\Beneficiary\Repositories\BeneficiaryRepositoryInterface;
 
-class UpdateInfo
+class GetBeneficiaries
 {
     protected BeneficiaryRepositoryInterface $repo;
     /**
@@ -15,7 +15,7 @@ class UpdateInfo
         $this->repo = $repo;
     }
 
-    public function updateInfo($id, $data){
-        return $this->repo->update($id, $data->toArray());
+     public function getBeneficairies(){
+        return $this->repo->all();
     }
 }

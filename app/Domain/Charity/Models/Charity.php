@@ -3,6 +3,8 @@
 namespace App\Domain\Charity\Models;
 
 use App\Domain\Admins\Models\Admin;
+use App\Domain\Beneficiary\Models\BeneficiaryFeedback;
+use App\Domain\Beneficiary\Models\Request;
 use App\Domain\Events\Models\Event;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -38,6 +40,13 @@ class Charity extends Model
         return $this->belongsTo(Admin::class);
     }
 
+    public function request(){
+        return $this->belongsTo(Request::class);
+    }
+
+    public function beneficiary_feedback(){
+        return $this->belongsTo(BeneficiaryFeedback::class);
+    }
     protected static function newFactory()
     {
         return \Database\Factories\CharityFactory::new();
