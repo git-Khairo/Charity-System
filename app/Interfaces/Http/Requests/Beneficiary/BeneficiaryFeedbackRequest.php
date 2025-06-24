@@ -23,7 +23,6 @@ class BeneficiaryFeedbackRequest extends FormRequest
     {
         return [
             'title'       => 'required|string|min:3|max:255',
-            'charity_id'  => 'required|exists:charities,id',
             'description' => 'required|string|min:10',
         ];
     }

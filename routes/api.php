@@ -37,12 +37,12 @@ Route::get('/beneficiary/{id}', [BeneficiaryController::class, 'getBeneficairy']
 Route::post('beneficiary/register', [BeneficiaryController::class, 'registerBeneficiary']);
 Route::post('beneficiary/login', [BeneficiaryController::class, 'loginBeneficiary']);
 Route::put('/beneficiary/update/{id}', [BeneficiaryController::class, 'updateBeneficiary']);
-Route::post('/beneficiary/charity', [BeneficiaryController::class, 'applyForCharity']);
-Route::post('/beneficiary/feedback', [BeneficiaryController::class, 'createBeneficiaryFeedback']);
 
 
 
 Route::group(['middleware'=>['auth:sanctum']], function (){
+    Route::post('/beneficiary/charity/{id}', [BeneficiaryController::class, 'applyForCharity']);
+    Route::post('/beneficiary/feedback/{id}', [BeneficiaryController::class, 'createBeneficiaryFeedback']);
     Route::put('/volunteer/update',[VolunteerController::class, 'updateVolunteer']);//
     Route::post('/logout',[VolunteerController::class,'logout']);//
     Route::post('/feedback', [VolunteerController::class, 'makeFeedback']);

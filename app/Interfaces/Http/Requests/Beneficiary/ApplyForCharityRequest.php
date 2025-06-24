@@ -22,7 +22,6 @@ class ApplyForCharityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'charity_id' => 'required|exists:charities,id',
             'details'    => 'required|string|min:10',
             'priority'   => 'required|integer|between:1,5',
             'status'     => 'required|string|in:pending,approved,rejected',
