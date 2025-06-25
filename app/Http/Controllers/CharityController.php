@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Application\Charity\UseCases\CreateCharity;
 use App\Application\Charity\UseCases\DeleteCharity;
+use App\Application\Charity\UseCases\GetByCategory;
 use App\Application\Charity\UseCases\GetCharities;
 use App\Application\Charity\UseCases\GetCharity;
 use App\Application\Charity\UseCases\UpdateCharity;
@@ -20,6 +21,11 @@ class CharityController extends Controller
     public function getCharity($id, GetCharity $usecase){
         $charity = $usecase->getCharity($id);
         return response()->json(['message' => 'charity', 'charity' => $charity], 201);
+    }
+
+    public function getCharityByCategory($id, GetByCategory $usecase){
+        $charities = $usecase->getByCategory($id);
+        return response()->json(['message' => 'charity', 'charity' => $charities], 201);
     }
 
     public function updateCharity($id, UpdateCharityRequest $request, UpdateCharity $usecase){

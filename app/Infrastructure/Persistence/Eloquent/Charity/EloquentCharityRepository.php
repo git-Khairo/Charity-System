@@ -16,6 +16,10 @@ class EloquentCharityRepository implements CharityRepositoryInterface
         return Charity::findOrFail($id);
     }
 
+    public function byCategory($id){
+        return Charity::where('category_id', $id)->get();
+    }
+
     public function update($id , array $data){
         try {
         $charity = Charity::findOrFail($id);

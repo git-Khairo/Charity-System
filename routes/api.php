@@ -21,6 +21,7 @@ Route::get('/volunteer/{id}',[VolunteerController::class,'show']);//
 
 Route::get('/charities', [CharityController::class, 'getAllCharities']);
 Route::get('/charity/{id}', [CharityController::class, 'getCharity']);
+Route::get('/charity/category/{id}', [CharityController::class, 'getCharityByCategory']);
 Route::post('/charity/create', [CharityController::class, 'createCharity']);
 Route::put('/charity/update/{id}', [CharityController::class, 'updateCharity']);
 Route::delete('/charity/delete/{id}', [CharityController::class, 'deleteCharity']);
