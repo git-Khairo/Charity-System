@@ -49,6 +49,11 @@ class EloquentBeneficiaryRepository implements BeneficiaryRepositoryInterface
         ];
     }
 
+    public function logout($request){
+        $request->user()->tokens()->delete();
+        return;
+    }
+
     public function update($id, array $data){
         $beneficiary = Beneficiary::findOrFail($id);
         $beneficiary->update($data);

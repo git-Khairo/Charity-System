@@ -7,6 +7,7 @@ use App\Application\Beneficiary\UseCases\CreateFeedback;
 use App\Application\Beneficiary\UseCases\GetBeneficiaries;
 use App\Application\Beneficiary\UseCases\GetBeneficiary;
 use App\Application\Beneficiary\UseCases\Login;
+use App\Application\Beneficiary\UseCases\Logout;
 use App\Application\Beneficiary\UseCases\Register;
 use App\Application\Beneficiary\UseCases\UpdateInfo;
 use App\Interfaces\Http\Requests\Beneficiary\ApplyForCharityRequest;
@@ -14,6 +15,7 @@ use App\Interfaces\Http\Requests\Beneficiary\BeneficiaryFeedbackRequest;
 use App\Interfaces\Http\Requests\Beneficiary\LoginBeneficiaryRequest;
 use App\Interfaces\Http\Requests\Beneficiary\RegisterBeneficiaryRequest;
 use App\Interfaces\Http\Requests\Beneficiary\UpdateBeneficiaryRequest;
+use Illuminate\Http\Request;
 
 class BeneficiaryController extends Controller
 {
@@ -35,6 +37,11 @@ class BeneficiaryController extends Controller
     public function loginBeneficiary(LoginBeneficiaryRequest $request, Login $usecase){
         $beneficiary = $usecase->login($request);
         return response()->json(['message' => 'beneficiary logged in', 'beneficiaries' => $beneficiary],201);
+    }
+
+    public function logoutBeneficiary(Request $request, Logout $usecase){
+        $usecase->logout($request);
+        return response()->json(['message' => 'beneficiary logged out'],201);
     }
 
     public function updateBeneficiary($id, UpdateBeneficiaryRequest $request, UpdateInfo $usecase){

@@ -42,6 +42,7 @@ Route::put('/beneficiary/update/{id}', [BeneficiaryController::class, 'updateBen
 
 
 Route::group(['middleware'=>['auth:sanctum']], function (){
+    Route::post('/beneficiary/logout', [BeneficiaryController::class, 'logoutBeneficiary']);
     Route::post('/beneficiary/charity/{id}', [BeneficiaryController::class, 'applyForCharity']);
     Route::post('/beneficiary/feedback/{id}', [BeneficiaryController::class, 'createBeneficiaryFeedback']);
     Route::put('/volunteer/update',[VolunteerController::class, 'updateVolunteer']);//
