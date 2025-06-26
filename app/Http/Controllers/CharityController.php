@@ -10,36 +10,37 @@ use App\Application\Charity\UseCases\GetCharity;
 use App\Application\Charity\UseCases\UpdateCharity;
 use App\Interfaces\Http\Requests\Charity\CreateCharityRequest;
 use App\Interfaces\Http\Requests\Charity\UpdateCharityRequest;
+use App\Interfaces\Http\Resources\Charity\CharityResource;
 
 class CharityController extends Controller
 {
     public function getAllCharities(GetCharities $usecase){
         $charities = $usecase->getCharites();
-        return response()->json(['message' => 'allCharities', 'charities' => $charities], 201);
+        return response()->json(['message' => 'allCharities', 'charities' => CharityResource::collection($charities)], 201);
     }
 
     public function getCharity($id, GetCharity $usecase){
         $charity = $usecase->getCharity($id);
-        return response()->json(['message' => 'charity', 'charity' => $charity], 201);
+        return response()->json(['message' => 'charity', 'charity' => new CharityResource($charity)], 201);
     }
 
     public function getCharityByCategory($id, GetByCategory $usecase){
         $charities = $usecase->getByCategory($id);
-        return response()->json(['message' => 'charity', 'charity' => $charities], 201);
+        return response()->json(['message' => 'charity', 'charity' => CharityResource::collection($charities)], 201);
     }
 
     public function updateCharity($id, UpdateCharityRequest $request, UpdateCharity $usecase){
         $charity = $usecase->updateCharity($id, $request->validated());
-        return response()->json(['message' => 'updated charity', 'charity' => $charity], 201);
+        return response()->json(['message' => 'updated charity', 'charity' => new CharityResource($charity)], 201);
     }
 
     public function createCharity(CreateCharityRequest $request, CreateCharity $usecase){
         $charity = $usecase->createCharity($request->validated());
-        return response()->json(['message' => 'created charity', 'charity' => $charity], 201);
+        return response()->json(['message' => 'created charity', 'charity' => new CharityResource($charity)], 201);
     }
 
     public function deleteCharity($id, DeleteCharity $usecase){
         $charity = $usecase->deleteCharity($id);
-        return response()->json(['message' => 'deleted charity', 'charity' => $charity], 201);
+        return response()->json(['message' => 'deleted charity', 'charity' => new CharityResource($charity)], 201);
     }
 }

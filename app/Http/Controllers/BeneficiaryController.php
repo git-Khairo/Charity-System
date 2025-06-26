@@ -15,13 +15,14 @@ use App\Interfaces\Http\Requests\Beneficiary\BeneficiaryFeedbackRequest;
 use App\Interfaces\Http\Requests\Beneficiary\LoginBeneficiaryRequest;
 use App\Interfaces\Http\Requests\Beneficiary\RegisterBeneficiaryRequest;
 use App\Interfaces\Http\Requests\Beneficiary\UpdateBeneficiaryRequest;
+use App\Interfaces\Http\Resources\Beneficiary\BeneficiaryResource;
 use Illuminate\Http\Request;
 
 class BeneficiaryController extends Controller
 {
     public function getAllBeneficiaries(GetBeneficiaries $usecase){
         $beneficiaries = $usecase->getBeneficairies();
-        return response()->json(['message' => 'All beneficiaries', 'beneficiaries' => $beneficiaries],201);
+        return response()->json(['message' => 'All beneficiaries', 'beneficiaries' => BeneficiaryResource::collection($beneficiaries)],201);
     }
 
     public function getBeneficairy($id, GetBeneficiary $usecase){
