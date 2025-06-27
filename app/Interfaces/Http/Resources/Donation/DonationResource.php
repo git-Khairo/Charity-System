@@ -17,13 +17,11 @@ class DonationResource extends JsonResource
         return [
             'charity_id' => $this->charity_id,
             'name' => $this->name,
-            'details' => $this->details,
+            'status' => $this->status,
             'address' => $this->address,
             'email' => $this->email,
             'phonenumber' => $this->phonenumber,
-            'image' => $this->image,
-            'amount' => $this->amount,
-            'payment_info' => $this->payment_info
+            'amount' => $this->amount
         ];
     }
 }

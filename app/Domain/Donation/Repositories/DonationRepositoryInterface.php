@@ -7,5 +7,5 @@ interface DonationRepositoryInterface
     public function all();
     public function find($id);
     public function byCharity($id);
-    public function create(array $data);
+    public function create($id, array $data, $paymentIntent);
 }

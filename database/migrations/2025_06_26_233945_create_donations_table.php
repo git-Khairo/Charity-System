@@ -17,11 +17,11 @@ return new class extends Migration
             $table->foreignId('charity_id')->constrained('charities')->cascadeOnDelete();
             $table->string('email');
             $table->string('phonenumber');
-            $table->longText('details');
             $table->string('address');
             $table->string('image')->nullable();
-            $table->decimal('amount');
-            $table->string('payment_info');
+            $table->decimal('amount', 8, 2);
+            $table->string('payment_intent_id')->nullable();
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }

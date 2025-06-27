@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Application\Donation\GetDonation;
 use App\Application\Donation\GetDonationByCharity;
 use App\Application\Donation\GetDonations;
+use App\Application\Donation\StoreDonation;
+use App\Interfaces\Http\Requests\Donation\DonationRequest;
 use App\Interfaces\Http\Resources\Donation\DonationResource;
 
 class DonationController extends Controller
@@ -18,9 +20,6 @@ class DonationController extends Controller
         return response()->json(['message' => 'All Donations', 'donations' => DonationResource::collection($donations)], 201);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function getDonation($id, GetDonation $usecase)
     {
         $donation = $usecase->getDonation($id);
@@ -31,5 +30,11 @@ class DonationController extends Controller
     {
         $donations = $usecase->getDonationByCharity($id);
         return response()->json(['message' => 'All Donations', 'donations' => DonationResource::collection($donations)], 201);
+    }
+
+    public function storeDonation($id, DonationRequest $request, StoreDonation $usecase)
+    {
+        $donation = $usecase->storeDonation($id, $request);
+        return response()->json(['message' => 'Donation Stored', 'donations' => $donation], 201);
     }
 }

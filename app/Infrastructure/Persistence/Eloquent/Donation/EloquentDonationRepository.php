@@ -19,7 +19,17 @@ class EloquentDonationRepository implements DonationRepositoryInterface
         return Donation::where('charity_id', $id)->get();
     }
 
-    public function create(array $data){
+    public function create($id, array $data, $paymentIntent){
+        Donation::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'phonenumber' => $data['phonenumber'],
+            'address' => $data['address'],
+            'amount' => $data['amount'],
+            'charity_id' => $id,
+            'payment_intent_id' => $paymentIntent->id,
+        ]);
 
+        return $paymentIntent->client_secret;
     }
 }

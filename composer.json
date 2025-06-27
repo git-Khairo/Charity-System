@@ -12,6 +12,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
         "spatie/laravel-permission": "^6.19",
+        "stripe/stripe-php": "^17.3",
         "tecnickcom/tc-lib-barcode": "^1.15"
     },
     "require-dev": {

@@ -43,6 +43,7 @@ Route::put('/beneficiary/update/{id}', [BeneficiaryController::class, 'updateBen
 Route::get('/donations', [DonationController::class, 'getAllDonations']);
 Route::get('/donation/{id}', [DonationController::class, 'getDonation']);
 Route::get('/donation/charity/{id}', [DonationController::class, 'getDonationByCharity']);
+Route::post('/donate/{id}', [DonationController::class, 'storeDonation']);
 
 
 
