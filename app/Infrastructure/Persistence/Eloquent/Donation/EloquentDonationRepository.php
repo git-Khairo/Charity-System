@@ -19,7 +19,7 @@ class EloquentDonationRepository implements DonationRepositoryInterface
         return Donation::where('charity_id', $id)->get();
     }
 
-    public function create($id, array $data, $paymentIntent){
+    public function createCard($id, array $data, $paymentIntent){
         Donation::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -31,5 +31,19 @@ class EloquentDonationRepository implements DonationRepositoryInterface
         ]);
 
         return $paymentIntent->client_secret;
+    }
+
+    public function createImage($id, array $data){
+        $donation = Donation::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'phonenumber' => $data['phonenumber'],
+            'address' => $data['address'],
+            'amount' => $data['amount'],
+            'charity_id' => $id,
+            'image' => $data['image'],
+        ]);
+
+        return $donation->id;
     }
 }

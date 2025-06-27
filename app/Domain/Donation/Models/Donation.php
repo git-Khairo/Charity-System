@@ -24,7 +24,8 @@ class Donation extends Model
         'phonenumber',
         'address',
         'amount',
-        'payment_intent_id'
+        'payment_intent_id',
+        'image'
     ];
 
      public function charity(){
