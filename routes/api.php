@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BeneficiaryController;
 use App\Http\Controllers\CharityController;
+use App\Http\Controllers\DonationController;
 use App\Http\Controllers\EventController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,10 @@ Route::get('/beneficiary/{id}', [BeneficiaryController::class, 'getBeneficairy']
 Route::post('beneficiary/register', [BeneficiaryController::class, 'registerBeneficiary']);
 Route::post('beneficiary/login', [BeneficiaryController::class, 'loginBeneficiary']);
 Route::put('/beneficiary/update/{id}', [BeneficiaryController::class, 'updateBeneficiary']);
+
+Route::get('/donations', [DonationController::class, 'getAllDonations']);
+Route::get('/donation/{id}', [DonationController::class, 'getDonation']);
+Route::get('/donation/charity/{id}', [DonationController::class, 'getDonationByCharity']);
 
 
 

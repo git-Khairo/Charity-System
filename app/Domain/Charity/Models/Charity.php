@@ -5,6 +5,7 @@ namespace App\Domain\Charity\Models;
 use App\Domain\Admins\Models\Admin;
 use App\Domain\Beneficiary\Models\BeneficiaryFeedback;
 use App\Domain\Beneficiary\Models\Request;
+use App\Domain\Donation\Models\Donation;
 use App\Domain\Events\Models\Event;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -34,6 +35,10 @@ class Charity extends Model
 
     public function events(){
         return $this->hasMany(Event::class);
+    }
+
+    public function donation(){
+        return $this->hasMany(Donation::class);
     }
 
     public function admin(){
