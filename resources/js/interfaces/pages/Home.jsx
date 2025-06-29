@@ -1,7 +1,16 @@
-// The exported code uses Tailwind CSS. Install Tailwind CSS in your dev environment to ensure all styles work.
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import useGet from "../../services/useGet";
 const App = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+
+  const { get, data, loading, error } = useGet();
+
+  useEffect(() => {
+    get('/api/charities');
+  }, []);
+
+  console.log({data, loading, error});
+
   const heroImages = [
     {
       url: "https://readdy.ai/api/search-image?query=Emotional%20image%20of%20diverse%20volunteers%20helping%20communities%20in%20need%2C%20with%20warm%20lighting%20and%20genuine%20human%20connection%2C%20showing%20hands%20reaching%20out%20to%20help%20others%2C%20professional%20photography%20with%20soft%20natural%20lighting%20and%20blurred%20background&width=800&height=800&seq=1&orientation=landscape",
