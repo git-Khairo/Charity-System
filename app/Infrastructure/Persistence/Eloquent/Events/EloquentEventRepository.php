@@ -8,16 +8,20 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class EloquentEventRepository implements EventRepositoryInterface
 {
+
     public function all() { return Event::all(); }
 
-    public function find($id) { return Event::findOrFail($id); }
+    public function find($id) {
+
+        return Event::findOrFail($id);
+    }
 
     public function byCharity($id){
         $events = Event::where('charity_id', $id)->get();
         return $events;
     }
 
-    public function create(array $data) { 
+    public function create(array $data) {
         try {
         $event = Event::create($data);
 
@@ -47,7 +51,7 @@ class EloquentEventRepository implements EventRepositoryInterface
     public function delete($id) {
         try {
         $event = Event::findOrFail($id);
-        
+
         $event->delete();
         return true;
         } catch (ModelNotFoundException $e) {

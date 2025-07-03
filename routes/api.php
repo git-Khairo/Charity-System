@@ -7,7 +7,9 @@ use App\Http\Controllers\EventController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VolunteerController;
-
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\SuperAdminController;
+use App\Http\Middleware\RoleMiddleware;
 
 
 /*Route::get('/user', function (Request $request) {
@@ -23,38 +25,55 @@ Route::get('/volunteer/{id}',[VolunteerController::class,'show']);//
 Route::get('/charities', [CharityController::class, 'getAllCharities']);
 Route::get('/charity/{id}', [CharityController::class, 'getCharity']);
 Route::get('/charity/category/{id}', [CharityController::class, 'getCharityByCategory']);
-Route::post('/charity/create', [CharityController::class, 'createCharity']);
-Route::put('/charity/update/{id}', [CharityController::class, 'updateCharity']);
-Route::delete('/charity/delete/{id}', [CharityController::class, 'deleteCharity']);
+Route::post('/charity/create', [SuperAdminController::class, 'createCharity']);
+Route::put('/charity/update/{id}', [SuperAdminController::class, 'updateCharity']);
+Route::delete('/charity/delete/{id}', [SuperAdminController::class, 'deleteCharity']);
 
 Route::get('/events', [EventController::class, 'getAllEvents']);
 Route::get('/event/{id}', [EventController::class, 'getEvent']);
 Route::get('/charity/events/{id}', [EventController::class, 'getEventByCharity']);
-Route::post('/event/create', [EventController::class, 'createEvent']);
-Route::put('/event/update/{id}', [EventController::class, 'updateEvent']);
-Route::delete('/event/delete/{id}', [EventController::class, 'deleteEvent']);
+
 
 Route::get('/beneficiaries', [BeneficiaryController::class, 'getAllBeneficiaries']);
 Route::get('/beneficiary/{id}', [BeneficiaryController::class, 'getBeneficairy']);
 Route::post('beneficiary/register', [BeneficiaryController::class, 'registerBeneficiary']);
 Route::post('beneficiary/login', [BeneficiaryController::class, 'loginBeneficiary']);
-Route::put('/beneficiary/update/{id}', [BeneficiaryController::class, 'updateBeneficiary']);
 
-Route::get('/donations', [DonationController::class, 'getAllDonations']);
-Route::get('/donation/{id}', [DonationController::class, 'getDonation']);
-Route::get('/donation/charity/{id}', [DonationController::class, 'getDonationByCharity']);
+
 Route::post('/donate/{id}', [DonationController::class, 'storeDonation']);
 
 
+Route::post('/admin/login/{lang}', [AdminController::class, 'login']);
 
 Route::group(['middleware'=>['auth:sanctum']], function (){
-    Route::post('/beneficiary/logout', [BeneficiaryController::class, 'logoutBeneficiary']);
-    Route::post('/beneficiary/charity/{id}', [BeneficiaryController::class, 'applyForCharity']);
-    Route::post('/beneficiary/feedback/{id}', [BeneficiaryController::class, 'createBeneficiaryFeedback']);
-    Route::put('/volunteer/update',[VolunteerController::class, 'updateVolunteer']);//
-    Route::post('/logout',[VolunteerController::class,'logout']);//
-    Route::post('/feedback', [VolunteerController::class, 'makeFeedback']);
-    Route::get('/myFeedbacks', [VolunteerController::class, 'myFeedbacks']);
-    Route::post('/events/{id}/apply', [VolunteerController::class, 'applyForEvent']);
-    Route::get('/myEvents', [VolunteerController::class, 'myEvents']);
+
+
+    Route::middleware(RoleMiddleware::class.':Beneficiary')->group(function () {
+        Route::post('/beneficiary/logout', [BeneficiaryController::class, 'logoutBeneficiary']);
+        Route::post('/beneficiary/charity/{id}', [BeneficiaryController::class, 'applyForCharity']);
+        Route::post('/beneficiary/feedback/{id}', [BeneficiaryController::class, 'createBeneficiaryFeedback']);
+        Route::put('/beneficiary/update/{id}', [BeneficiaryController::class, 'updateBeneficiary']);
+    });
+
+
+    Route::middleware(RoleMiddleware::class.':Volunteer')->group(function () {
+        Route::put('/volunteer/update', [VolunteerController::class, 'updateVolunteer']);//
+        Route::post('/logout', [VolunteerController::class, 'logout']);//
+        Route::post('/feedback', [VolunteerController::class, 'makeFeedback']);
+        Route::get('/myFeedbacks', [VolunteerController::class, 'myFeedbacks']);
+        Route::post('/events/{id}/apply', [VolunteerController::class, 'applyForEvent']);
+        Route::get('/myEvents', [VolunteerController::class, 'myEvents']);
+    });
+
+
+    Route::middleware(RoleMiddleware::class.':Admin')->group(function () {
+        Route::post('/event/create', [AdminController::class, 'createEvent']);
+        Route::put('/event/update/{id}', [AdminController::class, 'updateEvent']);
+        Route::delete('/event/delete/{id}', [AdminController::class, 'deleteEvent']);
+        Route::get('/donations', [DonationController::class, 'getAllDonations']);
+        Route::get('/donation/{id}', [DonationController::class, 'getDonation']);
+        Route::get('/donation/charity/{id}', [DonationController::class, 'getDonationByCharity']);
+        Route::get('/admin/charity/events-by-month', [AdminController::class, 'activityReport']);
+        Route::get('/admin/charity/volunteer-in-events', [AdminController::class, 'volunteerStat']);
+    });
 });

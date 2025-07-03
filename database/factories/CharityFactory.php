@@ -21,7 +21,7 @@ class CharityFactory extends Factory
     public function definition(): array
     {
         return [
-             'admin_id' => 1,
+            'admin_id' => 1,
             'category_id' => 1,
             'name' => $this->faker->company,
             'address' => $this->faker->address,

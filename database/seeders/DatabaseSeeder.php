@@ -10,6 +10,7 @@ use App\Domain\volunteer\Models\Volunteer;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,7 +19,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Admin::factory()->create();
+
+       // DB::table('admins')->truncate();
+        // Ensure the 'admin' role exists
+        $adminRole=Role::firstOrCreate(['name' => 'Admin','guard_name' => 'api']);
+
+        $admin=Admin::factory()->create();
+
+        // Assign the 'admin' role
+        $admin->assignRole($adminRole);
+
         Volunteer::factory()->count(10)->create();
         $categories = ['Health', 'Education', 'Food', 'Shelter', 'Disaster Relief'];
         foreach ($categories as $name) {
@@ -28,7 +38,9 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ]);
         }
-        Charity::factory()->count(1)->create();
+        Charity::factory()->create([
+            'admin_id' => $admin->id,  // <-- Use the actual ID here
+        ]);
         Event::factory()->count(5)->create();
         Beneficiary::factory()->count(5)->create();
     }

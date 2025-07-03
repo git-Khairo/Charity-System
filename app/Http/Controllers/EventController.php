@@ -31,19 +31,5 @@ class EventController extends Controller
         return response()->json(['message' => `Event Num $id`, 'event' => new EventResource($event)], 201);
     }
 
-    public function createEvent(StoreEventRequest $request, AddEvent $usecase){
-        $event = $usecase->createEvent($request);
-        return response()->json(['message' => 'Created Event', 'event' => new EventResource($event)], 201);
-    }
-
-    public function updateEvent(UpdateEventRequest $request, $id, UpdateEvent $usecase){
-        $event = $usecase->updateEvent($id, $request);
-        return response()->json(['message' => 'Updated Event', 'event' => new EventResource($event)], 201);
-    }
-
-    public function deleteEvent($id, DeleteEvent $usecase){
-        $event = $usecase->deleteEvent($id);
-        return response()->json(['message' => 'Deleted Event', 'event' => new EventResource($event)], 201);
-    }
 
 }

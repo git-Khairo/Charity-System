@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class Admin extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\VolunteerFactory> */
-    use HasFactory,HasApiTokens,Notifiable;
+    use HasFactory,HasApiTokens,Notifiable,HasRoles;
     /**
      * The attributes that are mass assignable.
      *
@@ -35,6 +36,8 @@ class Admin extends Authenticatable
         'remember_token',
     ];
 
+    protected $guard_name = 'api';
+
     /**
      * Get the attributes that should be cast.
      *
@@ -49,7 +52,7 @@ class Admin extends Authenticatable
     }
 
     public function charity(){
-        return $this->belongsTo(Charity::class);
+        return $this->hasOne(Charity::class);
     }
 
     protected static function newFactory()

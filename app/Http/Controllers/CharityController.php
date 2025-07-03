@@ -29,18 +29,5 @@ class CharityController extends Controller
         return response()->json(['message' => 'charity', 'charity' => CharityResource::collection($charities)], 201);
     }
 
-    public function updateCharity($id, UpdateCharityRequest $request, UpdateCharity $usecase){
-        $charity = $usecase->updateCharity($id, $request->validated());
-        return response()->json(['message' => 'updated charity', 'charity' => new CharityResource($charity)], 201);
-    }
 
-    public function createCharity(CreateCharityRequest $request, CreateCharity $usecase){
-        $charity = $usecase->createCharity($request->validated());
-        return response()->json(['message' => 'created charity', 'charity' => new CharityResource($charity)], 201);
-    }
-
-    public function deleteCharity($id, DeleteCharity $usecase){
-        $charity = $usecase->deleteCharity($id);
-        return response()->json(['message' => 'deleted charity', 'charity' => new CharityResource($charity)], 201);
-    }
 }
