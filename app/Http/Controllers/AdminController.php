@@ -2,65 +2,55 @@
 
 namespace App\Http\Controllers;
 
-use App\Admin;
-use App\Http\Requests\StoreAdminRequest;
-use App\Http\Requests\UpdateAdminRequest;
+use App\Application\Admin\useCases\ActivityReport;
+use App\Application\Admin\useCases\Login;
+use App\Application\Admin\useCases\Statistics;
+use App\Application\Events\useCases\AddEvent;
+use App\Application\Events\useCases\DeleteEvent;
+use App\Application\Events\useCases\UpdateEvent;
+use App\Interfaces\Http\Requests\Admins\ActivityReportRequest;
+use App\Interfaces\Http\Requests\Admins\LoginAdminRequest;
+use App\Interfaces\Http\Requests\Admins\VolunteerStatRequest;
+use App\Interfaces\Http\Requests\Events\StoreEventRequest;
+use App\Interfaces\Http\Requests\Events\UpdateEventRequest;
+use App\Interfaces\Http\Resources\Events\EventResource;
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+
+    public function login($lang,LoginAdminRequest $request,Login $useCase){
+        $admin=$useCase->login($lang,$request->validated());
+
+        return response()->json(['message' => 'Admin registered successfully', 'user' => $admin],201);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    public function volunteerStat(VolunteerStatRequest $request, Statistics $useCase){
+
+        $report = $useCase->allVolunteer($request->validated());
+        return response()->json(['message' => 'this year report', 'report' => $report], 201);
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreAdminRequest $request)
-    {
-        //
+    public function activityReport(ActivityReportRequest $request,ActivityReport $useCase){
+
+        $report = $useCase->report($request->validated());
+        return response()->json(['message' => 'this year report', 'report' => $report], 201);
+
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Admin $admin)
-    {
-        //
+    public function createEvent(StoreEventRequest $request, AddEvent $usecase){
+        $event = $usecase->createEvent($request->validated());
+        return response()->json(['message' => 'Created Event', 'event' => new EventResource($event)], 201);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Admin $admin)
-    {
-        //
+    public function updateEvent(UpdateEventRequest $request, $id, UpdateEvent $usecase){
+        $event = $usecase->updateEvent($id, $request->validated());
+        return response()->json(['message' => 'Updated Event', 'event' => new EventResource($event)], 201);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateAdminRequest $request, Admin $admin)
-    {
-        //
+    public function deleteEvent($id, DeleteEvent $usecase){
+        $event = $usecase->deleteEvent($id);
+        return response()->json(['message' => 'Deleted Event', 'event' => new EventResource($event)], 201);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Admin $admin)
-    {
-        //
-    }
 }

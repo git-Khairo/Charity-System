@@ -4,7 +4,7 @@ namespace App\Interfaces\Http\Requests\Admins;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreAdminRequest extends FormRequest
+class ActivityReportRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class StoreAdminRequest extends FormRequest
     public function rules(): array
     {
         return [
-
+            'year' => 'required|digits:4|integer'
         ];
     }
 }

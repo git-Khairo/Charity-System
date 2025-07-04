@@ -31,12 +31,12 @@ class BeneficiaryController extends Controller
     }
 
     public function registerBeneficiary(RegisterBeneficiaryRequest $request, Register $usecase){
-        $beneficiary = $usecase->register($request);
+        $beneficiary = $usecase->register($request->validated());
         return response()->json(['message' => 'beneficiary added', 'beneficiaries' => $beneficiary],201);
     }
 
     public function loginBeneficiary(LoginBeneficiaryRequest $request, Login $usecase){
-        $beneficiary = $usecase->login($request);
+        $beneficiary = $usecase->login($request->validated());
         return response()->json(['message' => 'beneficiary logged in', 'beneficiaries' => $beneficiary],201);
     }
 
@@ -46,17 +46,17 @@ class BeneficiaryController extends Controller
     }
 
     public function updateBeneficiary($id, UpdateBeneficiaryRequest $request, UpdateInfo $usecase){
-        $beneficiary = $usecase->updateInfo($id, $request);
+        $beneficiary = $usecase->updateInfo($id, $request->validated());
         return response()->json(['message' => 'beneficiary logged in', 'beneficiaries' => $beneficiary],201);
     }
 
     public function applyForCharity($id, ApplyForCharityRequest $request, ApplyForCharity $usecase){
-        $beneficiary = $usecase->applyForCharity($id, $request);
+        $beneficiary = $usecase->applyForCharity($id, $request->validated());
         return response()->json(['message' => 'beneficiary logged in', 'beneficiaries' => $beneficiary],201);
     }
 
     public function createBeneficiaryFeedback($id, BeneficiaryFeedbackRequest $request, CreateFeedback $usecase){
-        $beneficiary = $usecase->createFeedback($id, $request);
+        $beneficiary = $usecase->createFeedback($id, $request->validated());
         return response()->json(['message' => 'beneficiary logged in', 'beneficiaries' => $beneficiary],201);
     }
 }

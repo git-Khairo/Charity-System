@@ -4,7 +4,7 @@ namespace App\Domain\Events\Repositories;
 
 use App\Domain\Repositories\BaseRepositoryInterface;
 
-interface EventRepositoryInterface extends BaseRepositoryInterface
+interface EventRepositoryInterface
 {
     public function all();
     public function find($id);
