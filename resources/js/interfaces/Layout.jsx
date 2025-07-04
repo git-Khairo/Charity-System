@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { FaBars, FaFacebook, FaInstagram, FaLanguage, FaMapPin, FaMoon, FaSun, FaTimes, FaTwitter, FaYoutube } from "react-icons/fa";
 import { Link, Outlet } from "react-router-dom";
+import ScrollToTop from "./ScrollToTop";
 
 const Layout = () => {
     const [darkmode, setDarkmode] = useState(false);
@@ -42,6 +43,7 @@ const Layout = () => {
 
     return ( 
     <>
+    <ScrollToTop />
     <nav className="bg-white border-gray-200 dark:bg-dark-background fixed w-full z-20">
     <div className="flex flex-wrap items-center justify-between mx-auto px-10 py-4">
         <Link to={'/'} className="flex items-center space-x-3 rtl:space-x-reverse">
