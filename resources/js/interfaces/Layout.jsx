@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { FaFacebook, FaInstagram, FaLanguage, FaMapPin, FaMoon, FaSun, FaTwitter, FaYoutube } from "react-icons/fa";
+import { FaBars, FaFacebook, FaInstagram, FaLanguage, FaMapPin, FaMoon, FaSun, FaTimes, FaTwitter, FaYoutube } from "react-icons/fa";
 import { Link, Outlet } from "react-router-dom";
 
 const Layout = () => {
@@ -7,6 +7,7 @@ const Layout = () => {
     const [isLanguageDropDownOpen, setIsLanguageDropDownOpen] = useState(false);
     const [language, setLanguage] = useState('en');
     const dropdownRef = useRef(null);
+    const [showSidebar, setShowSidebar] = useState(false);
 
     const toggleDropdown = () => setIsLanguageDropDownOpen((prev) => !prev);
 
@@ -67,67 +68,117 @@ const Layout = () => {
         </ul>
         </div>
         <div className="items-center space-x-7 md:order-2 hidden md:flex">
-  {/* Language Dropdown (wrapped in relative) */}
-  <div className="relative">
-    <button
-      onClick={toggleDropdown}
-      className="text-gray-700 hover:text-blue-700 text-3xl transition duration-200 focus:outline-none"
-      aria-label="Toggle Language"
-    >
-      <FaLanguage />
-    </button>
+    {/* Language Dropdown (wrapped in relative) */}
+    <div className="relative">
+        <button
+        onClick={toggleDropdown}
+        className="text-gray-700 hover:text-blue-700 text-3xl transition duration-200 focus:outline-none"
+        aria-label="Toggle Language"
+        >
+        <FaLanguage />
+        </button>
 
-    {isLanguageDropDownOpen && (
-      <div className="absolute -right-10 mt-2 bg-white border border-gray-200 rounded-md shadow-lg z-50 w-28">
-        <button
-          onClick={() => changeLanguage('ar')}
-          className={`block w-full text-center px-4 py-2 text-sm hover:bg-gray-100 ${
-            language === 'ar' ? 'text-blue-600 font-semibold' : 'text-gray-700'
-          }`}
-        >
-          AR
-        </button>
-        <button
-          onClick={() => changeLanguage('en')}
-          className={`block w-full text-center px-4 py-2 text-sm hover:bg-gray-100 ${
-            language === 'en' ? 'text-blue-600 font-semibold' : 'text-gray-700'
-          }`}
-        >
-          EN
-        </button>
-      </div>
-    )}
+        {isLanguageDropDownOpen && (
+        <div className="absolute -right-10 mt-2 bg-white border border-gray-200 rounded-md shadow-lg z-50 w-28">
+            <button
+            onClick={() => changeLanguage('ar')}
+            className={`block w-full text-center px-4 py-2 text-sm hover:bg-gray-100 ${
+                language === 'ar' ? 'text-blue-600 font-semibold' : 'text-gray-700'
+            }`}
+            >
+            AR
+            </button>
+            <button
+            onClick={() => changeLanguage('en')}
+            className={`block w-full text-center px-4 py-2 text-sm hover:bg-gray-100 ${
+                language === 'en' ? 'text-blue-600 font-semibold' : 'text-gray-700'
+            }`}
+            >
+            EN
+            </button>
         </div>
-
-        {/* Dark mode toggle */}
-        {darkmode ? (
-            <FaMoon
-            onClick={handleDarkmode}
-            className="text-gray-600 text-xl hover:text-blue-700 cursor-pointer transition duration-200"
-            />
-        ) : (
-            <FaSun
-            onClick={handleDarkmode}
-            className="text-gray-600 text-xl hover:text-yellow-500 cursor-pointer transition duration-200"
-            />
         )}
+            </div>
 
-        {/* Log in / Sign up */}
-        <Link
-            to="/login"
-            className="text-gray-700 border-2 border-gray-700 rounded-md px-4 py-1.5 hover:border-blue-700 hover:text-blue-700 transition duration-200 font-medium"
-        >
-            Log in
-        </Link>
-        <Link
-            to="/signup"
-            className="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition duration-200 font-medium"
-        >
-            Sign up
-        </Link>
+            {/* Dark mode toggle */}
+            {darkmode ? (
+                <FaMoon
+                onClick={handleDarkmode}
+                className="text-gray-600 text-xl hover:text-blue-700 cursor-pointer transition duration-200"
+                />
+            ) : (
+                <FaSun
+                onClick={handleDarkmode}
+                className="text-gray-600 text-xl hover:text-yellow-500 cursor-pointer transition duration-200"
+                />
+            )}
+
+            {/* Log in / Sign up */}
+            <Link
+                to="/login"
+                className="text-gray-700 border-2 border-gray-700 rounded-md px-4 py-1.5 hover:border-blue-700 hover:text-blue-700 transition duration-200 font-medium"
+            >
+                Log in
+            </Link>
+            <Link
+                to="/signup"
+                className="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition duration-200 font-medium"
+            >
+                Sign up
+            </Link>
+            </div>
+            <button
+                className="block md:hidden text-light-secondary2 dark:text-gray-200 mr-4 hover:text-light-primary hover:dark:text-dark-primary transition-colors duration-500"
+                onClick={(e) => {
+                e.stopPropagation();
+                setShowSidebar(true);
+                }}
+            >
+                <FaBars size={22} />
+            </button>
         </div>
-    </div>
     </nav>
+        {/* navbar */}
+    <div
+    className={`fixed z-50 left-0 top-0 w-64 h-full bg-light-background dark:bg-dark-background shadow-lg transform transition-transform duration-500 ${
+    showSidebar ? "translate-x-0" : "-translate-x-full"
+    }`}
+    onClick={(e) => e.stopPropagation()}
+    >
+        <div className="flex justify-between items-center p-4 border-b-2 border-light-secondary dark:border-dark-secondary">
+        <h2 className="text-xl font-Montserrat text-light-text dark:text-dark-text">Menu</h2>
+        <button
+            onClick={() => setShowSidebar(false)}
+            className="text-light-text dark:text-dark-text hover:text-light-primary dark:hover:text-dark-primary transition-colors duration-700"
+        >
+            <FaTimes size={22} />
+        </button>
+        </div>
+        <ul className="mt-4 space-y-4 px-4">
+        <li>
+            <a
+                href={`/`}
+                className="block py-2 px-4 font-Montserrat text-light-text dark:text-dark-text hover:bg-light-secondary dark:hover:bg-dark-secondary rounded-md transition-colors"
+                onClick={() => setShowSidebar(false)}
+            >
+                Home
+            </a>
+            </li>
+        {["Products", "Projects", "Categories", "About Us"].map((item) => (
+            <li key={item}>
+            <a
+                href={`/${item}`}
+                className="block py-2 px-4 font-Montserrat text-light-text dark:text-dark-text hover:bg-light-secondary dark:hover:bg-dark-secondary rounded-md transition-colors"
+                onClick={() => setShowSidebar(false)}
+            >
+                {item}
+            </a>
+            </li>
+        ))}
+        </ul>
+    </div>
+
+
 
     <main className="pt-10">
         <Outlet/>
