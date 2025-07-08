@@ -9,6 +9,8 @@ const App = () => {
     get('/api/charities');
   }, []);
 
+  console.log(data);
+
 
   const heroImages = [
     {

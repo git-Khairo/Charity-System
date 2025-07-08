@@ -13,7 +13,6 @@ const useGet = () => {
       const res = await fetch(url, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${token}`,
           'Accept': 'application/json',
         },
       });

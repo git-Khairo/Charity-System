@@ -1,6 +1,14 @@
-// The exported code uses Tailwind CSS. Install Tailwind CSS in your dev environment to ensure all styles work.
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
+import useGet from "../../services/useGet";
+import Pagination from "../components/Pagination";
+
 const Charities = () => {
+  const { get, data, loading, error } = useGet();
+  
+  useEffect(() => {
+    get('/api/charities');
+  }, []);
+
   // Charity categories
   const categories = [
     { id: "all", name: "All Categories" },
@@ -11,123 +19,17 @@ const Charities = () => {
     { id: "animals", name: "Animal Welfare" },
     { id: "disaster", name: "Disaster Relief" },
   ];
+
   // Sort options
   const sortOptions = [
     { id: "newest", name: "Newest First" },
     { id: "az", name: "Name (A-Z)" },
     { id: "za", name: "Name (Z-A)" },
   ];
-  // Sample charities data
-  const charitiesData = [
-    {
-      id: 1,
-      name: "Clean Water Initiative",
-      description:
-        "Providing clean water solutions to communities in need across developing regions.",
-      category: "health",
-      imagePrompt:
-        "A professional photograph of clean water being poured into a glass, with water droplets and a blue background, showing clean water initiatives for charity, high quality professional photography with soft lighting and clear details, minimalist background",
-    },
-    {
-      id: 2,
-      name: "Global Education Fund",
-      description:
-        "Supporting education programs for underprivileged children around the world.",
-      category: "education",
-      imagePrompt:
-        "A professional photograph of diverse children reading books in a classroom setting, with natural light coming through windows, showing education charity work, high quality professional photography with warm lighting and clear details, minimalist background",
-    },
-    {
-      id: 3,
-      name: "Rainforest Protection Alliance",
-      description:
-        "Preserving rainforest ecosystems and protecting endangered species from deforestation.",
-      category: "environment",
-      imagePrompt:
-        "A professional photograph of a lush green rainforest with sunlight filtering through the canopy, showing environmental conservation efforts, high quality professional photography with natural lighting and vibrant colors, minimalist background",
-    },
-    {
-      id: 4,
-      name: "Food for Families",
-      description:
-        "Distributing nutritious meals to families facing food insecurity in urban communities.",
-      category: "food",
-      imagePrompt:
-        "A professional photograph of fresh healthy food being prepared and packaged for distribution, showing food charity work, high quality professional photography with bright lighting and clear details, minimalist background",
-    },
-    {
-      id: 5,
-      name: "Wildlife Conservation Trust",
-      description:
-        "Protecting endangered wildlife through conservation programs and habitat restoration.",
-      category: "animals",
-      imagePrompt:
-        "A professional photograph of diverse wildlife in their natural habitat, showing animal conservation efforts, high quality professional photography with natural lighting and clear details, minimalist background",
-    },
-    {
-      id: 6,
-      name: "Hurricane Relief Project",
-      description:
-        "Providing emergency relief and rebuilding assistance to communities affected by hurricanes.",
-      category: "disaster",
-      imagePrompt:
-        "A professional photograph of volunteers distributing supplies and helping with rebuilding efforts after a natural disaster, showing disaster relief work, high quality professional photography with natural lighting and clear details, minimalist background",
-    },
-    {
-      id: 7,
-      name: "Children's Health Foundation",
-      description:
-        "Improving healthcare access and outcomes for children in underserved communities.",
-      category: "health",
-      imagePrompt:
-        "A professional photograph of healthcare professionals caring for children in a bright medical facility, showing children healthcare charity work, high quality professional photography with soft lighting and clear details, minimalist background",
-    },
-    {
-      id: 8,
-      name: "Ocean Cleanup Coalition",
-      description:
-        "Removing plastic pollution from oceans and promoting sustainable practices to protect marine life.",
-      category: "environment",
-      imagePrompt:
-        "A professional photograph of volunteers cleaning up a beach with blue ocean in the background, showing environmental ocean cleanup efforts, high quality professional photography with natural lighting and vibrant colors, minimalist background",
-    },
-    {
-      id: 9,
-      name: "Literacy for All",
-      description:
-        "Promoting literacy and providing educational resources to communities with limited access to books.",
-      category: "education",
-      imagePrompt:
-        "A professional photograph of people of various ages reading books in a community library setting, showing literacy charity work, high quality professional photography with warm lighting and clear details, minimalist background",
-    },
-    {
-      id: 10,
-      name: "Community Gardens Initiative",
-      description:
-        "Creating sustainable food sources through community gardens in urban food deserts.",
-      category: "food",
-      imagePrompt:
-        "A professional photograph of diverse people working together in a thriving community garden with vegetables and flowers, showing sustainable food initiatives, high quality professional photography with natural lighting and vibrant colors, minimalist background",
-    },
-    {
-      id: 11,
-      name: "Shelter for the Homeless",
-      description:
-        "Providing safe shelter, meals, and support services to individuals experiencing homelessness.",
-      category: "health",
-      imagePrompt:
-        "A professional photograph of a clean, welcoming shelter facility with beds and common areas, showing homeless support charity work, high quality professional photography with warm lighting and clear details, minimalist background",
-    },
-    {
-      id: 12,
-      name: "Endangered Species Protection",
-      description:
-        "Working to protect critically endangered species through conservation and anti-poaching efforts.",
-      category: "animals",
-      imagePrompt:
-        "A professional photograph of endangered wildlife in a protected sanctuary, showing animal conservation efforts, high quality professional photography with natural lighting and clear details, minimalist background",
-    },
-  ];
+
+  // Use charities array from data or empty array as fallback
+  const charitiesData = data?.charities || [];
+
   // State for filters and pagination
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
@@ -135,8 +37,8 @@ const Charities = () => {
   const [itemsPerPage, setItemsPerPage] = useState(8);
   const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
-  const [isPerPageDropdownOpen, setIsPerPageDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+
   // Filter charities based on selected filters and search term
   const filteredCharities = charitiesData.filter((charity) => {
     return (
@@ -146,6 +48,7 @@ const Charities = () => {
         charity.description.toLowerCase().includes(searchTerm.toLowerCase()))
     );
   });
+
   // Sort charities based on selected sort option
   const sortedCharities = [...filteredCharities].sort((a, b) => {
     switch (sortBy) {
@@ -159,6 +62,7 @@ const Charities = () => {
         return 0;
     }
   });
+
   // Calculate pagination
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -167,8 +71,7 @@ const Charities = () => {
     indexOfLastItem,
   );
   const totalPages = Math.ceil(sortedCharities.length / itemsPerPage);
-  // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   // Clear all filters
   const clearFilters = () => {
     setSelectedCategory("all");
@@ -176,26 +79,10 @@ const Charities = () => {
     setSearchTerm("");
     setCurrentPage(1);
   };
+
   // Check if any filter is active
   const isFilterActive = selectedCategory !== "all" || searchTerm !== "";
-  // Generate page numbers for pagination
-  const pageNumbers = [];
-  for (let i = 1; i <= totalPages; i++) {
-    pageNumbers.push(i);
-  }
-  // Get visible page numbers (show 5 at a time)
-  const getVisiblePageNumbers = () => {
-    if (totalPages <= 5) {
-      return pageNumbers;
-    }
-    if (currentPage <= 3) {
-      return pageNumbers.slice(0, 5);
-    }
-    if (currentPage >= totalPages - 2) {
-      return pageNumbers.slice(totalPages - 5);
-    }
-    return pageNumbers.slice(currentPage - 3, currentPage + 2);
-  };
+
   return (
     <div className="min-h-screen bg-[#f9f9f9]">
       {/* Header Section */}
@@ -210,6 +97,7 @@ const Charities = () => {
           </p>
         </div>
       </header>
+
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-8">
         {/* Filter & Sort Controls */}
@@ -300,17 +188,17 @@ const Charities = () => {
                   setIsSortDropdownOpen(!isSortDropdownOpen);
                   setIsCategoryDropdownOpen(false);
                 }}
-                className="!rounded-button whitespace-nowrap flex items-center gap-2 bg-white border border-gray-300 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-50 cursor-pointer"
+                className="!rounded-button whitespace-nowrap flex items-center gap-2 bg-white border border-gray-300 px-4 py-2 rounded-lg text-grey-700 hover:bg-grey-50 cursor-pointer"
               >
                 <i className="fas fa-sort text-blue-500"></i>
                 <span>
                   Sort:{" "}
                   {sortOptions.find((option) => option.id === sortBy)?.name}
                 </span>
-                <i className="fas fa-chevron-down text-gray-500 text-xs"></i>
+                <i className="fas fa-chevron-down text-grey-500 text-xs"></i>
               </button>
               {isSortDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-20">
+                <div className="absolute right-0 mt-2 w-64 bg-white border border-grey-200 rounded-lg shadow-lg z-20">
                   <ul className="py-2">
                     {sortOptions.map((option) => (
                       <li
@@ -319,7 +207,7 @@ const Charities = () => {
                           setSortBy(option.id);
                           setIsSortDropdownOpen(false);
                         }}
-                        className={`px-4 py-2 cursor-pointer hover:bg-gray-100 ${sortBy === option.id ? "bg-blue-50 text-blue-600" : ""}`}
+                        className={`px-4 py-2 cursor-pointer hover:bg-grey-100 ${sortBy === option.id ? "bg-blue-50 text-blue-600" : ""}`}
                       >
                         {option.name}
                       </li>
@@ -330,17 +218,46 @@ const Charities = () => {
             </div>
           </div>
         </div>
+
+        {/* Loading State */}
+        {loading && (
+          <div className="text-center py-12">
+            <i className="fas fa-spinner fa-spin text-4xl text-[#002366] mb-4"></i>
+            <p className="text-[#000111] text-lg">Loading charities...</p>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && (
+          <div className="bg-white rounded-lg shadow-md p-8 text-center">
+            <i className="fas fa-exclamation-circle text-5xl text-red-500 mb-4"></i>
+            <h3 className="text-xl font-semibold text-[#000111] mb-2">
+              Error loading charities
+            </h3>
+            <p className="text-[#000111] mb-4">{error.message}</p>
+            <button
+              onClick={() => get('/api/charities')}
+              className="!rounded-button whitespace-nowrap bg-[#002366] hover:bg-[#001133] text-white py-2 px-6 rounded-lg transition-colors duration-300 cursor-pointer"
+            >
+              Try Again
+            </button>
+          </div>
+        )}
+
         {/* Results Count */}
-        <div className="mb-6">
-          <p className="text-[#000111]">
-            Showing{" "}
-            <span className="font-semibold">{filteredCharities.length}</span>{" "}
-            charities
-            {isFilterActive && " with selected filters"}
-          </p>
-        </div>
+        {!loading && !error && (
+          <div className="mb-6">
+            <p className="text-[#000111]">
+              Showing{" "}
+              <span className="font-semibold">{filteredCharities.length}</span>{" "}
+              charities
+              {isFilterActive && " with selected filters"}
+            </p>
+          </div>
+        )}
+
         {/* Charity Grid */}
-        {currentCharities.length > 0 ? (
+        {!loading && !error && currentCharities.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {currentCharities.map((charity) => (
               <div
@@ -349,7 +266,7 @@ const Charities = () => {
               >
                 <div className="h-48 overflow-hidden">
                   <img
-                    src={`https://readdy.ai/api/search-image?query=$%7Bcharity.imagePrompt%7D&width=600&height=400&seq=${charity.id}&orientation=landscape`}
+                    src={charity.images ? JSON.parse(charity.images)[0] : "https://via.placeholder.com/600x400"}
                     alt={charity.name}
                     className="w-full h-full object-cover object-top"
                   />
@@ -373,7 +290,7 @@ const Charities = () => {
                     >
                       {
                         categories.find((cat) => cat.id === charity.category)
-                          ?.name
+                          ?.name || "Other"
                       }
                     </span>
                   </div>
@@ -396,114 +313,40 @@ const Charities = () => {
             ))}
           </div>
         ) : (
-          <div className="bg-white rounded-lg shadow-md p-8 text-center">
-            <i className="fas fa-search text-5xl text-[#a7a7a7] mb-4"></i>
-            <h3 className="text-xl font-semibold text-[#000111] mb-2">
-              No charities found
-            </h3>
-            <p className="text-[#000111] mb-4">
-              Try adjusting your filters to find more results.
-            </p>
-            <button
-              onClick={clearFilters}
-              className="!rounded-button whitespace-nowrap bg-[#002366] hover:bg-[#001133] text-white py-2 px-6 rounded-lg transition-colors duration-300 cursor-pointer"
-            >
-              Clear All Filters
-            </button>
-          </div>
-        )}
-        {/* Pagination */}
-        {filteredCharities.length > 0 && (
-          <div className="mt-12 flex flex-col md:flex-row items-center justify-between">
-            <div className="mb-4 md:mb-0">
-              <p className="text-[#000111]">
-                Showing {indexOfFirstItem + 1}-
-                {Math.min(indexOfLastItem, filteredCharities.length)} of{" "}
-                {filteredCharities.length} results
+          !loading &&
+          !error && (
+            <div className="bg-white rounded-lg shadow-md p-8 text-center">
+              <i className="fas fa-search text-5xl text-[#a7a7a7] mb-4"></i>
+              <h3 className="text-xl font-semibold text-[#000111] mb-2">
+                No charities found
+              </h3>
+              <p className="text-[#000111] mb-4">
+                Try adjusting your filters to find more results.
               </p>
+              <button
+                onClick={clearFilters}
+                className="!rounded-button whitespace-nowrap bg-[#002366] hover:bg-[#001133] text-white py-2 px-6 rounded-lg transition-colors duration-300 cursor-pointer"
+              >
+                Clear All Filters
+              </button>
             </div>
-            <div className="flex items-center">
-              <nav className="flex items-center">
-                <button
-                  onClick={() => currentPage > 1 && paginate(currentPage - 1)}
-                  disabled={currentPage === 1}
-                  className={`!rounded-button whitespace-nowrap mr-2 px-3 py-2 rounded-lg ${
-                    currentPage === 1
-                      ? "bg-[#a7a7a7] text-white cursor-not-allowed"
-                      : "bg-white border border-[#97c9ea] text-[#000111] hover:bg-[#f9f9f9] cursor-pointer"
-                  }`}
-                >
-                  <i className="fas fa-chevron-left"></i>
-                </button>
-                <div className="hidden md:flex">
-                  {getVisiblePageNumbers().map((number) => (
-                    <button
-                      key={number}
-                      onClick={() => paginate(number)}
-                      className={`!rounded-button whitespace-nowrap mx-1 px-4 py-2 rounded-lg ${
-                        currentPage === number
-                          ? "bg-[#002366] text-white"
-                          : "bg-white border border-[#97c9ea] text-[#000111] hover:bg-[#f9f9f9]"
-                      } cursor-pointer`}
-                    >
-                      {number}
-                    </button>
-                  ))}
-                </div>
-                <div className="md:hidden">
-                  <span className="mx-2 text-gray-600">
-                    Page {currentPage} of {totalPages}
-                  </span>
-                </div>
-                <button
-                  onClick={() =>
-                    currentPage < totalPages && paginate(currentPage + 1)
-                  }
-                  disabled={currentPage === totalPages}
-                  className={`!rounded-button whitespace-nowrap ml-2 px-3 py-2 rounded-lg ${
-                    currentPage === totalPages
-                      ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                      : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 cursor-pointer"
-                  }`}
-                >
-                  <i className="fas fa-chevron-right"></i>
-                </button>
-              </nav>
-              <div className="relative ml-4">
-                <button
-                  onClick={() =>
-                    setIsPerPageDropdownOpen(!isPerPageDropdownOpen)
-                  }
-                  className="!rounded-button whitespace-nowrap flex items-center gap-2 bg-white border border-gray-300 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-50 cursor-pointer"
-                >
-                  <span>{itemsPerPage} per page</span>
-                  <i className="fas fa-chevron-down text-gray-500 text-xs"></i>
-                </button>
-                {isPerPageDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-200 rounded-lg shadow-lg z-20">
-                    <ul className="py-2">
-                      {[8, 12, 16, 24].map((number) => (
-                        <li
-                          key={number}
-                          onClick={() => {
-                            setItemsPerPage(number);
-                            setIsPerPageDropdownOpen(false);
-                            setCurrentPage(1);
-                          }}
-                          className={`px-4 py-2 cursor-pointer hover:bg-gray-100 ${itemsPerPage === number ? "bg-blue-50 text-blue-600" : ""}`}
-                        >
-                          {number} per page
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
+          )
+        )}
+
+        {/* Pagination */}
+        {!loading && !error && filteredCharities.length > 0 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            itemsPerPage={itemsPerPage}
+            setCurrentPage={setCurrentPage}
+            setItemsPerPage={setItemsPerPage}
+            filteredCharities={filteredCharities}
+          />
         )}
       </main>
     </div>
   );
 };
+
 export default Charities;
