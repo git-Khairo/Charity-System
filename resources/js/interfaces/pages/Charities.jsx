@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import useGet from "../../services/useGet";
+import useGet from "../../services/API/useGet";
 import Pagination from "../components/Pagination";
+import useFilter from "../../services/Hooks/useFilter";
+import useSort from "../../services/Hooks/useSort";
 
 const Charities = () => {
   const { get, data, loading, error } = useGet();
-  
+
   useEffect(() => {
     get('/api/charities');
   }, []);
@@ -30,38 +32,35 @@ const Charities = () => {
   // Use charities array from data or empty array as fallback
   const charitiesData = data?.charities || [];
 
-  // State for filters and pagination
+  // Filter and sort states
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("newest");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(8);
   const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
 
-  // Filter charities based on selected filters and search term
-  const filteredCharities = charitiesData.filter((charity) => {
-    return (
-      (selectedCategory === "all" || charity.category === selectedCategory) &&
-      (searchTerm === "" ||
-        charity.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        charity.description.toLowerCase().includes(searchTerm.toLowerCase()))
-    );
+  // Use filter and sort logic hooks
+  const { filteredData, isFilterActive } = useFilter({
+    data: charitiesData,
+    selectedCategory,
+    searchTerm,
+  });
+  const { sortedData } = useSort({
+    data: filteredData,
+    sortBy,
   });
 
-  // Sort charities based on selected sort option
-  const sortedCharities = [...filteredCharities].sort((a, b) => {
-    switch (sortBy) {
-      case "newest":
-        return b.id - a.id;
-      case "az":
-        return a.name.localeCompare(b.name);
-      case "za":
-        return b.name.localeCompare(a.name);
-      default:
-        return 0;
-    }
-  });
+  // Initialize and update filtered and sorted data
+  const [filteredCharities, setFilteredCharities] = useState(filteredData);
+  const [sortedCharities, setSortedCharities] = useState(sortedData);
+
+  useEffect(() => {
+    setFilteredCharities(filteredData);
+    setSortedCharities(sortedData);
+    setCurrentPage(1); // Reset to first page on filter/sort change
+  }, [selectedCategory, searchTerm, sortBy, charitiesData]);
 
   // Calculate pagination
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -72,16 +71,13 @@ const Charities = () => {
   );
   const totalPages = Math.ceil(sortedCharities.length / itemsPerPage);
 
-  // Clear all filters
-  const clearFilters = () => {
+  // Clear all filters and reset sort
+  const handleClearFilters = () => {
     setSelectedCategory("all");
-    setSortBy("newest");
     setSearchTerm("");
+    setSortBy("newest");
     setCurrentPage(1);
   };
-
-  // Check if any filter is active
-  const isFilterActive = selectedCategory !== "all" || searchTerm !== "";
 
   return (
     <div className="min-h-screen bg-[#f9f9f9]">
@@ -113,7 +109,6 @@ const Charities = () => {
                 value={searchTerm}
                 onChange={(e) => {
                   setSearchTerm(e.target.value);
-                  setCurrentPage(1);
                 }}
                 placeholder="Search charities..."
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
@@ -122,7 +117,6 @@ const Charities = () => {
                 <button
                   onClick={() => {
                     setSearchTerm("");
-                    setCurrentPage(1);
                   }}
                   className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
                 >
@@ -159,7 +153,6 @@ const Charities = () => {
                           onClick={() => {
                             setSelectedCategory(category.id);
                             setIsCategoryDropdownOpen(false);
-                            setCurrentPage(1);
                           }}
                           className={`px-4 py-2 cursor-pointer hover:bg-gray-100 ${selectedCategory === category.id ? "bg-blue-50 text-blue-600" : ""}`}
                         >
@@ -173,7 +166,7 @@ const Charities = () => {
               {/* Clear Filters Button */}
               {isFilterActive && (
                 <button
-                  onClick={clearFilters}
+                  onClick={handleClearFilters}
                   className="!rounded-button whitespace-nowrap flex items-center gap-2 bg-[#f9f9f9] px-4 py-2 rounded-lg text-[#000111] hover:bg-[#a7a7a7] cursor-pointer"
                 >
                   <i className="fas fa-times text-gray-500"></i>
@@ -324,7 +317,7 @@ const Charities = () => {
                 Try adjusting your filters to find more results.
               </p>
               <button
-                onClick={clearFilters}
+                onClick={handleClearFilters}
                 className="!rounded-button whitespace-nowrap bg-[#002366] hover:bg-[#001133] text-white py-2 px-6 rounded-lg transition-colors duration-300 cursor-pointer"
               >
                 Clear All Filters

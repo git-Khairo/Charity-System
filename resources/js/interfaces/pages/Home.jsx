@@ -1,15 +1,6 @@
 import { useState, useEffect } from "react";
-import useGet from "../../services/useGet";
 const App = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-
-  const { get, data, loading, error } = useGet();
-
-  useEffect(() => {
-    get('/api/charities');
-  }, []);
-
-  console.log(data);
 
 
   const heroImages = [

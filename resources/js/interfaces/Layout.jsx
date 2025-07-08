@@ -64,9 +64,6 @@ const Layout = () => {
             <li>
             <Link to={''} className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">About us</Link>
             </li>
-            <li>
-            <Link to={''} className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Contact us</Link>
-            </li>
         </ul>
         </div>
         <div className="items-center space-x-7 md:order-2 hidden md:flex">
