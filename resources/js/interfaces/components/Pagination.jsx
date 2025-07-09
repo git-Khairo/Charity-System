@@ -6,7 +6,7 @@ const Pagination = ({
   itemsPerPage,
   setCurrentPage,
   setItemsPerPage,
-  filteredCharities,
+  filteredData,
 }) => {
   const [isPerPageDropdownOpen, setIsPerPageDropdownOpen] = useState(false);
 
@@ -38,8 +38,8 @@ const Pagination = ({
       <div className="mb-4 md:mb-0">
         <p className="text-[#000111]">
           Showing {indexOfFirstItem + 1}-
-          {Math.min(indexOfLastItem, filteredCharities.length)} of{" "}
-          {filteredCharities.length} results
+          {Math.min(indexOfLastItem, filteredData.length)} of{" "}
+          {filteredData.length} results
         </p>
       </div>
       <div className="flex items-center">

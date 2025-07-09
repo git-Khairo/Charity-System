@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { FaBars, FaFacebook, FaInstagram, FaLanguage, FaMapPin, FaMoon, FaSun, FaTimes, FaTwitter, FaYoutube } from "react-icons/fa";
 import { Link, Outlet } from "react-router-dom";
-import ScrollToTop from "./ScrollToTop";
+import ScrollToTop from "../../services/Hooks/ScrollToTop";
 
 const Layout = () => {
     const [darkmode, setDarkmode] = useState(false);
@@ -62,7 +62,7 @@ const Layout = () => {
             <Link to={'/campaigns'} className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Campaigns</Link>
             </li>
             <li>
-            <Link to={''} className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">About us</Link>
+            <Link to={'/about us'} className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">About us</Link>
             </li>
         </ul>
         </div>

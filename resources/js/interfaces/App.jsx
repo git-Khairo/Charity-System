@@ -1,11 +1,11 @@
-import React from "react";
 import ReactDOM from 'react-dom/client';
-import Layout from './Layout';
 import Home from "./pages/Home";
 import Charities from "./pages/Charities";
 import Campaigns from "./pages/Campaigns";
 import Dashboard from "./pages/Dashboard";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import About from "./pages/About";
+import Layout from "./components/Layout";
 
 const App = () => {
     return(
@@ -16,6 +16,7 @@ const App = () => {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/charities" element={<Charities />} />
                 <Route path="/campaigns" element={<Campaigns />} />
+                <Route path="/about us" element={<About />} />
                 </Route>
             </Routes>
         </Router>
