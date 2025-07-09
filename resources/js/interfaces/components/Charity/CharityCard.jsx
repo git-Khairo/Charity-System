@@ -1,5 +1,4 @@
-// components/CharityCard.js
-import React from 'react';
+import { FaChevronRight } from "react-icons/fa";
 
 const CharityCard = ({ charity, categories }) => {
     // Helper to get category name
@@ -25,7 +24,7 @@ const CharityCard = ({ charity, categories }) => {
 
     return (
         <div
-            className="bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:shadow-lg hover:transform hover:scale-[1.02] border border-[#97c9ea]"
+            className="bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:shadow-lg border border-[#97c9ea]"
         >
             <div className="h-48 overflow-hidden">
                 <img
@@ -49,8 +48,9 @@ const CharityCard = ({ charity, categories }) => {
                     {charity.description}
                   </p>
                <div className="flex justify-between items-center mt-auto">
-                    <button className="!rounded-button whitespace-nowrap bg-[#002366] hover:bg-[#001133] text-white py-2 px-4 rounded-lg transition-colors duration-300 cursor-pointer">
+                    <button className="flex justify-center items-center !rounded-button whitespace-nowrap text-[#002366] py-2 px-4 rounded-lg transition-colors duration-300 cursor-pointer">
                       View Details
+                      <FaChevronRight />
                     </button>
                     <button className="!rounded-button whitespace-nowrap bg-[#97c9ea] hover:bg-[#7ab9e0] text-[#002366] py-2 px-4 rounded-lg transition-colors duration-300 cursor-pointer">
                       Donate

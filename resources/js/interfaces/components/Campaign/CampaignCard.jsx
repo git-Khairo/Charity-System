@@ -1,5 +1,5 @@
-
 const CampaignCard = ({ campaign }) => {
+  console.log(campaign);
   return (
     <div className="bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:shadow-md">
       <div className="relative h-48 overflow-hidden">
@@ -27,28 +27,6 @@ const CampaignCard = ({ campaign }) => {
           {campaign.title}
         </h3>
         <p className="text-sm text-gray-600 mb-4 line-clamp-2">{campaign.description}</p>
-
-        <div className="mb-3">
-          <div className="w-full bg-gray-200 rounded-full h-2">
-            <div
-              className="bg-blue-500 h-2 rounded-full"
-              style={{
-                width: `${Math.min(
-                  100,
-                  (campaign.raised / campaign.goal) * 100
-                )}%`,
-              }}
-            ></div>
-          </div>
-        </div>
-
-        <div className="flex justify-between items-center mb-4">
-          {campaign.status === "Active" && (
-            <div className="text-sm text-orange-600 font-medium">
-              {campaign.daysLeft} days left
-            </div>
-          )}
-        </div>
 
         <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md transition-colors duration-200 !rounded-button whitespace-nowrap cursor-pointer">
           View Campaign

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const Pagination = ({
   currentPage,
@@ -53,7 +54,7 @@ const Pagination = ({
                 : "bg-white border border-[#97c9ea] text-[#000111] hover:bg-[#f9f9f9] cursor-pointer"
             }`}
           >
-            <i className="fas fa-chevron-left"></i>
+            <FaChevronLeft />
           </button>
           <div className="hidden md:flex">
             {getVisiblePageNumbers().map((number) => (
@@ -86,7 +87,7 @@ const Pagination = ({
                 : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 cursor-pointer"
             }`}
           >
-            <i className="fas fa-chevron-right"></i>
+          <FaChevronRight />
           </button>
         </nav>
         <div className="relative ml-4">
