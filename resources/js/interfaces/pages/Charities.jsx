@@ -1,15 +1,15 @@
 import { useEffect } from "react";
-import useGet from "../../services/API/useGet";
 import Pagination from "../components/Pagination";
 import useCharity from "../../core/Charity/usecase/useCharity";
 import CharityFilters from "../components/Charity/CharityFilters";
 import CharityCard from "../components/Charity/CharityCard";
+import { useFetchCharities } from "../../core/Charity/usecase/useFetchCharities";
 
 const Charities = () => {
-  const { get, data, loading, error } = useGet();
+  const { fetchCharities, charities, loading, error } = useFetchCharities();
 
   useEffect(() => {
-    get('/api/charities');
+    fetchCharities();
   }, []);
 
   // Charity categories
@@ -57,7 +57,7 @@ const Charities = () => {
     getVisiblePageNumbers,
     indexOfFirstItem,
     indexOfLastItem,
-  } = useCharity(data?.charities || []); // Fallback to empty array
+  } = useCharity(charities || []); // Fallback to empty array
 
   return (
     <div className="min-h-screen bg-[#f9f9f9]">

@@ -3,7 +3,6 @@ import { useMemo } from 'react';
 const useFilter = ({ data = [], selectedCategory = 'all', searchTerm = '', statusFilter = 'All' }) => {
   const filteredData = useMemo(() => {
     return data.filter((item) => {
-      console.log(selectedCategory);
       const categoryMatch = selectedCategory === 'all' || item.category === selectedCategory;
       const statusMatch = statusFilter === 'All' || item.status === statusFilter;
       const searchMatch =

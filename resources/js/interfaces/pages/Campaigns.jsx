@@ -4,12 +4,13 @@ import Pagination from "../components/Pagination";
 import { useCampaign } from "../../core/Campaigns/usecase/useCampaign";
 import CampaignFilters from "../components/Campaign/CampaignFilters";
 import CampaignCard from "../components/Campaign/CampaignCard";
+import { useFetchCampaigns } from "../../core/Campaigns/usecase/useFetchCampaigns";
 
 const Campaigns = () => {
-  const { get, data, loading, error } = useGet();
+const { fetchCampaigns, campaigns, loading, error } = useFetchCampaigns();
 
   useEffect(() => {
-    get('/api/events');
+    fetchCampaigns();
   }, []);
 
   const categories = [
@@ -47,7 +48,7 @@ const Campaigns = () => {
     nextPage,
     prevPage,
     isFilterActive,
-  } = useCampaign(data?.events || []);
+  } = useCampaign(campaigns || []);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -83,7 +84,7 @@ const Campaigns = () => {
             </h3>
             <p className="text-gray-900 mb-4">{error.message}</p>
             <button
-              onClick={() => get('/api/events')}
+              onClick={() => fetchCampaigns()}
               className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-6 rounded-md transition-colors duration-200 !rounded-button whitespace-nowrap cursor-pointer"
             >
               Try Again
