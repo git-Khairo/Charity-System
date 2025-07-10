@@ -89,8 +89,8 @@ class EloquentVolunteerRepository implements VolunteerRepositoryInterface
 
         $volunteer=$data['volunteer'];
 
-        // Attach the user to the event
-        $volunteer->event()->attach($data['event_id'], [
+        $volunteer->participation()->create([
+            'event_id' => $data['event_id'],
             'full_name' => $data['full_name'],
             'phone_number' => $data['phone_number'],
             'address' => $data['address'],
@@ -102,7 +102,6 @@ class EloquentVolunteerRepository implements VolunteerRepositoryInterface
             'availability_for_volunteering' => $data['availability_for_volunteering'],
             'preferred_time' => $data['preferred_time'],
 
-            // Only one of these booleans is required
             'Developmental' => $data['Developmental'] ?? false,
             'Child_care' => $data['Child_care'] ?? false,
             'Training' => $data['Training'] ?? false,
@@ -117,6 +116,7 @@ class EloquentVolunteerRepository implements VolunteerRepositoryInterface
 
             'status' => $data['status'],
         ]);
+
         return ['message' =>'applied done successfully'];
 
     }

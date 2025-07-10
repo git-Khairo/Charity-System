@@ -4,16 +4,22 @@ namespace App\Providers;
 
 use App\Domain\Admins\Repositories\AdminRepositoriesInterface;
 use App\Domain\Beneficiary\Repositories\BeneficiaryRepositoryInterface;
+use App\Domain\Beneficiary\Repositories\BeneficiaryRequestRepositoryInterface;
 use App\Domain\Charity\Repositories\CharityRepositoryInterface;
 use App\Domain\Donation\Repositories\DonationRepositoryInterface;
 use App\Domain\Events\Repositories\EventRepositoryInterface;
 use App\Domain\Repositories\BaseRepositoryInterface;
+use App\Domain\Volunteer\Repositories\VolunteerParticipationRepositoryInterface;
 use App\Domain\Volunteer\Repositories\VolunteerRepositoryInterface;
 use App\Infrastructure\Persistence\Eloquent\Admins\EloquentAdminRepository;
+use App\Infrastructure\Persistence\Eloquent\Beneficiary\EloquentBeneficiaryNotificationRepository;
 use App\Infrastructure\Persistence\Eloquent\Beneficiary\EloquentBeneficiaryRepository;
+use App\Infrastructure\Persistence\Eloquent\Beneficiary\EloquentBeneficiaryRequestRepository;
 use App\Infrastructure\Persistence\Eloquent\Charity\EloquentCharityRepository;
 use App\Infrastructure\Persistence\Eloquent\Donation\EloquentDonationRepository;
 use App\Infrastructure\Persistence\Eloquent\Events\EloquentEventRepository;
+use App\Infrastructure\Persistence\Eloquent\Volunteer\EloquentVolunteerNotificationRepository;
+use App\Infrastructure\Persistence\Eloquent\Volunteer\EloquentVolunteerParticipationRepository;
 use App\Infrastructure\Persistence\Eloquent\Volunteer\EloquentVolunteerRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -31,6 +37,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(BeneficiaryRepositoryInterface::class, EloquentBeneficiaryRepository::class);
         $this->app->bind(DonationRepositoryInterface::class, EloquentDonationRepository::class);
         $this->app->bind(AdminRepositoriesInterface::class, EloquentAdminRepository::class);
+        $this->app->bind(VolunteerParticipationRepositoryInterface::class, EloquentVolunteerParticipationRepository::class);
+        $this->app->bind(BaseRepositoryInterface::class, EloquentVolunteerNotificationRepository::class);
+        $this->app->bind(BeneficiaryRequestRepositoryInterface::class, EloquentBeneficiaryRequestRepository::class);
+        $this->app->bind(BaseRepositoryInterface::class, EloquentBeneficiaryNotificationRepository::class);
     }
 
     /**

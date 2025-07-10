@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Application\Admin\useCases\AcceptBeneficiary;
+use App\Application\Admin\useCases\AcceptVolunteer;
 use App\Application\Admin\useCases\ActivityReport;
 use App\Application\Admin\useCases\Login;
 use App\Application\Admin\useCases\Statistics;
 use App\Application\Events\useCases\AddEvent;
 use App\Application\Events\useCases\DeleteEvent;
 use App\Application\Events\useCases\UpdateEvent;
+use App\Interfaces\Http\Requests\Admins\AcceptBeneficiaryRequest;
+use App\Interfaces\Http\Requests\Admins\AcceptVolunteerRequest;
 use App\Interfaces\Http\Requests\Admins\ActivityReportRequest;
 use App\Interfaces\Http\Requests\Admins\LoginAdminRequest;
 use App\Interfaces\Http\Requests\Admins\VolunteerStatRequest;
@@ -18,8 +22,8 @@ use App\Interfaces\Http\Resources\Events\EventResource;
 class AdminController extends Controller
 {
 
-    public function login($lang,LoginAdminRequest $request,Login $useCase){
-        $admin=$useCase->login($lang,$request->validated());
+    public function login(LoginAdminRequest $request,Login $useCase){
+        $admin=$useCase->login($request->validated());
 
         return response()->json(['message' => 'Admin registered successfully', 'user' => $admin],201);
     }
@@ -52,5 +56,17 @@ class AdminController extends Controller
         $event = $usecase->deleteEvent($id);
         return response()->json(['message' => 'Deleted Event', 'event' => new EventResource($event)], 201);
     }
+
+    public function acceptVolunteer(AcceptVolunteerRequest $request,AcceptVolunteer $useCase){
+        $notification=$useCase->accept($request->validated());
+        return response()->json(['message' => 'The volunteer status', 'event' => $notification], 201);
+
+    }
+    public function acceptBeneficiary(AcceptBeneficiaryRequest  $request,AcceptBeneficiary $useCase){
+        $notification=$useCase->accept($request->validated());
+        return response()->json(['message' => 'The Beneficiary status', 'event' => $notification], 201);
+
+    }
+
 
 }

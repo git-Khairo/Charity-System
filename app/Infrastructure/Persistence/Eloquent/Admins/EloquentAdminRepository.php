@@ -24,7 +24,7 @@ class EloquentAdminRepository implements AdminRepositoriesInterface
         return $response;
     }
 
-    public function login($lang,array $data){
+    public function login(array $data){
         // Attempt to find the beneficiary by email
         $admin = Admin::where('email', $data['email'])->first();
 
@@ -104,6 +104,10 @@ class EloquentAdminRepository implements AdminRepositoriesInterface
         ]);
     }
 
+    public function findPart($id)
+    {
+        //return ::findOrFail($id);
+    }
 
 
 }

@@ -55,6 +55,10 @@ class Beneficiary extends Model
         return $this->hasMany(BeneficiaryFeedback::class);
     }
 
+    public function notification(){
+        return $this->hasMany(beneficiary_notification::class);
+    }
+
 
     protected static function newFactory()
     {

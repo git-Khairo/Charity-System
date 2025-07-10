@@ -4,7 +4,9 @@ namespace App\Domain\volunteer\Models;
 
 
 
+use App\Domain\Beneficiary\Models\beneficiary_notification;
 use App\Domain\Events\Models\Event;
+use Database\Factories\VolunteerNotificationFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -60,11 +62,14 @@ class Volunteer extends Authenticatable
         return $this->hasMany(Volunteer_feddback::class);
     }
 
-    public function event(){
-        return $this->belongsToMany(Event::class, 'participations')
-            ->withPivot( 'status')
-            ->withTimestamps();
+    public function participation(){
+        return $this->hasMany(participation::class);
     }
+
+    public function notification(){
+        return $this->hasMany(VolunteerNotificationFactory::class);
+    }
+
 
     protected static function newFactory()
     {

@@ -75,5 +75,7 @@ Route::group(['middleware'=>['auth:sanctum']], function (){
         Route::get('/donation/charity/{id}', [DonationController::class, 'getDonationByCharity']);
         Route::get('/admin/charity/events-by-month', [AdminController::class, 'activityReport']);
         Route::get('/admin/charity/volunteer-in-events', [AdminController::class, 'volunteerStat']);
+        Route::post('/event/accept_volunteer', [AdminController::class, 'acceptVolunteer']);
+        Route::post('/event/accept_beneficiary', [AdminController::class, 'acceptBeneficiary']);
     });
 });

@@ -2,6 +2,7 @@
 
 namespace App\Application\Volunteer\UseCases;
 
+use App\Domain\Events\Repositories\EventRepositoryInterface;
 use App\Domain\Repositories\BaseRepositoryInterface;
 use App\Domain\Volunteer\Repositories\VolunteerRepositoryInterface;
 use App\Infrastructure\Persistence\Eloquent\Events\EloquentEventRepository;
@@ -11,8 +12,8 @@ class ApplyForEvents
 {
 
     protected VolunteerRepositoryInterface $volunteerRepo ;
-    protected BaseRepositoryInterface $eventRepo;
-    public function __construct(VolunteerRepositoryInterface $volunteerRepo,EloquentEventRepository $eventRepo)
+    protected EventRepositoryInterface $eventRepo;
+    public function __construct(VolunteerRepositoryInterface $volunteerRepo,EventRepositoryInterface $eventRepo)
     {
         $this-> volunteerRepo = $volunteerRepo;
         $this->eventRepo=$eventRepo;
@@ -24,7 +25,7 @@ class ApplyForEvents
       $event=$this->eventRepo->find($id);
 
         // Check for duplicate application
-        if ($volunteer->event()->where('participations.event_id', $event->id)->exists()) {
+        if ($volunteer->participation()->where('event_id', $event->id)->exists()) {
             return ['message' => 'You have already applied to this event.'];
         }
         // Check event status and capacity
@@ -48,9 +49,9 @@ class ApplyForEvents
 
         $volunteer = Auth::user();
 
-        $volunteer->event;
+        $participation=$volunteer->participation;
 
-        return $volunteer ;
+        return $participation ;
     }
 
 

@@ -15,9 +15,9 @@ class Login
         $this->repo = $repo;
     }
 
-    public function login($lang,$data){
+    public function login($data){
 
-        return $this->repo->login($lang,$data);
+        return $this->repo->login($data);
 
     }
 

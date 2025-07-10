@@ -3,6 +3,7 @@
 namespace App\Domain\Events\Models;
 
 use App\Domain\Charity\Models\Charity;
+use App\Domain\volunteer\Models\participation;
 use App\Domain\volunteer\Models\Volunteer;
 use App\Domain\Volunteer\Models\Volunteer_feddback;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -39,9 +40,7 @@ class Event extends Model
     }
 
     public function volunteer(){
-        return $this->belongsToMany(Volunteer::class, 'participations')
-            ->withPivot('status')
-            ->withTimestamps();
+        return $this->hasMany(participation::class);
     }
 
     protected static function newFactory()
