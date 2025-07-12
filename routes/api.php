@@ -17,8 +17,8 @@ use App\Http\Middleware\RoleMiddleware;
 })->middleware('auth:sanctum');
 */
 
-Route::post('/register',[VolunteerController::class,'register']);
-Route::post('/login',[VolunteerController::class,'login']);
+Route::post('/volunteer/register',[VolunteerController::class,'register']);
+Route::post('/volunteer/login',[VolunteerController::class,'login']);
 Route::get('/volunteer/{id}',[VolunteerController::class,'show']);//
 
 
