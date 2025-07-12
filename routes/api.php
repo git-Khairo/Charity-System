@@ -36,8 +36,8 @@ Route::get('/charity/events/{id}', [EventController::class, 'getEventByCharity']
 
 Route::get('/beneficiaries', [BeneficiaryController::class, 'getAllBeneficiaries']);
 Route::get('/beneficiary/{id}', [BeneficiaryController::class, 'getBeneficairy']);
-Route::post('beneficiary/register', [BeneficiaryController::class, 'registerBeneficiary']);
-Route::post('beneficiary/login', [BeneficiaryController::class, 'loginBeneficiary']);
+Route::post('/beneficiary/register', [BeneficiaryController::class, 'registerBeneficiary']);
+Route::post('/beneficiary/login', [BeneficiaryController::class, 'loginBeneficiary']);
 
 
 Route::post('/donate/{id}', [DonationController::class, 'storeDonation']);

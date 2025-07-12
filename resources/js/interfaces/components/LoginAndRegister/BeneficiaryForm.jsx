@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { FaCheck } from 'react-icons/fa';
+import { usePostBeneficairy } from '../../../core/Beneficiary/usecase/usePostBeneficiary';
 
 const BeneficiaryForm = ({ onFinish }) => {
   const [step, setStep] = useState(1);
+  const { registerBeneficiary, response, error, loading } = usePostBeneficairy();
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -11,7 +13,7 @@ const BeneficiaryForm = ({ onFinish }) => {
     email: '',
     password: '',
     needs: [],
-    otherDetails: '', // ✅ حقل جديد
+    otherDetails: '',
   });
 
   const handleChange = (e) => {
@@ -34,10 +36,15 @@ const BeneficiaryForm = ({ onFinish }) => {
   const nextStep = () => setStep((s) => s + 1);
   const prevStep = () => setStep((s) => s - 1);
 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    onFinish();
+    try {
+      await registerBeneficiary(formData);
+      onFinish();
+    } catch (err) {
+      alert(err.message); // Display error to user
+    }
   };
 
   const StepIndicator = () => (

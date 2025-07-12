@@ -17,7 +17,7 @@ class Register
     }
 
      public function register($data){
-        $beneficiary = $this->repo->register($data->toArray());
+        $beneficiary = $this->repo->register($data);
 
          $beneficiaryRole=Role::firstOrCreate(['name' => 'Beneficiary','guard_name' => 'api']);
 

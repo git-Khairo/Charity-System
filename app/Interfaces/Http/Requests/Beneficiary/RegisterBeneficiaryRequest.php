@@ -23,11 +23,11 @@ class RegisterBeneficiaryRequest extends FormRequest
     {
         return [
             'name'        => 'required|string|max:255',
-            'email'       => 'required|email|unique:beneficiaries,email',
+            'email'       => 'required|email',
             'password'    => 'required|string|min:8|confirmed',
-            'phonenumber' => 'required|string|unique:beneficiaries,phonenumber',
+            'phonenumber' => 'required|string',
             'address'     => 'required|string|max:255',
-            'details'     => 'required|string|min:10',
+            'details'     => 'required|string',
         ];
     }
 }
