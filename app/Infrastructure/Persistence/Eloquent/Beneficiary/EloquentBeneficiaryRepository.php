@@ -20,12 +20,12 @@ class EloquentBeneficiaryRepository implements BeneficiaryRepositoryInterface
     }
 
     public function register(array $data){
-        $volunteer = Beneficiary::create($data);
+        $beneficiary = Beneficiary::create($data);
 
-        $token=$volunteer->createToken($volunteer->email)->plainTextToken;
+        $token=$beneficiary->createToken($beneficiary->email)->plainTextToken;
 
         $response=[
-            'user'=>$volunteer,
+            'user'=>$beneficiary,
             'token'=>$token
         ];
 

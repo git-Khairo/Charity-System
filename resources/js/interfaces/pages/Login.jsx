@@ -1,19 +1,39 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import usePost from '../../services/API/usePost';
+
+const LOGIN_ENDPOINTS = {
+  beneficiary: '/api/beneficiary/login',
+  volunteer: '/api/volunteer/login',
+};
 
 const Login = () => {
   const [activeLoginTab, setActiveLoginTab] = useState('beneficiary');
   const [formData, setFormData] = useState({ email: '', password: '' });
   const navigate = useNavigate();
+  const { post, error, loading } = usePost();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    alert(`Logging in as ${activeLoginTab} with email: ${formData.email}`);
+
+    try {
+      const result = await post(LOGIN_ENDPOINTS[activeLoginTab], formData);
+
+      console.log(result);
+      // Save token or role info if returned
+      if (result.user) {
+        sessionStorage.setItem('token', result.user.token);
+      }
+
+      navigate('/');
+    } catch (err) {
+      alert('Login failed: ' + err.message);
+    }
   };
 
   return (

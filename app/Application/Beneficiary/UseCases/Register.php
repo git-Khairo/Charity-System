@@ -21,7 +21,7 @@ class Register
 
          $beneficiaryRole=Role::firstOrCreate(['name' => 'Beneficiary','guard_name' => 'api']);
 
-         $beneficiary->assignRole($beneficiaryRole);
+         $beneficiary['user']->assignRole($beneficiaryRole);
 
          return $beneficiary;
 

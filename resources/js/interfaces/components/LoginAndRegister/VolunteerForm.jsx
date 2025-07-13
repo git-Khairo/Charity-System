@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { FaCheck } from 'react-icons/fa';
 import { usePostVolunteer } from '../../../core/Volunteer/usecase/usePostVolunteer';
+import { useNavigate } from 'react-router-dom';
 
 const VolunteerForm = () => {
   const [step, setStep] = useState(1);
+  const navigate = useNavigate();
   const { registerVolunteer, response, error, loading } = usePostVolunteer();
   const [formData, setFormData] = useState({
     name: '',
@@ -213,6 +215,7 @@ const VolunteerForm = () => {
           </p>
           <button
             type="submit"
+            onClick={() => navigate('/')}
             className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
           >
             Go to Home

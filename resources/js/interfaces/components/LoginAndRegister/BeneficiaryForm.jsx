@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { FaCheck } from 'react-icons/fa';
 import { usePostBeneficairy } from '../../../core/Beneficiary/usecase/usePostBeneficiary';
+import { useNavigate } from 'react-router-dom';
 
-const BeneficiaryForm = ({ onFinish }) => {
+const BeneficiaryForm = () => {
   const [step, setStep] = useState(1);
+  const navigate = useNavigate();
   const { registerBeneficiary, response, error, loading } = usePostBeneficairy();
   const [formData, setFormData] = useState({
     name: '',
@@ -41,7 +43,6 @@ const BeneficiaryForm = ({ onFinish }) => {
     e.preventDefault();
     try {
       await registerBeneficiary(formData);
-      onFinish();
     } catch (err) {
       alert(err.message); // Display error to user
     }
@@ -206,6 +207,7 @@ const BeneficiaryForm = ({ onFinish }) => {
           </p>
           <button
             type="submit"
+            onClick={() => navigate('/')}
             className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
           >
             Go to Login
