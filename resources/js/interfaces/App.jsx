@@ -10,7 +10,7 @@ import Login from './pages/Login';
 import UserTypeSelection from './pages/UserTypeSelection';
 import VolunteerForm from './components/LoginAndRegister/VolunteerForm';
 import BeneficiaryForm from './components/LoginAndRegister/BeneficiaryForm';
-import DonationForm from './components/Donation/DonationForm';
+import DonationForm from './pages/DonationForm';
 
 const App = () => {
     return(

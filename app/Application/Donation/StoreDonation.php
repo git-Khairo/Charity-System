@@ -25,7 +25,6 @@ class StoreDonation
         }else{
             Stripe::setApiKey(config('services.stripe.secret'));
 
-            // Convert amount to cents
             $amountInCents = $data['amount'] * 100;
 
             $paymentIntent = PaymentIntent::create([

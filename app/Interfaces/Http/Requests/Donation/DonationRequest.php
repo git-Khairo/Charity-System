@@ -27,7 +27,7 @@ class DonationRequest extends FormRequest
             'phonenumber'    => 'required|string|max:20',
             'address'        => 'required|string|max:255',
             'amount'         => 'required|numeric|min:1',
-            'image'          => 'nullable|image|max:2048', // Optional image upload
+            'image'          => 'nullable|image|max:2048',
         ];
     }
 }

@@ -41,6 +41,7 @@ Route::post('/beneficiary/login', [BeneficiaryController::class, 'loginBeneficia
 
 
 Route::post('/donate/{id}', [DonationController::class, 'storeDonation']);
+Route::post('/donate/{id}/confirm', [DonationController::class, 'storeDonation']);
 
 
 Route::post('/admin/login/{lang}', [AdminController::class, 'login']);
