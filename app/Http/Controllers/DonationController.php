@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Application\Donation\GetDonation;
 use App\Application\Donation\GetDonationByCharity;
 use App\Application\Donation\GetDonations;
+use App\Application\Donation\GetPaymentIntent;
 use App\Application\Donation\StoreDonation;
+use App\Interfaces\Http\Requests\Donation\DonationCheckRequest;
 use App\Interfaces\Http\Requests\Donation\DonationRequest;
 use App\Interfaces\Http\Resources\Donation\DonationResource;
 
@@ -35,6 +37,11 @@ class DonationController extends Controller
     public function storeDonation($id, DonationRequest $request, StoreDonation $usecase)
     {
         $donation = $usecase->storeDonation($id, $request);
+        return response()->json(['message' => 'Get Payment Intent', 'donations' => $donation], 201);
+    }
+
+    public function getPaymentIntent($id, DonationCheckRequest $request, GetPaymentIntent $usecase){
+        $donation = $usecase->getIntent($id, $request);
         return response()->json(['message' => 'Donation Stored', 'donations' => $donation], 201);
     }
 }

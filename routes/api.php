@@ -40,7 +40,7 @@ Route::post('/beneficiary/register', [BeneficiaryController::class, 'registerBen
 Route::post('/beneficiary/login', [BeneficiaryController::class, 'loginBeneficiary']);
 
 
-Route::post('/donate/{id}', [DonationController::class, 'storeDonation']);
+Route::post('/donate/{id}', [DonationController::class, 'getPaymentIntent']);
 Route::post('/donate/{id}/confirm', [DonationController::class, 'storeDonation']);
 
 

@@ -1,18 +1,18 @@
 // core/domain/entities/Donation.js
 
 export class Donation {
-  constructor({ fullName, email, phone, city, amount }) {
-    this.fullName = fullName;
+  constructor({ name, email, phonenumber, address, amount }) {
+    this.name = name;
     this.email = email;
-    this.phone = phone;
-    this.city = city;
+    this.phonenumber = phonenumber;
+    this.address = address;
     this.amount = amount;
   }
 
   validate() {
     const errors = [];
 
-    if (!this.fullName || typeof this.fullName !== 'string' || this.fullName.length > 255) {
+    if (!this.name || typeof this.name !== 'string' || this.name.length > 255) {
       errors.push('Full Name is required and must be less than 255 characters.');
     }
 
@@ -22,11 +22,11 @@ export class Donation {
     }
 
     const phoneRegex = /^[0-9\-\+\s\(\)]{7,15}$/;
-    if (!this.phone || !phoneRegex.test(this.phone)) {
+    if (!this.phonenumber || !phoneRegex.test(this.phonenumber)) {
       errors.push('Phone number is required and must be valid.');
     }
 
-    if (!this.city || typeof this.city !== 'string' || this.city.length > 255) {
+    if (!this.address || typeof this.address !== 'string' || this.address.length > 255) {
       errors.push('City is required and must be less than 255 characters.');
     }
 
@@ -39,10 +39,10 @@ export class Donation {
 
   toJSON() {
     return {
-      name: this.fullName,
+      name: this.name,
       email: this.email,
-      phonenumber: this.phone,
-      address: this.city,
+      phonenumber: this.phonenumber,
+      address: this.address,
       amount: this.amount,
     };
   }

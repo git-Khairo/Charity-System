@@ -9,10 +9,10 @@ const useDonation = () => {
   const [clientSecret, setClientSecret] = useState('');
   const [bankStatement, setBankStatement] = useState(null);
   const [formData, setFormData] = useState({
-    fullName: '',
+    name: '',
     email: '',
-    phone: '',
-    city: '',
+    phonenumber: '',
+    address: '',
     amount: '',
     payment: '',
   });
@@ -37,35 +37,65 @@ const useDonation = () => {
   };
 
   const handleSubmit = async (paymentIntent) => {
-    if (paymentIntent === 'prev') {
-      setStep((prev) => prev - 1);
-      return;
-    }
-
-    try {
-      if (formData.payment === 'bank' && !bankStatement) {
-        alert('Please upload a bank statement.');
+      if (paymentIntent === 'prev') {
+        setStep((prev) => prev - 1);
         return;
       }
 
-      if (formData.payment === 'wallet' && !paymentIntent) {
-        alert('Payment processing failed.');
-        return;
-      }
+      try {
+        if (formData.payment === 'bank' && !bankStatement) {
+          alert('Please upload a bank statement.');
+          return;
+        }
 
-      // Simulate API call for final submission
-      const submissionData = {
-        ...formData,
-        bankStatement: formData.payment === 'bank' ? bankStatement : null,
-        paymentIntentId: paymentIntent ? paymentIntent.id : null,
-      };
-      console.log(submissionData);
-      await post(`/api/donate/${id}/confirm`, submissionData);
-      setStep(3);
-    } catch (err) {
-      alert('Submission failed: ' + err.message);
-    }
-  };
+        if (formData.payment === 'wallet' && !paymentIntent) {
+          alert('Payment processing failed.');
+          return;
+        }
+
+        // Map frontend field names to backend expected names
+        const submissionData = {
+          name: formData.name,
+          email: formData.email,
+          phonenumber: formData.phonenumber,
+          address: formData.address,
+          amount: formData.amount,
+          payment: formData.payment,
+          paymentIntentId: paymentIntent ? paymentIntent.id : null,
+        };
+
+        if (formData.payment === 'bank' && bankStatement) {
+          // Use FormData for bank transfers
+          const formDataToSend = new FormData();
+          Object.entries(submissionData).forEach(([key, value]) => {
+            formDataToSend.append(key, value);
+          });
+          formDataToSend.append('bankStatement', bankStatement, bankStatement.name || 'bank_statement.jpg');
+
+          // Send FormData directly with fetch
+          const token = sessionStorage.getItem('token');
+          const res = await fetch(`/api/donate/${id}/confirm`, {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${token}`,
+              Accept: 'application/json',
+            },
+            body: formDataToSend,
+          });
+
+          if (!res.ok) throw new Error(`Post request failed: ${res.statusText}`);
+
+          const result = await res.json();
+          if (result.error) throw new Error(result.error);
+          setStep(3);
+        } else {
+          await post(`/api/donate/${id}/confirm`, submissionData);
+          setStep(3);
+        }
+      } catch (err) {
+        alert('Submission failed: ' + err.message);
+      }
+    };
 
   const nextStep = async () => {
     try {
@@ -80,6 +110,7 @@ const useDonation = () => {
       if (step === 1) {
         const result = await post(`/api/donate/${id}`, donation.toJSON());
         if (result?.donations) {
+          console.log(result);
           setClientSecret(result.donations);
           setStep(2);
         } else {

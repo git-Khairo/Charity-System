@@ -11,8 +11,8 @@ const PersonalInfoStep = ({ formData, handleChange, nextStep }) => {
     <div className="max-w-2xl mx-auto space-y-6">
       <h2 className="text-2xl font-bold mb-6">Your Information</h2>
       <input
-        name="fullName"
-        value={formData.fullName}
+        name="name"
+        value={formData.name}
         onChange={handleChange}
         placeholder="Full Name"
         className="w-full px-4 py-3 border border-[#a7a7a7] rounded-lg"
@@ -26,16 +26,16 @@ const PersonalInfoStep = ({ formData, handleChange, nextStep }) => {
         className="w-full px-4 py-3 border border-[#a7a7a7] rounded-lg"
       />
       <input
-        name="phone"
-        value={formData.phone}
+        name="phonenumber"
+        value={formData.phonenumber}
         onChange={handleChange}
         type="tel"
         placeholder="Phone Number"
         className="w-full px-4 py-3 border border-[#a7a7a7] rounded-lg"
       />
       <input
-        name="city"
-        value={formData.city}
+        name="address"
+        value={formData.address}
         onChange={handleChange}
         placeholder="Address"
         className="w-full px-4 py-3 border border-[#a7a7a7] rounded-lg"
