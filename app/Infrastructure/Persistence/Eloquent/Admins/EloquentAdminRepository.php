@@ -104,10 +104,33 @@ class EloquentAdminRepository implements AdminRepositoriesInterface
         ]);
     }
 
-    public function findPart($id)
+    public function beneficiaryStat($data)
     {
-        //return ::findOrFail($id);
+        $charity = $data['charity'];
+        $year = $data['year'];
+
+        // Get all request IDs or filter by charity if applicable
+        // Adjust the table and field names if different
+        $requests = collect(DB::table('requests')
+            ->where('charity_id', $charity->id) // Adjust if relationship is different
+            ->whereYear('created_at', $year)
+            ->where('status', 'accepted')
+            ->selectRaw('MONTH(created_at) as month, COUNT(*) as total')
+            ->groupByRaw('MONTH(created_at)')
+            ->pluck('total', 'month'));
+
+        // Fill all 12 months with 0 where there are no requests
+        $monthlyCounts = collect(range(1, 12))->mapWithKeys(function ($month) use ($requests) {
+            return [$month => $requests->get($month, 0)];
+        });
+
+        return response()->json([
+            'charity_id' => $charity->id,
+            'year' => $year,
+            'monthly_accepted_requests' => $monthlyCounts
+        ]);
     }
+
 
 
 }

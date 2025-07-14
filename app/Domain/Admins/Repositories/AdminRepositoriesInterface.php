@@ -11,5 +11,5 @@ interface AdminRepositoriesInterface
     public function logout($request);
     public function getActivity($data);
     public function volunteerStat($data);
-    public function findPart($id);
+    public function BeneficiaryStat($data);
 }

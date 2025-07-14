@@ -8,7 +8,7 @@ use App\Domain\volunteer\Models\Volunteer;
 
 class EloquentBeneficiaryNotificationRepository implements BaseRepositoryInterface
 {
-    public function all() { return beneficiary_notification::all(); }
+    public function all() { return beneficiary_notification::orderBy('created_at', 'desc')->get(); }
 
     public function find($id) { return beneficiary_notification::findOrFail($id); }
 

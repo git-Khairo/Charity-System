@@ -36,4 +36,23 @@ class Statistics
         return $this->repo->volunteerStat($data);
     }
 
+    public function allBeneficiary($request){
+
+        $admin = auth()->user();
+        $charity = $admin->charity;
+
+        if (!$charity) {
+            return response()->json(['message' => 'No charity found for this admin'], 404);
+        }
+
+        $year = $request['year'];
+
+        $data =[
+            'charity'=>$charity,
+            'year'=>$year
+        ];
+
+        return $this->repo->BeneficiaryStat($data);
+    }
+
 }

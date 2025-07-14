@@ -9,7 +9,7 @@ use App\Domain\volunteer\Models\Volunteer_notification;
 class EloquentVolunteerNotificationRepository implements BaseRepositoryInterface
 {
 
-    public function all() { return Volunteer_notification::all(); }
+    public function all() { return Volunteer_notification::orderBy('created_at', 'desc')->get(); }
 
     public function find($id) { return Volunteer_notification::findOrFail($id); }
 
