@@ -1,0 +1,42 @@
+import { useState, useEffect } from 'react';
+import useGet from '../../../services/API/useGet';
+import { Campaign } from '../entity/Campaign';
+
+export const useFetchCampaigns = () => {
+  const { get, loading, error } = useGet();
+  const [campaigns, setCampaigns] = useState([]);
+  const [fetchError, setFetchError] = useState(null);
+
+  const fetchCampaigns = async () => {
+    try {
+      const result = await get('/api/events');
+      if (result) {
+        // Map API data to Campaign entities
+        const validatedCampaigns = result.events.map((item) => {
+          try {
+            return new Campaign({
+            //   charity_id: item.charity_id,
+              title: item.title,
+              description: item.description,
+              location: item.location,
+              status: item.status,
+            });
+          } catch (err) {
+            console.log(`Skipping invalid campaign: ${err.message}`);
+            return null;
+          }
+        }).filter(campaign => campaign !== null); // Remove invalid campaigns
+        setCampaigns(validatedCampaigns);
+        setFetchError(null);
+      } else {
+        setCampaigns([]);
+        setFetchError('No campaigns found in response');
+      }
+    } catch (err) {
+      setCampaigns([]);
+      setFetchError(err.message);
+    }
+  };
+
+  return { fetchCampaigns, campaigns, loading, error: fetchError || error };
+};

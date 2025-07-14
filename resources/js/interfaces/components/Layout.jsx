@@ -114,13 +114,13 @@ const Layout = () => {
 
             {/* Log in / Sign up */}
             <Link
-                to="/login"
+                to={'/login'}
                 className="text-gray-700 border-2 border-gray-700 rounded-md px-4 py-1.5 hover:border-blue-700 hover:text-blue-700 transition duration-200 font-medium"
             >
                 Log in
             </Link>
             <Link
-                to="/signup"
+                to={'/userSelection'}
                 className="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition duration-200 font-medium"
             >
                 Sign up

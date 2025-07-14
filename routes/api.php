@@ -17,8 +17,8 @@ use App\Http\Middleware\RoleMiddleware;
 })->middleware('auth:sanctum');
 */
 
-Route::post('/register',[VolunteerController::class,'register']);
-Route::post('/login',[VolunteerController::class,'login']);
+Route::post('/volunteer/register',[VolunteerController::class,'register']);
+Route::post('/volunteer/login',[VolunteerController::class,'login']);
 Route::get('/volunteer/{id}',[VolunteerController::class,'show']);//
 
 
@@ -36,11 +36,12 @@ Route::get('/charity/events/{id}', [EventController::class, 'getEventByCharity']
 
 Route::get('/beneficiaries', [BeneficiaryController::class, 'getAllBeneficiaries']);
 Route::get('/beneficiary/{id}', [BeneficiaryController::class, 'getBeneficairy']);
-Route::post('beneficiary/register', [BeneficiaryController::class, 'registerBeneficiary']);
-Route::post('beneficiary/login', [BeneficiaryController::class, 'loginBeneficiary']);
+Route::post('/beneficiary/register', [BeneficiaryController::class, 'registerBeneficiary']);
+Route::post('/beneficiary/login', [BeneficiaryController::class, 'loginBeneficiary']);
 
 
-Route::post('/donate/{id}', [DonationController::class, 'storeDonation']);
+Route::post('/donate/{id}', [DonationController::class, 'getPaymentIntent']);
+Route::post('/donate/{id}/confirm', [DonationController::class, 'storeDonation']);
 
 
 Route::post('/admin/login/{lang}', [AdminController::class, 'login']);

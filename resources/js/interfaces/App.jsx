@@ -6,6 +6,11 @@ import Dashboard from "./pages/Dashboard";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import About from "./pages/About";
 import Layout from "./components/Layout";
+import Login from './pages/Login';
+import UserTypeSelection from './pages/UserTypeSelection';
+import VolunteerForm from './components/LoginAndRegister/VolunteerForm';
+import BeneficiaryForm from './components/LoginAndRegister/BeneficiaryForm';
+import DonationForm from './pages/DonationForm';
 
 const App = () => {
     return(
@@ -17,6 +22,11 @@ const App = () => {
                 <Route path="/charities" element={<Charities />} />
                 <Route path="/campaigns" element={<Campaigns />} />
                 <Route path="/about us" element={<About />} />
+                <Route path='/login' element={<Login />} />
+                <Route path='/userSelection' element={<UserTypeSelection />} />
+                <Route path='/volunteer/signup' element={<VolunteerForm />} />
+                <Route path='/beneficiary/signup' element={<BeneficiaryForm />} />
+                <Route path='/donate/:id' element={<DonationForm />} />
                 </Route>
             </Routes>
         </Router>

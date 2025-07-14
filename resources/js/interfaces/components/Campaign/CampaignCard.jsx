@@ -1,5 +1,4 @@
 const CampaignCard = ({ campaign }) => {
-  console.log(campaign);
   return (
     <div className="bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:shadow-md">
       <div className="relative h-48 overflow-hidden">
