@@ -16,6 +16,6 @@ class ApplyForCharity
     }
 
     public function applyForCharity($id, $data){
-        return $this->repo->apply($id, $data->toArray());
+        return $this->repo->apply($id, $data);
     }
 }

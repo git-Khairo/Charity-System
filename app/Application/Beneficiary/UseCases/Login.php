@@ -16,6 +16,6 @@ class Login
     }
 
      public function login($data){
-        return $this->repo->login($data->toArray());
+        return $this->repo->login($data);
     }
 }

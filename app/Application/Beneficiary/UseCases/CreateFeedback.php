@@ -16,6 +16,6 @@ class CreateFeedback
     }
 
      public function createFeedback($id, $data){
-        return $this->repo->createFeedback($id, $data->toArray());
+        return $this->repo->createFeedback($id, $data);
     }
 }

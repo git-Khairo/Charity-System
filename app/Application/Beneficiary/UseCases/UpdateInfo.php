@@ -16,6 +16,6 @@ class UpdateInfo
     }
 
     public function updateInfo($id, $data){
-        return $this->repo->update($id, $data->toArray());
+        return $this->repo->update($id, $data);
     }
 }
