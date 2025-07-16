@@ -9,15 +9,15 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class EloquentCharityRepository implements CharityRepositoryInterface
 {
     public function all(){
-        return Charity::all();
+        return Charity::with('category')->get();
     }
 
     public function find($id){
-        return Charity::findOrFail($id);
+        return Charity::with('category')->findOrFail($id);
     }
 
     public function byCategory($id){
-        return Charity::where('category_id', $id)->get();
+        return Charity::with('category')->where('category_id', $id)->get();
     }
 
     public function update($id , array $data){

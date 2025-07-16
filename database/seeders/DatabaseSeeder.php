@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
         Volunteer::factory()->count(10)->create();
         $categories = ['Health', 'Education', 'Food', 'Shelter', 'Disaster Relief'];
         foreach ($categories as $name) {
-            DB::table('category')->insert([
+            DB::table('categories')->insert([
                 'name' => $name,
                 'created_at' => now(),
                 'updated_at' => now(),

@@ -19,7 +19,7 @@ class CharityCardResource extends JsonResource
             'name' => $this->name,
             'address' => $this->address,
             'images' => $this->images,
-            'category_id' => $this->category_id 
+            'categoryName' => $this->category->name, 
         ];
     }
 }

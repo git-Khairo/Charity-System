@@ -49,6 +49,10 @@ class Charity extends Model
         return $this->belongsTo(Request::class);
     }
 
+    public function category(){
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+
     public function beneficiary_feedback(){
         return $this->belongsTo(BeneficiaryFeedback::class);
     }

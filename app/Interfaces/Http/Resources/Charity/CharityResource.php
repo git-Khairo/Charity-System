@@ -22,7 +22,7 @@ class CharityResource extends JsonResource
             'images' => $this->images,
             'phonenumber' => $this->phonenumber,
             'email' => $this->email,
-            'category_id' => $this->category_id 
+            'categoryName' => $this->category->name, 
         ];
     }
 }
