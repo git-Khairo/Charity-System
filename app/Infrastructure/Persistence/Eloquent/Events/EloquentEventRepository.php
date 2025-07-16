@@ -9,15 +9,17 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class EloquentEventRepository implements EventRepositoryInterface
 {
 
-    public function all() { return Event::all(); }
+    public function all() {
+        return Event::with('charity.category')->get();
+    }
 
     public function find($id) {
 
-        return Event::findOrFail($id);
+        return Event::with('charity.category')->findOrFail($id);
     }
 
     public function byCharity($id){
-        $events = Event::where('charity_id', $id)->get();
+        $events = Event::with('charity.category')->where('charity_id', $id)->get();
         return $events;
     }
 

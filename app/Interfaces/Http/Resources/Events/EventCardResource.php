@@ -19,6 +19,7 @@ class EventCardResource extends JsonResource
             'title' => $this->title,
             'location' => $this->loaction,
             'status' => $this->status,
+            'categoryName' => $this->charity->category->name,
         ];
     }
 }

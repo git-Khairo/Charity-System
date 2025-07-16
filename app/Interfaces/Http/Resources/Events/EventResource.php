@@ -21,7 +21,8 @@ class EventResource extends JsonResource
             'location' => $this->location,
             'status' => $this->status,
             'capacity' => $this->capacity,
-            'NumOfVolunteer' => $this->NumOfVolunteer
+            'NumOfVolunteer' => $this->NumOfVolunteer,
+            'categoryName' => $this->charity->category->name
         ];
     }
 }
