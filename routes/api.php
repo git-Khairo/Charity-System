@@ -25,9 +25,6 @@ Route::get('/volunteer/{id}',[VolunteerController::class,'show']);//
 Route::get('/charities', [CharityController::class, 'getAllCharities']);
 Route::get('/charity/{id}', [CharityController::class, 'getCharity']);
 Route::get('/charity/category/{id}', [CharityController::class, 'getCharityByCategory']);
-Route::post('/charity/create', [SuperAdminController::class, 'createCharity']);
-Route::put('/charity/update/{id}', [SuperAdminController::class, 'updateCharity']);
-Route::delete('/charity/delete/{id}', [SuperAdminController::class, 'deleteCharity']);
 
 Route::get('/events', [EventController::class, 'getAllEvents']);
 Route::get('/event/{id}', [EventController::class, 'getEvent']);
@@ -44,7 +41,8 @@ Route::post('/donate/{id}', [DonationController::class, 'getPaymentIntent']);
 Route::post('/donate/{id}/confirm', [DonationController::class, 'storeDonation']);
 
 
-Route::post('/admin/login/{lang}', [AdminController::class, 'login']);
+Route::post('/admin/login', [AdminController::class, 'login']);
+
 
 Route::group(['middleware'=>['auth:sanctum']], function (){
 
@@ -78,5 +76,19 @@ Route::group(['middleware'=>['auth:sanctum']], function (){
         Route::get('/admin/charity/volunteer-in-events', [AdminController::class, 'volunteerStat']);
         Route::post('/event/accept_volunteer', [AdminController::class, 'acceptVolunteer']);
         Route::post('/event/accept_beneficiary', [AdminController::class, 'acceptBeneficiary']);
+        Route::get('/admin/charity/beneficiary-in-charity', [AdminController::class, 'beneficiaryStat']);
+        Route::get('/admin/charity/donors-in-charity', [AdminController::class, 'donorsStat']);
+        Route::get('/admin/charity/financialReport', [AdminController::class, 'financialReport']);
+    });
+
+    Route::middleware(RoleMiddleware::class.':SuperAdmin')->group(function () {
+        Route::post('/charity/create', [SuperAdminController::class, 'createCharity']);
+        Route::put('/charity/update/{id}', [SuperAdminController::class, 'updateCharity']);
+        Route::delete('/charity/delete/{id}', [SuperAdminController::class, 'deleteCharity']);
+        Route::get('/super_admin/charity/beneficiary-in-charity', [SuperAdminController::class, 'beneficiaryStat']);
+        Route::get('/super_admin/charity/volunteer-in-events', [SuperAdminController::class, 'volunteerStat']);
+        Route::get('/super_admin/charity/financialReport', [AdminController::class, 'financialReport']);
+        Route::get('/super_admin/charity/charity_stat', [SuperAdminController::class, 'charityStat']);
     });
 });
+

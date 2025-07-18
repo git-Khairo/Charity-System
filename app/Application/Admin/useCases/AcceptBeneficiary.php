@@ -4,6 +4,7 @@ namespace App\Application\Admin\useCases;
 
 use App\Domain\Admins\Repositories\AdminRepositoriesInterface;
 use App\Domain\Beneficiary\Repositories\BeneficiaryRepositoryInterface;
+use App\Domain\Beneficiary\Repositories\BeneficiaryRequestRepositoryInterface;
 use App\Domain\Charity\Repositories\CharityRepositoryInterface;
 use App\Domain\Events\Repositories\EventRepositoryInterface;
 use App\Domain\Repositories\BaseRepositoryInterface;
@@ -16,13 +17,13 @@ class AcceptBeneficiary
 {
     protected AdminRepositoriesInterface $adminRepo;
     protected BeneficiaryRepositoryInterface  $beneficiaryRepo;
-    protected VolunteerParticipationRepositoryInterface $requestRepo;
+    protected BeneficiaryRequestRepositoryInterface $requestRepo;
     protected BaseRepositoryInterface $notificationRepo;
     protected CharityRepositoryInterface $charityRepo;
 
     public function __construct(AdminRepositoriesInterface $adminRepo,
                                 BeneficiaryRepositoryInterface  $beneficiaryRepo,
-                                VolunteerParticipationRepositoryInterface $requestRepo,
+                                BeneficiaryRequestRepositoryInterface $requestRepo,
                                 CharityRepositoryInterface $charityRepo,
                                 EloquentBeneficiaryNotificationRepository $notificationRepo
     )
@@ -41,7 +42,9 @@ class AcceptBeneficiary
 
         $request=$this->requestRepo->find($data['request_id']);
 
-        $charity=$this->charityRepo->find($data['event_id']);
+        $charity=$this->charityRepo->find($data['charity_id']);
+
+        //dd($request);
 
         $request->status=$data['status'];
         $request->save();
@@ -78,9 +81,10 @@ class AcceptBeneficiary
         $notification=[
             'beneficiary_id'=>$data['beneficiary_id'],
             'title'=>$title,
-            'message'=>$message
+            'message'=>$message,
         ];
 
+    //    dd($notification);
 
         return $this->notificationRepo->create($notification);
     }

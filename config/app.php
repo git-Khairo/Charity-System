@@ -123,4 +123,12 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*'providers' => [
+        App\Providers\EventServiceProvider::class,
+   //     Illuminate\Filesystem\FilesystemServiceProvider::class,
+        Illuminate\Queue\QueueServiceProvider::class,
+    ],
+
+  //  'File' => Illuminate\Support\Facades\File::class,
+*/
 ];

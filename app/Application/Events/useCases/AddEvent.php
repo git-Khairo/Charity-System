@@ -17,7 +17,7 @@ class AddEvent
 
     public function createEvent($data){
         $data['NumOfVolunteer'] = 0;
-        $data = $data->toArray();
+    //    $data = $data->toArray();
         return $this->repo->create($data);
     }
 

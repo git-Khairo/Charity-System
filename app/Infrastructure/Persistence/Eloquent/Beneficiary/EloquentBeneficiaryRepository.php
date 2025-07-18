@@ -7,6 +7,7 @@ use App\Domain\Beneficiary\Models\BeneficiaryFeedback;
 use App\Domain\Beneficiary\Models\Request;
 use App\Domain\Beneficiary\Repositories\BeneficiaryRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class EloquentBeneficiaryRepository implements BeneficiaryRepositoryInterface
@@ -87,5 +88,17 @@ class EloquentBeneficiaryRepository implements BeneficiaryRepositoryInterface
         ]);
 
         return $feedback;
+    }
+
+    public function charityBeneficiary(){
+
+        $results = DB::table('requests')
+            ->select('charity_id', DB::raw('COUNT(*) as accepted_count'))
+            ->where('status', 'Accepted')
+            ->groupBy('charity_id')
+            ->get();
+
+        return $results;
+
     }
 }

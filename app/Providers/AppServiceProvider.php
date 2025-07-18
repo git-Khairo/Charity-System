@@ -2,16 +2,21 @@
 
 namespace App\Providers;
 
+use App\Application\Charity\Listeners\SendCharityEventNotification;
 use App\Domain\Admins\Repositories\AdminRepositoriesInterface;
+use App\Domain\Admins\Repositories\SuperAdminRepositoriesInterface;
 use App\Domain\Beneficiary\Repositories\BeneficiaryRepositoryInterface;
 use App\Domain\Beneficiary\Repositories\BeneficiaryRequestRepositoryInterface;
+use App\Domain\Charity\Events\CharityEventCreated;
 use App\Domain\Charity\Repositories\CharityRepositoryInterface;
 use App\Domain\Donation\Repositories\DonationRepositoryInterface;
+use App\Domain\Events\Models\Event;
 use App\Domain\Events\Repositories\EventRepositoryInterface;
 use App\Domain\Repositories\BaseRepositoryInterface;
 use App\Domain\Volunteer\Repositories\VolunteerParticipationRepositoryInterface;
 use App\Domain\Volunteer\Repositories\VolunteerRepositoryInterface;
 use App\Infrastructure\Persistence\Eloquent\Admins\EloquentAdminRepository;
+use App\Infrastructure\Persistence\Eloquent\Admins\EloquentSuperAdminRepository;
 use App\Infrastructure\Persistence\Eloquent\Beneficiary\EloquentBeneficiaryNotificationRepository;
 use App\Infrastructure\Persistence\Eloquent\Beneficiary\EloquentBeneficiaryRepository;
 use App\Infrastructure\Persistence\Eloquent\Beneficiary\EloquentBeneficiaryRequestRepository;
@@ -25,6 +30,7 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
+
     /**
      * Register any application services.
      */
@@ -41,6 +47,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(BaseRepositoryInterface::class, EloquentVolunteerNotificationRepository::class);
         $this->app->bind(BeneficiaryRequestRepositoryInterface::class, EloquentBeneficiaryRequestRepository::class);
         $this->app->bind(BaseRepositoryInterface::class, EloquentBeneficiaryNotificationRepository::class);
+        $this->app->bind(SuperAdminRepositoriesInterface::class, EloquentSuperAdminRepository::class);
     }
 
     /**
@@ -48,6 +55,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+ /*       Event::listen(
+            CharityEventCreated::class,
+            SendCharityEventNotification::class
+    );*/
     }
 }

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->longText('message');
-            $table->string('status');
             $table->foreignId('beneficiary_id')->constrained('beneficiaries')->cascadeOnDelete();
             $table->timestamps();
         });

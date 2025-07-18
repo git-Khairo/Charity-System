@@ -12,4 +12,5 @@ interface BeneficiaryRepositoryInterface
     public function update($id, array $data);
     public function apply($id, array $data);
     public function createFeedback($id, array $data);
+    public function charityBeneficiary();
 }

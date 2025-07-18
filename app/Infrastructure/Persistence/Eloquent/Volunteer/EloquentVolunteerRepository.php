@@ -8,6 +8,7 @@ use App\Domain\volunteer\Models\Volunteer;
 use App\Domain\Volunteer\Models\Volunteer_feddback;
 use App\Domain\Volunteer\Repositories\VolunteerRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class EloquentVolunteerRepository implements VolunteerRepositoryInterface
@@ -120,5 +121,34 @@ class EloquentVolunteerRepository implements VolunteerRepositoryInterface
         return ['message' =>'applied done successfully'];
 
     }
+
+    public function charityVolunteer($data){
+
+        $charityId=$data['charity_id'];
+
+        $distinctAcceptedVolunteers = DB::table('participations')
+            ->join('events', 'participations.event_id', '=', 'events.id')
+            ->where('events.charity_id', $charityId)
+            ->where('participations.status', 'Accepted')
+            ->distinct('participations.volunteer_id')
+            ->count('participations.volunteer_id');
+
+        return $distinctAcceptedVolunteers;
+
+
+    }
+
+    public function allCharitiesVolunteerCounts()
+    {
+        $results = DB::table('participations')
+            ->join('events', 'participations.event_id', '=', 'events.id')
+            ->where('participations.status', 'Accepted')
+            ->select('events.charity_id', DB::raw('COUNT(DISTINCT participations.volunteer_id) as volunteer_count'))
+            ->groupBy('events.charity_id')
+            ->get();
+
+        return $results;
+    }
+
 
 }
