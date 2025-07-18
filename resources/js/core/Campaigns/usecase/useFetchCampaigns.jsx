@@ -15,11 +15,11 @@ export const useFetchCampaigns = () => {
         const validatedCampaigns = result.events.map((item) => {
           try {
             return new Campaign({
-            //   charity_id: item.charity_id,
+              charity_id: item.charity_id,
               title: item.title,
-              description: item.description,
               location: item.location,
               status: item.status,
+              categoryName: item.categoryName
             });
           } catch (err) {
             console.log(`Skipping invalid campaign: ${err.message}`);
