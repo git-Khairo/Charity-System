@@ -28,6 +28,8 @@ class UpdateBeneficiaryRequest extends FormRequest
             'phonenumber' => 'sometimes|required|string|unique:beneficiaries,phonenumber,',
             'address'     => 'sometimes|required|string|max:255',
             'details'     => 'sometimes|required|string|min:10',
+            'familyMember' => 'sometimes|required|integer',
+            'needs' => 'sometimes|required|string'
         ];
     }
 }

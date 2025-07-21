@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('phonenumber')->unique();
             $table->string('address');
             $table->longText('details');
+            $table->string('needs')->nullable();
+            $table->integer('familyMember');
             $table->timestamps();
         });
     }

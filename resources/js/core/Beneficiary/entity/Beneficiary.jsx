@@ -13,57 +13,57 @@ export class Beneficiary {
 
   // Validate the Beneficiary entity based on backend rules
   validate() {
-    const errors = [];
+    const errors = {};
 
     // Name validation: required, string, max 255 characters
     if (!this.name || typeof this.name !== 'string' || this.name.length > 255) {
-      errors.push('Name is required and must be a string with a maximum length of 255 characters.');
+      errors.name = 'Name is required and must be a string with a maximum length of 255 characters.';
     }
 
     // Email validation: required, valid email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!this.email || !emailRegex.test(this.email)) {
-      errors.push('A valid email is required.');
+      errors.email = 'A valid email is required.';
     }
 
     // Password validation: required, minimum 8 characters
     if (!this.password || typeof this.password !== 'string' || this.password.length < 8) {
-      errors.push('Password must be at least 8 characters long.');
+      errors.password = 'Password must be at least 8 characters long.';
     }
 
     // Confirm password validation
     if (this.password !== this.confirmPassword) {
-      errors.push('Passwords do not match.');
+      errors.password = 'Passwords do not match.';
     }
 
     // Phone number validation: required, string
     if (!this.phoneNumber || typeof this.phoneNumber !== 'string') {
-      errors.push('Phone number is required and must be a string.');
+      errors.phonenumber = 'Phone number is required and must be a string.';
     }
 
     // Address validation: required, string, max 255 characters
     if (!this.address || typeof this.address !== 'string' || this.address.length > 255) {
-      errors.push('Address is required and must be a string with a maximum length of 255 characters.');
+      errors.address = 'Address is required and must be a string with a maximum length of 255 characters.';
     }
 
     // Details validation: required, string, minimum 10 characters
     if (!this.details || typeof this.details !== 'string' || this.details.length < 10) {
-      errors.push('Details are required and must be a string with a minimum length of 10 characters.');
+      errors.details = 'Details are required and must be a string with a minimum length of 10 characters.';
     }
 
     // Family members validation: required, positive number
     if (!this.familyMembers || isNaN(this.familyMembers) || this.familyMembers < 1) {
-      errors.push('Number of family members is required and must be a positive number.');
+      errors.familyMember = 'Number of family members is required and must be a positive number.';
     }
 
     // Needs validation: required, array of strings
     if (!Array.isArray(this.needs) || this.needs.length === 0) {
-      errors.push('Needs must be a non-empty array.');
+      errors.needs = 'Needs must be a non-empty array.';
     } else if (!this.needs.every((need) => typeof need === 'string')) {
-      errors.push('All needs must be strings.');
+      errors.needs = 'All needs must be strings.';
     }
 
-    return errors.length > 0 ? errors : null;
+    return errors;
   }
 
   // Prepare data for API submission
@@ -76,8 +76,8 @@ export class Beneficiary {
       phonenumber: this.phoneNumber,
       address: this.address,
       details: this.details,
-    //   familyMembers: this.familyMembers,
-    //   needs: this.needs,
+      familyMember: this.familyMembers,
+      needs: JSON.stringify(this.needs),
     };
   }
 }

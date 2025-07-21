@@ -26,6 +26,8 @@ class Beneficiary extends Model
         'phonenumber',
         'address',
         'details',
+        'needs',
+        'familyMember'
     ];
 
     protected $hidden = [
