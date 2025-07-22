@@ -24,7 +24,6 @@ const Login = () => {
     try {
       const result = await post(LOGIN_ENDPOINTS[activeLoginTab], formData);
 
-      console.log(result);
       // Save token or role info if returned
       if (result.user) {
         sessionStorage.setItem('token', result.user.token);
@@ -78,8 +77,10 @@ const Login = () => {
               className="w-full px-5 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-3 focus:ring-blue-200 transition duration-200"
               value={formData.email}
               onChange={handleChange}
-              required
             />
+            {errors.familyMembers && (
+                <p className="mt-1 text-sm text-red-600">{errors.familyMembers}</p>
+            )}
           </div>
           <div className="mb-8">
             <label htmlFor="password" className="block text-gray-700 text-sm font-sm mb-2">Password</label>
@@ -91,8 +92,10 @@ const Login = () => {
               className="w-full px-5 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-3 focus:ring-blue-200 transition duration-200"
               value={formData.password}
               onChange={handleChange}
-              required
             />
+            {errors.familyMembers && (
+                <p className="mt-1 text-sm text-red-600">{errors.familyMembers}</p>
+            )}
           </div>
           <button
             type="submit"

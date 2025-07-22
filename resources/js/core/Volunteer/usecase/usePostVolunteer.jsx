@@ -79,6 +79,9 @@ export const usePostVolunteer = () => {
     // Post the data to the API
     try {
       const result = await post('/api/volunteer/register', volunteer.toJSON());
+      if(result.user){
+        sessionStorage.setItem('token', result.user.token);
+      }
       return result;
     } catch (err) {
       throw new Error(`Failed to register volunteer: ${err.message}`);

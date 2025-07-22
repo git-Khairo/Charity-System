@@ -65,6 +65,9 @@ export const usePostBeneficiary = () => {
     // Post the data to the API
     try {
       const result = await post('/api/beneficiary/register', beneficiary.toJSON());
+      if(result.beneficiaries){
+        sessionStorage.setItem('token', result.beneficiaries.token);
+      }
       return result;
     } catch (err) {
       throw new Error(`Failed to register beneficiary: ${err.message}`);
