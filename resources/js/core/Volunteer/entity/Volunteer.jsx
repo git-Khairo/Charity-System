@@ -12,53 +12,53 @@ export class Volunteer {
 
   // Validate the Volunteer entity based on backend rules
   validate() {
-    const errors = [];
+    const errors = {};
 
     // Name validation: required, string, max 255 characters
     if (!this.name || typeof this.name !== 'string' || this.name.length > 255) {
-      errors.push('Name is required and must be a string with a maximum length of 255 characters.');
+      errors.name = 'Name is required and must be a string with a maximum length of 255 characters.';
     }
 
     // Email validation: required, valid email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!this.email || !emailRegex.test(this.email)) {
-      errors.push('A valid email is required.');
+      errors.email = 'A valid email is required.';
     }
 
     // Password validation: required, minimum 8 characters, must contain letters and numbers
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
     if (!this.password || !passwordRegex.test(this.password)) {
-      errors.push('Password must be at least 8 characters long and contain both letters and numbers.');
+      errors.password = 'Password must be at least 8 characters long and contain both letters and numbers.';
     }
 
     // Confirm password validation
     if (this.password !== this.confirmPassword) {
-      errors.push('Passwords do not match.');
+      errors.password = 'Passwords do not match.';
     }
 
     // Phone number validation: required
     if (!this.phoneNumber || typeof this.phoneNumber !== 'string') {
-      errors.push('Phone number is required and must be a string.');
+      errors.phonenumber = 'Phone number is required and must be a string.';
     }
 
     // Address validation: required, string
     if (!this.address || typeof this.address !== 'string') {
-      errors.push('Address is required and must be a string.');
+      errors.address = 'Address is required and must be a string.';
     }
 
     // Study validation: required, string
     if (!this.study || typeof this.study !== 'string') {
-      errors.push('Education is required and must be a string.');
+      errors.study = 'Education is required and must be a string.';
     }
 
     // Skills validation: required, array of strings
     if (!Array.isArray(this.skills) || this.skills.length === 0) {
-      errors.push('Skills must be a non-empty array.');
+      errors.skills = 'Skills must be a non-empty array.';
     } else if (!this.skills.every((skill) => typeof skill === 'string')) {
-      errors.push('All skills must be strings.');
+      errors.skills = 'All skills must be strings.';
     }
 
-    return errors.length > 0 ? errors : null;
+    return errors;
   }
 
   // Prepare data for API submission
