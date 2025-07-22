@@ -10,31 +10,31 @@ export class Donation {
   }
 
   validate() {
-    const errors = [];
+    const errors = {};
 
     if (!this.name || typeof this.name !== 'string' || this.name.length > 255) {
-      errors.push('Full Name is required and must be less than 255 characters.');
+      errors.name = 'Full Name is required and must be less than 255 characters.';
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!this.email || !emailRegex.test(this.email)) {
-      errors.push('A valid email is required.');
+      errors.email = 'A valid email is required.';
     }
 
     const phoneRegex = /^[0-9\-\+\s\(\)]{7,15}$/;
     if (!this.phonenumber || !phoneRegex.test(this.phonenumber)) {
-      errors.push('Phone number is required and must be valid.');
+      errors.phonenumber = 'Phone number is required and must be valid.';
     }
 
     if (!this.address || typeof this.address !== 'string' || this.address.length > 255) {
-      errors.push('City is required and must be less than 255 characters.');
+      errors.address = 'Address is required and must be less than 255 characters.';
     }
 
     if (!this.amount || typeof this.amount !== 'number' || this.amount <= 0) {
-      errors.push('Amount must be a positive number.');
+      errors.amount = 'Amount must be a positive number.';
     }
 
-    return errors.length > 0 ? errors : null;
+    return errors;
   }
 
   toJSON() {
