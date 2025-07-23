@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { FaBars, FaFacebook, FaInstagram, FaLanguage, FaMapPin, FaMoon, FaSun, FaTimes, FaTwitter, FaYoutube } from "react-icons/fa";
 import { Link, Outlet } from "react-router-dom";
 import ScrollToTop from "../../services/Hooks/ScrollToTop";
+import { AuthContext } from "./AuthContext";
 
 const Layout = () => {
     const [darkmode, setDarkmode] = useState(false);
@@ -9,6 +10,7 @@ const Layout = () => {
     const [language, setLanguage] = useState('en');
     const dropdownRef = useRef(null);
     const [showSidebar, setShowSidebar] = useState(false);
+    const { auth } = useContext(AuthContext);
 
     const toggleDropdown = () => setIsLanguageDropDownOpen((prev) => !prev);
 
@@ -113,18 +115,24 @@ const Layout = () => {
             )}
 
             {/* Log in / Sign up */}
-            <Link
-                to={'/login'}
-                className="text-gray-700 border-2 border-gray-700 rounded-md px-4 py-1.5 hover:border-blue-700 hover:text-blue-700 transition duration-200 font-medium"
-            >
-                Log in
-            </Link>
-            <Link
-                to={'/userSelection'}
-                className="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition duration-200 font-medium"
-            >
-                Sign up
-            </Link>
+            {auth.isAuthenticated ? (
+                <div>Logged in</div>
+            ) : (
+            <>
+                <Link
+                    to={'/login'}
+                    className="text-gray-700 border-2 border-gray-700 rounded-md px-4 py-1.5 hover:border-blue-700 hover:text-blue-700 transition duration-200 font-medium"
+                >
+                    Log in
+                </Link>
+                <Link
+                    to={'/userSelection'}
+                    className="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition duration-200 font-medium"
+                >
+                    Sign up
+                </Link>
+            </>
+            )}
             </div>
             <button
                 className="block md:hidden text-light-secondary2 dark:text-gray-200 mr-4 hover:text-light-primary hover:dark:text-dark-primary transition-colors duration-500"

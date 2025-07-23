@@ -11,25 +11,28 @@ import UserTypeSelection from './pages/UserTypeSelection';
 import VolunteerForm from './components/LoginAndRegister/VolunteerForm';
 import BeneficiaryForm from './components/LoginAndRegister/BeneficiaryForm';
 import DonationForm from './pages/DonationForm';
+import { AuthProvider } from './components/AuthContext';
 
 const App = () => {
     return(
         <Router>
-            <Routes>
-                <Route element={<Layout />}>
-                <Route path="/" index element={<Home />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/charities" element={<Charities />} />
-                <Route path="/campaigns" element={<Campaigns />} />
-                <Route path="/about us" element={<About />} />
-                <Route path='/login' element={<Login />} />
-                <Route path='/userSelection' element={<UserTypeSelection />} />
-                <Route path='/volunteer/signup' element={<VolunteerForm />} />
-                <Route path='/beneficiary/signup' element={<BeneficiaryForm />} />
-                <Route path='/donate/:id' element={<DonationForm />} />
-                </Route>
-            </Routes>
-        </Router>
+            <AuthProvider>
+                <Routes>
+                    <Route element={<Layout />}>
+                    <Route path="/" index element={<Home />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/charities" element={<Charities />} />
+                    <Route path="/campaigns" element={<Campaigns />} />
+                    <Route path="/about us" element={<About />} />
+                    <Route path='/login' element={<Login />} />
+                    <Route path='/userSelection' element={<UserTypeSelection />} />
+                    <Route path='/volunteer/signup' element={<VolunteerForm />} />
+                    <Route path='/beneficiary/signup' element={<BeneficiaryForm />} />
+                    <Route path='/donate/:id' element={<DonationForm />} />
+                    </Route>
+                </Routes>
+            </AuthProvider>
+            </Router>
     )
 }
 

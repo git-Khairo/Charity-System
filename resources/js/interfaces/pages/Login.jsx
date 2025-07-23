@@ -53,11 +53,9 @@ const Login = () => {
       // Save token or role info if returned
       if (result.user) {
         sessionStorage.setItem('token', result.user.token);
-      }
-
-      if(result.ok){
         navigate('/');
       }
+
     } catch (err) {
       alert('Login failed: ' + err.message);
     }

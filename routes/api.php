@@ -45,6 +45,7 @@ Route::post('/admin/login', [AdminController::class, 'login']);
 
 
 Route::group(['middleware'=>['auth:sanctum']], function (){
+    Route::get('/user', [AdminController::class, 'verifyUser']);
 
 
     Route::middleware(RoleMiddleware::class.':Beneficiary')->group(function () {

@@ -8,6 +8,7 @@ use App\Application\Admin\useCases\ActivityReport;
 use App\Application\Admin\useCases\FinancialReport;
 use App\Application\Admin\useCases\Login;
 use App\Application\Admin\useCases\Statistics;
+use App\Application\Admin\useCases\VerifyUser;
 use App\Application\Events\useCases\AddEvent;
 use App\Application\Events\useCases\DeleteEvent;
 use App\Application\Events\useCases\UpdateEvent;
@@ -21,6 +22,7 @@ use App\Interfaces\Http\Requests\Admins\VolunteerStatRequest;
 use App\Interfaces\Http\Requests\Events\StoreEventRequest;
 use App\Interfaces\Http\Requests\Events\UpdateEventRequest;
 use App\Interfaces\Http\Resources\Events\EventResource;
+use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
@@ -91,6 +93,11 @@ class AdminController extends Controller
         $notification=$useCase->accept($request->validated());
         return response()->json(['message' => 'The Beneficiary status', 'event' => $notification], 201);
 
+    }
+
+    public function verifyUser(Request $request, VerifyUser $usecase){
+        $valid = $usecase->verify($request->bearerToken());
+        return response()->json(['valid' => $valid], 201);
     }
 
 

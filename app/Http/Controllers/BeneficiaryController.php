@@ -37,7 +37,7 @@ class BeneficiaryController extends Controller
 
     public function loginBeneficiary(LoginBeneficiaryRequest $request, Login $usecase){
         $beneficiary = $usecase->login($request->validated());
-        return response()->json(['message' => 'beneficiary logged in', 'beneficiaries' => $beneficiary],201);
+        return response()->json(['message' => 'beneficiary logged in', 'user' => $beneficiary],201);
     }
 
     public function logoutBeneficiary(Request $request, Logout $usecase){

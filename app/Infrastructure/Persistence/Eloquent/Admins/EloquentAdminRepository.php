@@ -7,6 +7,7 @@ use App\Domain\Admins\Repositories\AdminRepositoriesInterface;
 use App\Domain\Beneficiary\Models\Beneficiary;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class EloquentAdminRepository implements AdminRepositoriesInterface
 {
@@ -131,6 +132,21 @@ class EloquentAdminRepository implements AdminRepositoriesInterface
         ]);
     }
 
+    public function verify($token){
+        if (!$token) {
+            return response()->json(['error' => 'Invalid token format'], 400);
+        }
 
+        $cleanToken = preg_replace('/^\d+\|/', '', $token);
+        $hashedToken = hash('sha256', $cleanToken);
+
+        $token = PersonalAccessToken::where('token', $hashedToken)->first();
+
+        if ($token) {
+            return true;
+        }
+
+        return false;
+    }
 
 }
