@@ -31,8 +31,16 @@ export const AuthProvider = ({ children }) => {
     }
   }, [token]);
 
+  const login = (token, user = null) => {
+    sessionStorage.setItem('token', token);
+    setToken(token);
+    if (user) {
+      setAuth({ isAuthenticated: true, user });
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ auth, setAuth }}>
+    <AuthContext.Provider value={{ auth, setAuth, login }}>
       {children}
     </AuthContext.Provider>
   );

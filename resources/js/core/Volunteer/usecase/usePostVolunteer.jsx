@@ -1,8 +1,11 @@
 import { Volunteer } from "../entity/Volunteer";
 import usePost from "../../../services/API/usePost";
+import { useContext } from "react";
+import { AuthContext } from "../../../interfaces/components/AuthContext";
 
 export const usePostVolunteer = () => {
   const { post, response, error, loading } = usePost();
+  const { login } = useContext(AuthContext);
 
   const validateStep = (formData, stepNumber) => {
     // Create Volunteer entity
@@ -81,6 +84,7 @@ export const usePostVolunteer = () => {
       const result = await post('/api/volunteer/register', volunteer.toJSON());
       if(result.user){
         sessionStorage.setItem('token', result.user.token);
+        login(result.user.token, result.user.user);
       }
       return result;
     } catch (err) {

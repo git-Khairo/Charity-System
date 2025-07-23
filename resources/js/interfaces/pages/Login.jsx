@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import usePost from '../../services/API/usePost';
+import { AuthContext } from '../components/AuthContext';
 
 const LOGIN_ENDPOINTS = {
   beneficiary: '/api/beneficiary/login',
@@ -13,6 +14,7 @@ const Login = () => {
   const [errors, setErrors] = useState({ email: '', password: '' });
   const navigate = useNavigate();
   const { post, error, loading } = usePost();
+  const { login } = useContext(AuthContext);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,10 +51,11 @@ const Login = () => {
 
     try {
       const result = await post(LOGIN_ENDPOINTS[activeLoginTab], formData);
-
+      console.log(result);
       // Save token or role info if returned
       if (result.user) {
         sessionStorage.setItem('token', result.user.token);
+        login(result.user.token, result.user.user);
         navigate('/');
       }
 

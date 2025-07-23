@@ -1,8 +1,11 @@
 import { Beneficiary } from "../entity/Beneficiary";
 import usePost from "../../../services/API/usePost";
+import { useContext } from "react";
+import { AuthContext } from "../../../interfaces/components/AuthContext";
 
 export const usePostBeneficiary = () => {
   const { post, response, error, loading } = usePost();
+  const { login } = useContext(AuthContext);
 
   const validateStep = (formData, stepNumber) => {
     // Create Beneficiary entity
@@ -67,6 +70,7 @@ export const usePostBeneficiary = () => {
       const result = await post('/api/beneficiary/register', beneficiary.toJSON());
       if(result.beneficiaries){
         sessionStorage.setItem('token', result.beneficiaries.token);
+        login(result.beneficiaries.token, result.beneficiaries.user)
       }
       return result;
     } catch (err) {
