@@ -14,6 +14,7 @@ const Login = () => {
   const [errors, setErrors] = useState({ email: '', password: '' });
   const navigate = useNavigate();
   const { post, error, loading } = usePost();
+
   const { login } = useContext(AuthContext);
 
   const handleChange = (e) => {
@@ -51,16 +52,14 @@ const Login = () => {
 
     try {
       const result = await post(LOGIN_ENDPOINTS[activeLoginTab], formData);
-      console.log(result);
       // Save token or role info if returned
       if (result.user) {
         sessionStorage.setItem('token', result.user.token);
         login(result.user.token, result.user.user);
         navigate('/');
       }
-
     } catch (err) {
-      alert('Login failed: ' + err.message);
+      console.log(err);
     }
   };
 
@@ -97,6 +96,7 @@ const Login = () => {
         {/* End Login Role Tabs */}
 
         <div className="mb-5">
+          {error && <div className='my-1 text-sm text-red-600 text-center'>{error.errors.credentials[0]}</div>}
           <label htmlFor="email" className="block text-gray-700 text-sm font-medium mb-2">Email</label>
           <input
             type="email"

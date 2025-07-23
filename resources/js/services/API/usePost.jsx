@@ -1,9 +1,8 @@
-// src/hooks/usePost.js
 import { useState } from 'react';
 
 const usePost = () => {
   const [response, setResponse] = useState(null);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null); // Store full error object
   const [loading, setLoading] = useState(false);
 
   const post = async (url, body) => {
@@ -20,16 +19,19 @@ const usePost = () => {
         body: JSON.stringify(body),
       });
 
-      if (!res.ok) throw new Error('Post request failed');
-
       const result = await res.json();
+
+      if (!res.ok) {
+        throw result; // Throw the full error response
+      }
+
       setResponse(result);
-      setError("");
+      setError(null);
       return result;
     } catch (err) {
-      setError(err.message);
+      setError(err); // Store the full error object
       setResponse(null);
-      throw err;
+      throw err; // Re-throw to allow component to handle
     } finally {
       setLoading(false);
     }

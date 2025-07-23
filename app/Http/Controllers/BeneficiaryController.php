@@ -17,6 +17,7 @@ use App\Interfaces\Http\Requests\Beneficiary\RegisterBeneficiaryRequest;
 use App\Interfaces\Http\Requests\Beneficiary\UpdateBeneficiaryRequest;
 use App\Interfaces\Http\Resources\Beneficiary\BeneficiaryResource;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class BeneficiaryController extends Controller
 {
@@ -36,8 +37,32 @@ class BeneficiaryController extends Controller
     }
 
     public function loginBeneficiary(LoginBeneficiaryRequest $request, Login $usecase){
-        $beneficiary = $usecase->login($request->validated());
-        return response()->json(['message' => 'beneficiary logged in', 'user' => $beneficiary],201);
+       try {
+            $beneficiary = $usecase->login($request->validated());
+            
+            if (!$beneficiary) {
+                return response()->json([
+                    'message' => 'Authentication failed',
+                    'errors' => ['credentials' => ['Invalid email or password']],
+                ], 401);
+            }
+
+            return response()->json([
+                'message' => 'Beneficiary logged in',
+                'user' => $beneficiary['user'],
+                'token' => $beneficiary['token'],
+            ], 200);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred',
+                'errors' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     public function logoutBeneficiary(Request $request, Logout $usecase){

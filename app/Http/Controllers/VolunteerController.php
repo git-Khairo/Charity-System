@@ -13,7 +13,7 @@ use App\Interfaces\Http\Requests\Volunteer\LoginVolunteerRequest;
 use App\Interfaces\Http\Requests\Volunteer\StoreVolunteerRequest;
 use App\Interfaces\Http\Requests\Volunteer\UpdateVolunteerRequest;
 use Illuminate\Http\Request;
-
+use Illuminate\Validation\ValidationException;
 
 class VolunteerController extends Controller
 {
@@ -32,9 +32,32 @@ class VolunteerController extends Controller
     * Register a user
     * */
     public function login(LoginVolunteerRequest $request,LoginOrRegister $useCase){
-        $Volunteer=$useCase->login($request->validated());
+        try {
+            $volunteer = $useCase->login($request->validated());
+            
+            if (!$volunteer) {
+                return response()->json([
+                    'message' => 'Authentication failed',
+                    'errors' => ['credentials' => ['Invalid email or password']],
+                ], 401);
+            }
 
-        return response()->json(['message' => 'Volunteer registered successfully', 'user' => $Volunteer],201);
+            return response()->json([
+                'message' => 'Volunteer logged in successfully',
+                'user' => $volunteer['user'],
+                'token' => $volunteer['token'],
+            ], 200);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred',
+                'errors' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     public function logout(Request $request){

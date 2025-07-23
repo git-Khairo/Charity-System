@@ -56,9 +56,7 @@ class EloquentVolunteerRepository implements VolunteerRepositoryInterface
             $volunteer=Volunteer::where('phoneNumber',$data['email'])->first();
         }
         if(!$volunteer||!Hash::check($data['password'],$volunteer->password)){
-            return [
-                'message'=>'wrong password or Email'
-            ];
+            return null;
         }
 
         $volunteer['skills']=json_decode( $volunteer['skills'],true);
