@@ -4,7 +4,7 @@ namespace App\Infrastructure\Persistence\Eloquent\Beneficiary;
 
 use App\Domain\Beneficiary\Models\Request;
 use App\Domain\Beneficiary\Repositories\BeneficiaryRequestRepositoryInterface;
-use App\Domain\volunteer\Models\Volunteer;
+use App\Domain\Volunteer\Models\Volunteer;
 
 class EloquentBeneficiaryRequestRepository implements BeneficiaryRequestRepositoryInterface
 {

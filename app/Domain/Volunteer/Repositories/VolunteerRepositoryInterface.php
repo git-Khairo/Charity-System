@@ -12,4 +12,6 @@ interface VolunteerRepositoryInterface extends BaseRepositoryInterface
     public function createFeedback(array $data);
     public function charityVolunteer($data);
     public function allCharitiesVolunteerCounts();
+    public function eventStat($data);
+    public function getMonthlyAcceptedEvents($data);
 }

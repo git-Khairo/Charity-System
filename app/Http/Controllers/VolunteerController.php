@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Application\Volunteer\UseCases\AllNotification;
 use App\Application\Volunteer\UseCases\ApplyForEvents;
 use App\Application\Volunteer\UseCases\Feedback;
 use App\Application\Volunteer\UseCases\GetVolunteer;
@@ -12,6 +13,7 @@ use App\Interfaces\Http\Requests\Volunteer\FeedbackRequest;
 use App\Interfaces\Http\Requests\Volunteer\LoginVolunteerRequest;
 use App\Interfaces\Http\Requests\Volunteer\StoreVolunteerRequest;
 use App\Interfaces\Http\Requests\Volunteer\UpdateVolunteerRequest;
+use App\Interfaces\Http\Requests\Volunteer\VolunteerReport;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -34,7 +36,7 @@ class VolunteerController extends Controller
     public function login(LoginVolunteerRequest $request,LoginOrRegister $useCase){
         try {
             $volunteer = $useCase->login($request->validated());
-            
+
             if (!$volunteer) {
                 return response()->json([
                     'message' => 'Authentication failed',
@@ -137,5 +139,26 @@ class VolunteerController extends Controller
         $event=$useCase->myEvent();
 
         return response()->json(['message' => 'all the user events', 'user events' => $event],201);
+    }
+
+    public function report($id,VolunteerReport $request,ApplyForEvents $useCase){
+
+        $eventStat=$useCase->eventStatus($id);
+        $report=$useCase->report($id,$request->validated());
+
+        $data=[
+            'eventStat'=>$eventStat,
+            'report'=>$report
+        ];
+        return response()->json(['message' => 'Volunteer report', 'user events' => $data],201);
+    }
+
+    public function myNotification(AllNotification $useCase){
+
+        $notification=$useCase->all();
+
+
+        return response()->json(['message' => 'all the user notification', 'user notification' => $notification],200);
+
     }
 }

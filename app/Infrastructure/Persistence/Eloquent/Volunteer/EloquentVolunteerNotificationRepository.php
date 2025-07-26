@@ -3,8 +3,8 @@
 namespace App\Infrastructure\Persistence\Eloquent\Volunteer;
 
 use App\Domain\Repositories\BaseRepositoryInterface;
-use App\Domain\volunteer\Models\participation;
-use App\Domain\volunteer\Models\Volunteer_notification;
+use App\Domain\Volunteer\Models\participation;
+use App\Domain\Volunteer\Models\Volunteer_notification;
 
 class EloquentVolunteerNotificationRepository implements BaseRepositoryInterface
 {

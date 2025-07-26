@@ -6,7 +6,7 @@ use App\Domain\Admins\Models\Admin;
 use App\Domain\Beneficiary\Models\Beneficiary;
 use App\Domain\Charity\Models\Charity;
 use App\Domain\Events\Models\Event;
-use App\Domain\volunteer\Models\Volunteer;
+use App\Domain\Volunteer\Models\Volunteer;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;

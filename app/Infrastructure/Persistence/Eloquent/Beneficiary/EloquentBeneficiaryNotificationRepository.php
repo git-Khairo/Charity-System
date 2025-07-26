@@ -4,7 +4,7 @@ namespace App\Infrastructure\Persistence\Eloquent\Beneficiary;
 
 use App\Domain\Beneficiary\Models\beneficiary_notification;
 use App\Domain\Repositories\BaseRepositoryInterface;
-use App\Domain\volunteer\Models\Volunteer;
+use App\Domain\Volunteer\Models\Volunteer;
 
 class EloquentBeneficiaryNotificationRepository implements BaseRepositoryInterface
 {

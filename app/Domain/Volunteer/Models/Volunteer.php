@@ -59,7 +59,7 @@ class Volunteer extends Authenticatable
     }
 
     public function feedback(){
-        return $this->hasMany(Volunteer_feddback::class);
+        return $this->hasMany(Volunteer_feedback::class);
     }
 
     public function participation(){
@@ -67,7 +67,7 @@ class Volunteer extends Authenticatable
     }
 
     public function notification(){
-        return $this->hasMany(VolunteerNotificationFactory::class);
+        return $this->hasMany(Volunteer_notification::class);
     }
 
 

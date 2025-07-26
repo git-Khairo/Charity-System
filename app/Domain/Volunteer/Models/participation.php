@@ -3,7 +3,7 @@
 namespace App\Domain\volunteer\Models;
 
 use App\Domain\Events\Models\Event;
-use App\Domain\volunteer\Models\Volunteer;
+use App\Domain\Volunteer\Models\Volunteer;
 use Illuminate\Database\Eloquent\Model;
 
 class participation extends Model

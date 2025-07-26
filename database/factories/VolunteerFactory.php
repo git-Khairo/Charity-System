@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Domain\volunteer\Models\Volunteer;
+use App\Domain\Volunteer\Models\Volunteer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 

@@ -5,6 +5,7 @@ namespace App\Infrastructure\Persistence\Eloquent\Admins;
 use App\Domain\Admins\Models\Admin;
 use App\Domain\Admins\Repositories\AdminRepositoriesInterface;
 use App\Domain\Beneficiary\Models\Beneficiary;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\PersonalAccessToken;
@@ -143,7 +144,14 @@ class EloquentAdminRepository implements AdminRepositoriesInterface
         $token = PersonalAccessToken::where('token', $hashedToken)->first();
 
         if ($token) {
-            return true;
+
+            $user=Auth::user();
+            $user->getRoleNames();
+
+            return [
+            'valid' => true,
+            'user' => $user
+                ];
         }
 
         return false;

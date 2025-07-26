@@ -49,9 +49,71 @@ class ApplyForEvents
 
         $volunteer = Auth::user();
 
-        $participation=$volunteer->participation;
+        $volunteer->participation;
 
-        return $participation ;
+        $participation=$volunteer['participation'];
+
+
+        if(!$participation->first()){
+
+            return response()->json(['message' => 'No participation found'], 404);
+        }
+        $participation = $participation->first(); // or directly if you have one instance
+
+        $event=$this->eventRepo->find($participation->first()->event_id);
+
+        $fields = [
+            "Developmental",
+            "Child_care",
+            "Training",
+            "Shelter_and_relief",
+            "Events_and_conferences",
+            "Awareness_campaigns",
+            "Elderly_care",
+            "Supporting_women",
+            "Maintenance_technician",
+            "field_media_photography",
+            "Administrative_field",
+        ];
+
+
+
+        $selectedFields = collect($participation->only($fields))
+            ->filter(fn($value) => $value == 1)
+            ->keys()
+            ->toArray();
+
+        $eventId = $participation->event_id;
+
+       // dd($event);
+
+        $response=[
+            'title'=>$event->title,
+            'location'=>$event->location,
+            'whyVolunteer'=>$participation->why_charity,
+            'preferredTime'=> $participation->preferred_time,
+            'availability'=> $participation->availability_for_volunteering,
+            'interests'=>$selectedFields,
+            'status'=> $participation->status,
+        ];
+
+        //$participation->event;
+
+        return $response ;
+    }
+
+
+    public function eventStatus($data){
+
+        return $this->volunteerRepo->eventStat($data);
+
+    }
+
+    public function report($id,$data){
+
+        $data['id']=$id;
+
+        return $this->volunteerRepo->getMonthlyAcceptedEvents($data);
     }
 
 

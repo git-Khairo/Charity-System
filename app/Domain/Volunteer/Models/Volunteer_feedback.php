@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Volunteer_feddback extends Model
+class Volunteer_feedback extends Model
 {
     /** @use HasFactory<\Database\Factories\VolunteerFactory> */
     use HasFactory,Notifiable;

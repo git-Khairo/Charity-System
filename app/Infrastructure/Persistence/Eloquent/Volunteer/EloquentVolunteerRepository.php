@@ -4,8 +4,8 @@ namespace App\Infrastructure\Persistence\Eloquent\Volunteer;
 
 
 use App\Domain\Events\Models\Event;
-use App\Domain\volunteer\Models\Volunteer;
-use App\Domain\Volunteer\Models\Volunteer_feddback;
+use App\Domain\Volunteer\Models\Volunteer;
+use App\Domain\Volunteer\Models\Volunteer_feedback;
 use App\Domain\Volunteer\Repositories\VolunteerRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -73,7 +73,7 @@ class EloquentVolunteerRepository implements VolunteerRepositoryInterface
 
     public function createFeedback(array $data)
     {
-        $feedback=Volunteer_feddback::create([
+        $feedback=Volunteer_feedback::create([
             'volunteer_id' => Auth::id(), // Volunteer
             'event_id' => $data['event_id'],
             'title' => $data['title'],
@@ -146,6 +146,39 @@ class EloquentVolunteerRepository implements VolunteerRepositoryInterface
             ->get();
 
         return $results;
+    }
+
+    public function eventStat($data)
+    {
+        //dd($data['id']);
+        $counts = DB::table('participations')
+            ->select('status', DB::raw('count(*) as total'))
+            ->where('volunteer_id',$data)
+            ->groupBy('status')
+            ->get();
+
+        return $counts;
+    }
+
+    function getMonthlyAcceptedEvents($data) {
+        // Get actual accepted data grouped by month
+        $rawData = DB::table('participations')
+            ->selectRaw('MONTH(created_at) as month, COUNT(*) as total')
+            ->where('status', 'accepted')
+            ->where('volunteer_id',$data['id'])
+            ->whereYear('created_at', $data['year'])
+            ->groupBy(DB::raw('MONTH(created_at)'))
+            ->pluck('total', 'month'); // key = month, value = total
+
+        // Fill in all 12 months with 0 if missing
+        $allMonths = collect(range(1, 12))->map(function ($month) use ($rawData) {
+            return [
+                'month' => $month,
+                'total' => $rawData->get($month, 0),
+            ];
+        });
+
+        return $allMonths;
     }
 
 

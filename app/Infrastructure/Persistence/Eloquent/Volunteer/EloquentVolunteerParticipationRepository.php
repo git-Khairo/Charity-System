@@ -3,8 +3,8 @@
 namespace App\Infrastructure\Persistence\Eloquent\Volunteer;
 
 use App\Domain\Repositories\BaseRepositoryInterface;
-use App\Domain\volunteer\Models\participation;
-use App\Domain\volunteer\Models\Volunteer;
+use App\Domain\Volunteer\Models\participation;
+use App\Domain\Volunteer\Models\Volunteer;
 use App\Domain\Volunteer\Repositories\VolunteerParticipationRepositoryInterface;
 use App\Domain\Volunteer\Repositories\VolunteerRepositoryInterface;
 

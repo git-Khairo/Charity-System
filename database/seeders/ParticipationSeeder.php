@@ -1,7 +1,7 @@
 <?php
 namespace Database\Seeders;
 
-use App\Domain\volunteer\Models;
+use App\Domain\Volunteer\Models;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 

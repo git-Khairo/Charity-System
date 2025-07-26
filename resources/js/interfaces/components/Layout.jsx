@@ -40,10 +40,10 @@ const Layout = () => {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    const handleDarkmode = () => setDarkmode((prev) => !prev); 
+    const handleDarkmode = () => setDarkmode((prev) => !prev);
 
 
-    return ( 
+    return (
     <>
     <ScrollToTop />
     <nav className="bg-white border-gray-200 dark:bg-dark-background fixed w-full z-20">
@@ -187,7 +187,7 @@ const Layout = () => {
 
 
 
-    <main className="pt-10">
+    <main className="pt-16 min-h-screen">
         <Outlet/>
     </main>
 
@@ -248,5 +248,5 @@ const Layout = () => {
     </>
      );
 }
- 
+
 export default Layout;

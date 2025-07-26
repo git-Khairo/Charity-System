@@ -13,13 +13,17 @@ const useGet = () => {
       const res = await fetch(url, {
         method: 'GET',
         headers: {
+          'Authorization': `Bearer ${token}`,
+
           'Accept': 'application/json',
         },
       });
 
+
       if (!res.ok) throw new Error('Get request failed');
 
       const result = await res.json();
+        console.log(result);
       setData(result);
       setError("");
       return result;
