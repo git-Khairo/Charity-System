@@ -1,107 +1,176 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
+import { useVolunteerEdit } from '../../../core/Volunteer/usecase/useVolunteerEdit';
 
-const EditProfileModal = ({ isOpen, onClose, onSave }) => {
-  if (!isOpen) return null;
+const EditProfileModal = ({ isOpen, onClose, user }) => {
+    const { id } = useParams();
+    const { updateVolunteer, validationErrors, loading } = useVolunteerEdit(id);
+    const navigate = useNavigate();
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="bg-[#111518] rounded-2xl p-8 w-full max-w-xl shadow-xl overflow-y-auto max-h-[90vh]">
-        {/* Close Button */}
-        <button
-          className="absolute top-4 right-4 text-white hover:text-gray-400"
-          onClick={onClose}
-        >
-          ✕
-        </button>
+    console.log(user);
+    const [formData, setFormData] = useState({
+        id:'',
+        name: '',
+        email: '',
+        phoneNumber: '',
+        study: '',
+        address: '',
+        skills: '', // skills as comma-separated string
+    });
 
-        <h2 className="text-white text-[28px] font-bold leading-tight text-center pb-6 pt-2">
-          Edit Profile
-        </h2>
+    // Initialize form data on user load or change
+    useEffect(() => {
+        if (user) {
+            let skillsString = '';
+            try {
+                const skillsArray = JSON.parse(user.skills);
+                if (Array.isArray(skillsArray)) {
+                    skillsString = skillsArray.join(', ');
+                }
+            } catch {
+                skillsString = '';
+            }
+            setFormData({
+                id:user.id || '',
+                name: user.name || '',
+                email: user.email || '',
+                phoneNumber: user.phoneNumber || '',
+                study: user.study || '',
+                address: user.address || '',
+                skills: skillsString,
+            });
+        }
+    }, [user]);
 
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-            const data = Object.fromEntries(formData.entries());
-            onSave(data);
-          }}
-          className="space-y-5"
-        >
-          {/* Name */}
-          <div>
-            <label className="block text-white font-medium mb-2">Name</label>
-            <input
-              name="name"
-              type="text"
-              className="w-full rounded-xl bg-[#283139] text-white placeholder:text-[#9cabba] p-4 h-14 focus:ring-2 focus:ring-blue-500 outline-none"
-              placeholder="Your Name"
-            />
-          </div>
+    if (!isOpen) return null;
 
-          {/* Email */}
-          <div>
-            <label className="block text-white font-medium mb-2">Email</label>
-            <input
-              name="email"
-              type="email"
-              className="w-full rounded-xl bg-[#283139] text-white placeholder:text-[#9cabba] p-4 h-14 focus:ring-2 focus:ring-blue-500 outline-none"
-              placeholder="you@example.com"
-            />
-          </div>
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+    };
 
-          {/* Phone */}
-          <div>
-            <label className="block text-white font-medium mb-2">Phone Number</label>
-            <input
-              name="phone"
-              type="text"
-              className="w-full rounded-xl bg-[#283139] text-white placeholder:text-[#9cabba] p-4 h-14 focus:ring-2 focus:ring-blue-500 outline-none"
-              placeholder="+1 234 567 890"
-            />
-          </div>
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-          {/* Study */}
-          <div>
-            <label className="block text-white font-medium mb-2">Study</label>
-            <input
-              name="study"
-              type="text"
-              className="w-full rounded-xl bg-[#283139] text-white placeholder:text-[#9cabba] p-4 h-14 focus:ring-2 focus:ring-blue-500 outline-none"
-              placeholder="Your Major"
-            />
-          </div>
+        // Convert skills string to array for API
+        const skillsArray = formData.skills
+            .split(',')
+            .map((s) => s.trim())
+            .filter(Boolean);
 
-          {/* Address */}
-          <div>
-            <label className="block text-white font-medium mb-2">Address</label>
-            <textarea
-              name="address"
-              rows="3"
-              className="w-full rounded-xl bg-[#283139] text-white placeholder:text-[#9cabba] p-4 focus:ring-2 focus:ring-blue-500 outline-none resize-none"
-              placeholder="Your Address"
-            ></textarea>
-          </div>
+        // Prepare data to send (replace skills string with array)
+        const dataToSend = {
+            ...formData,
+            skills: skillsArray,
+        };
 
-          {/* Buttons */}
-          <div className="flex flex-col gap-3 pt-2">
-            <button
-              type="submit"
-              className="bg-[#0b80ee] text-white font-bold py-3 rounded-full w-full hover:bg-blue-600 transition"
-            >
-              Save Changes
-            </button>
-            <button
-              type="button"
-              onClick={onClose}
-              className="bg-[#283139] text-white font-bold py-3 rounded-full w-full hover:bg-[#3a4752] transition"
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  );
+        const result = await updateVolunteer(dataToSend);
+        console.log(result);
+        if (result.success){
+            onClose();
+            navigate(`/volunteer/${id}/profile`,{ replace: true });
+            window.location.reload();
+        }
+    };
+
+    const renderError = (field) =>
+        validationErrors[field] ? (
+            <p className="text-red-500 text-sm mt-1">{validationErrors[field]}</p>
+        ) : null;
+
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+            <div className="bg-[#111518] rounded-2xl p-8 w-full max-w-xl shadow-xl overflow-y-auto max-h-[90vh] relative">
+                <button
+                    className="absolute top-4 right-4 text-white hover:text-gray-400"
+                    onClick={onClose}
+                    type="button"
+                >
+                    ✕
+                </button>
+
+                <h2 className="text-white text-[28px] font-bold text-center pb-6 pt-2">
+                    Edit Profile
+                </h2>
+
+                <form onSubmit={handleSubmit} className="space-y-5">
+                    {[
+                        { label: 'Name', name: 'name', type: 'text' },
+                        { label: 'Email', name: 'email', type: 'email' },
+                        { label: 'Phone Number', name: 'phoneNumber', type: 'text' },
+                        { label: 'Study', name: 'study', type: 'text' },
+                    ].map(({ label, name, type }) => (
+                        <div key={name}>
+                            <label className="block text-white font-medium mb-2" htmlFor={name}>
+                                {label}
+                            </label>
+                            <input
+                                id={name}
+                                name={name}
+                                type={type}
+                                value={formData[name] || ''}
+                                onChange={handleChange}
+                                className="w-full rounded-xl bg-[#283139] text-white placeholder:text-[#9cabba] p-4 h-14 focus:ring-2 focus:ring-blue-500 outline-none"
+                                placeholder={label}
+                            />
+                            {renderError(name)}
+                        </div>
+                    ))}
+
+                    {/* Address */}
+                    <div>
+                        <label className="block text-white font-medium mb-2" htmlFor="address">
+                            Address
+                        </label>
+                        <textarea
+                            id="address"
+                            name="address"
+                            value={formData.address || ''}
+                            onChange={handleChange}
+                            rows="3"
+                            className="w-full rounded-xl bg-[#283139] text-white placeholder:text-[#9cabba] p-4 focus:ring-2 focus:ring-blue-500 outline-none resize-none"
+                            placeholder="Your Address"
+                        />
+                        {renderError('address')}
+                    </div>
+
+                    {/* Skills */}
+                    <div>
+                        <label className="block text-white font-medium mb-2" htmlFor="skills">
+                            Skills (comma separated)
+                        </label>
+                        <input
+                            id="skills"
+                            name="skills"
+                            type="text"
+                            value={formData.skills || ''}
+                            onChange={handleChange}
+                            className="w-full rounded-xl bg-[#283139] text-white placeholder:text-[#9cabba] p-4 h-14 focus:ring-2 focus:ring-blue-500 outline-none"
+                            placeholder="e.g. communication, teamwork"
+                        />
+                        {renderError('skills')}
+                    </div>
+
+                    <div className="flex flex-col gap-3 pt-2">
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="bg-[#0b80ee] text-white font-bold py-3 rounded-full w-full hover:bg-blue-600 transition"
+                        >
+                            {loading ? 'Saving...' : 'Save Changes'}
+                        </button>
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            className="bg-[#283139] text-white font-bold py-3 rounded-full w-full hover:bg-[#3a4752] transition"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    );
 };
 
 export default EditProfileModal;

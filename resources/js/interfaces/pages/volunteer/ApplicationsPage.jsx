@@ -12,7 +12,7 @@ const ApplicationsPage = () => {
         console.log('vsvdsv');
     }, []);
 
-    console.log(loading);
+    console.log(userEvent);
 
     if (authUser.id!==parseInt(id) || authUser.roles.some(role => role.name !== 'Volunteer')){
         return (
@@ -57,7 +57,9 @@ const ApplicationsPage = () => {
         );
     }
 
-    const applications = userEvent ? [userEvent] : [];
+    const applications = userEvent ;
+
+    console.log(applications);
 
     return (
     <main className="container mx-auto flex-1 px-4 py-8 sm:px-6 lg:px-8">

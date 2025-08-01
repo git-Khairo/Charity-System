@@ -26,7 +26,7 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    
+
     // Validation
     let newErrors = { email: '', password: '' };
     let isValid = true;
@@ -53,9 +53,10 @@ const Login = () => {
     try {
       const result = await post(LOGIN_ENDPOINTS[activeLoginTab], formData);
       // Save token or role info if returned
+       console.log(result)
       if (result.user) {
-        sessionStorage.setItem('token', result.user.token);
-        login(result.user.token, result.user.user);
+        sessionStorage.setItem('token', result.token);
+        login(result.token, result.user.user);
         navigate('/');
       }
     } catch (err) {

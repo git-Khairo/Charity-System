@@ -17,6 +17,9 @@ import ProfilePage from "./pages/volunteer/ProfilePage";
 import ApplicationsPage from "./pages/volunteer/ApplicationsPage";
 import FeedbackPage from "./pages/volunteer/FeedbackPage";
 import NotificationsPage from "./pages/volunteer/NotificationsPage";
+import CharityDetails from "./pages/charity/CharityDetails";
+import BeneficiaryDashboard from "./components/BeneficiaryDashboard";
+import CampaignDetails from "./pages/campain/CampaignDetails";
 
 const App = () => {
     return(
@@ -34,12 +37,15 @@ const App = () => {
                     <Route path='/volunteer/signup' element={<VolunteerForm />} />
                     <Route path='/beneficiary/signup' element={<BeneficiaryForm />} />
                     <Route path='/donate/:id' element={<DonationForm />} />
+                    <Route path='/charity/:id' element={<CharityDetails />} />
+                    <Route path="/beneficiary-dashboard/:id" element={<BeneficiaryDashboard />} />
                     <Route path='/volunteer/:id'   element={<VolunteerLayout/>}>
                         <Route  path="profile"  element={<ProfilePage/>}/>
                         <Route  path="participations"  element={<ApplicationsPage/>}/>
                         <Route  path="feedback"  element={<FeedbackPage/>}/>
                         <Route  path="notifications"  element={<NotificationsPage/>}/>
                     </Route>
+                    <Route path="/campaign/:id" element={<CampaignDetails/>}/>
                     </Route>
                 </Routes>
             </AuthProvider>

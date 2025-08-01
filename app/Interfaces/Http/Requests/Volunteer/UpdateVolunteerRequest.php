@@ -22,22 +22,21 @@ class UpdateVolunteerRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->route('id') ?? $this->input('id'); // Get volunteer id from route or input
+
         return [
-            'name' => 'required|string|max:255|sometimes',
-            'email' => 'required|email|unique:users,email|sometimes',
+            'name' => ['sometimes', 'required', 'string', 'max:255'],
+            'email' => ['sometimes', 'required', 'email', "unique:users,email,$id"],
             'password' => [
-                'required|sometimes',
-                'confirmed', // requires a matching 'password_confirmation' field
-                Password::min(8)
-                    ->letters()
-                    ->numbers()
-                , // ensures the password hasn't been leaked
+                'sometimes', // validate password only if present
+                'confirmed', // must have matching password_confirmation
+                Password::min(8)->letters()->numbers(),
             ],
-            'phoneNumber' => 'required|unique:volunteers|sometimes',
-            'address' => 'required|string|sometimes',
-            'study'=>'required|string|sometimes',
-            'skills' => 'required|array|sometimes',
-            'skills.*' => 'string|sometimes',
+            'phoneNumber' => ['sometimes', 'required', 'string', "unique:volunteers,phoneNumber,$id"],
+            'address' => ['sometimes', 'required', 'string'],
+            'study' => ['sometimes', 'required', 'string'],
+            'skills' => ['sometimes', 'required', 'array'],
+            'skills.*' => ['sometimes', 'string'],
         ];
     }
 }

@@ -7,7 +7,7 @@ import { Info, StatCard } from '../../components/Volunteer/SharedComponents';
 const ProfilePage = () => {
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
-  const user = useOutletContext();
+  const {user} = useOutletContext();
 
  // console.log(user);
 

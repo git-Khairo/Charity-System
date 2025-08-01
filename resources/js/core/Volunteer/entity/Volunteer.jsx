@@ -1,5 +1,5 @@
 export class Volunteer {
-  constructor({ name, email, password, confirmPassword, phoneNumber, address, study, skills }) {
+  constructor({ name, email, password, confirmPassword, phoneNumber, address, study, skills }, options = {}) {
     this.name = name;
     this.email = email;
     this.password = password;
@@ -8,6 +8,8 @@ export class Volunteer {
     this.address = address;
     this.study = study;
     this.skills = skills;
+
+      this.skipPasswordValidation = options.skipPasswordValidation || false;
   }
 
   // Validate the Volunteer entity based on backend rules
@@ -26,16 +28,17 @@ export class Volunteer {
     }
 
     // Password validation: required, minimum 8 characters, must contain letters and numbers
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
-    if (!this.password || !passwordRegex.test(this.password)) {
-      errors.password = 'Password must be at least 8 characters long and contain both letters and numbers.';
-    }
+      if (!this.skipPasswordValidation) {
+          const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
 
-    // Confirm password validation
-    if (this.password !== this.confirmPassword) {
-      errors.password = 'Passwords do not match.';
-    }
+          if (!this.password || !passwordRegex.test(this.password)) {
+              errors.password = 'Password must be at least 8 characters long and contain both letters and numbers.';
+          }
 
+          if (this.password !== this.confirmPassword) {
+              errors.password = 'Passwords do not match.';
+          }
+      }
     // Phone number validation: required
     if (!this.phoneNumber || typeof this.phoneNumber !== 'string') {
       errors.phonenumber = 'Phone number is required and must be a string.';

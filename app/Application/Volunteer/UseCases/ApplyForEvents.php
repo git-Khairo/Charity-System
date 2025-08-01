@@ -45,22 +45,15 @@ class ApplyForEvents
 
     }
 
-    public function myEvent(){
-
+    public function myEvent()
+    {
         $volunteer = Auth::user();
 
-        $volunteer->participation;
+        $participations = $volunteer->participation; // assuming this is a relationship
 
-        $participation=$volunteer['participation'];
-
-
-        if(!$participation->first()){
-
+        if ($participations->isEmpty()) {
             return response()->json(['message' => 'No participation found'], 404);
         }
-        $participation = $participation->first(); // or directly if you have one instance
-
-        $event=$this->eventRepo->find($participation->first()->event_id);
 
         $fields = [
             "Developmental",
@@ -76,31 +69,30 @@ class ApplyForEvents
             "Administrative_field",
         ];
 
+        $response = [];
 
+        foreach ($participations as $participation) {
+            $event = $this->eventRepo->find($participation->event_id);
 
-        $selectedFields = collect($participation->only($fields))
-            ->filter(fn($value) => $value == 1)
-            ->keys()
-            ->toArray();
+            $selectedFields = collect($participation->only($fields))
+                ->filter(fn($value) => $value == 1)
+                ->keys()
+                ->toArray();
 
-        $eventId = $participation->event_id;
+            $response[] = [
+                'title' => $event ? $event->title : null,
+                'location' => $event ? $event->location : null,
+                'whyVolunteer' => $participation->why_charity,
+                'preferredTime' => $participation->preferred_time,
+                'availability' => $participation->availability_for_volunteering,
+                'interests' => $selectedFields,
+                'status' => $participation->status,
+            ];
+        }
 
-       // dd($event);
-
-        $response=[
-            'title'=>$event->title,
-            'location'=>$event->location,
-            'whyVolunteer'=>$participation->why_charity,
-            'preferredTime'=> $participation->preferred_time,
-            'availability'=> $participation->availability_for_volunteering,
-            'interests'=>$selectedFields,
-            'status'=> $participation->status,
-        ];
-
-        //$participation->event;
-
-        return $response ;
+        return $response;
     }
+
 
 
     public function eventStatus($data){

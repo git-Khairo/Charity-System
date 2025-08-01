@@ -23,7 +23,7 @@ const VolunteerLayout = () => {
     const { login,auth } = useContext(AuthContext);
     const { fetchProfileVolunteer, user, loading, error } = useProfileVolunteer(id);
 
-   // console.log( authUser.id==id);
+    console.log( loading);
 
 
     useEffect(() => {
@@ -177,7 +177,7 @@ const VolunteerLayout = () => {
             <EditProfileModal
                 isOpen={isEditModalOpen}
                 onClose={() => setEditModalOpen(false)}
-                user={user}
+                user={authUser}
                 onSave={(data) => {
                     console.log('Saved profile:', data);
                     setEditModalOpen(false);
