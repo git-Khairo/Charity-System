@@ -3,6 +3,8 @@
 namespace App\Application\Donation;
 
 use App\Domain\Donation\Repositories\DonationRepositoryInterface;
+use App\Mail\SendDonationEmail;
+use Illuminate\Support\Facades\Mail;
 use Stripe\PaymentIntent;
 use Stripe\Stripe;
 
@@ -23,7 +25,11 @@ class StoreDonation
             $data['image'] = $path;
             return $this->repo->createImage($id, $data->toArray());
         }else{
-            return $this->repo->createCard($id, $data->toArray());
+            $donation = $this->repo->createCard($id, $data->toArray());
+            if($donation){
+                Mail::to($data['email'])->send(new SendDonationEmail($data));
+            }
+            return $donation;
         }
     }
 }

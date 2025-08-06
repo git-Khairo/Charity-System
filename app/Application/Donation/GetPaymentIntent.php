@@ -19,17 +19,16 @@ class GetPaymentIntent
 
     public function getIntent($id, $data){
         Stripe::setApiKey(config('services.stripe.secret'));
-
+        
         $amountInCents = $data['amount'] * 100;
-
+        
         $paymentIntent = PaymentIntent::create([
             'amount' => $amountInCents,
             'currency' => 'usd',
-            'payment_method_types' => ['card'],
             'metadata' => [
                 'donor_name' => $data['name'],
                 'charity_id' => $id,
-            ]
+                ]
         ]);
 
         return $paymentIntent->client_secret;
