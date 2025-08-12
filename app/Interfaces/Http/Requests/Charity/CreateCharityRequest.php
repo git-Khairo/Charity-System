@@ -23,14 +23,22 @@ class CreateCharityRequest extends FormRequest
     {
         return [
             'admin_id' => 'required|exists:admins,id',
-            'category_id' => 'required|exists:category,id',
-            'name' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-            'description' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
+
+            // translations are arrays with locale keys
+            'name.en' => 'required|string|max:255',
+            'name.ar' => 'required|string|max:255',
+
+            'address.en' => 'required|string|max:500',
+            'address.ar' => 'required|string|max:500',
+
+            'description.en' => 'required|string',
+            'description.ar' => 'required|string',
+
             'images' => 'required|array',
-            'images.*' => 'string|url',
-            'phonenumber' => 'required|string|max:20',
-            'email' => 'required|email|max:255',
+            'images.*' => 'string',
+            'phonenumber' => 'required|string',
+            'email' => 'required|email',
         ];
     }
 }

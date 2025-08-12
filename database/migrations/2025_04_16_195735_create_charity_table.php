@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('admin_id')->constrained('admins')->cascadeOnDelete();
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
-            $table->string('name');
-            $table->string('address');
-            $table->longText('description');
-            $table->json('images');
+            $table->json('name');         // translatable
+            $table->json('address');      // translatable
+            $table->json('description');  // translatable
+            $table->json('images')->nullable();
             $table->string('phonenumber');
             $table->string('email');
             $table->timestamps();

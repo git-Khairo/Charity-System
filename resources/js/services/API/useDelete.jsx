@@ -10,10 +10,14 @@ const useDelete = () => {
     setLoading(true);
     try {
       const token = sessionStorage.getItem('token');
+      const lang = localStorage.getItem('lang');
+
+
       const res = await fetch(url, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
+            'X-App-Lang': lang,
           'Accept': 'application/json',
         },
       });

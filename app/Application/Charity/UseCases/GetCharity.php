@@ -16,6 +16,7 @@ class GetCharity
     }
 
     public function getCharity($id){
+
         return $this->repo->find($id);
     }
 }

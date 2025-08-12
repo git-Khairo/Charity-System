@@ -9,10 +9,13 @@ const usePost = () => {
     setLoading(true);
     try {
       const token = sessionStorage.getItem('token');
+        const lang = localStorage.getItem('lang');
+
       const res = await fetch(url, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
+            'X-App-Lang': lang,
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },

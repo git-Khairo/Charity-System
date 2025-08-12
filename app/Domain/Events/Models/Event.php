@@ -9,17 +9,27 @@ use App\Domain\Volunteer\Models\Volunteer_feedback;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Translatable\HasTranslations;
 
 class Event extends Model
 {
     /** @use HasFactory<\Database\Factories\EventFactory> */
-    use HasFactory,Notifiable;
+    use HasFactory,Notifiable,HasTranslations;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
+    public $translatable = [
+        'title',
+        'description',
+        'location',
+    ];
+
+    protected $casts = [
+        'images' => 'array',
+    ];
 
     protected $fillable = [
         'charity_id',

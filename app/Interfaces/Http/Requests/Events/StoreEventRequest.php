@@ -23,11 +23,22 @@ class StoreEventRequest extends FormRequest
     {
         return [
             'charity_id' => 'required|exists:charities,id',
-            'title' => 'required|string|max:255',
-            'description' => 'required|string|max:1000',
-            'location' => 'required|string|max:255',
-            'status' => 'required|string|in:active,inactive,pending',
-            'capacity' => 'required|integer|min:1',
+
+            'title.en' => 'required|string|max:255',
+            'title.ar' => 'required|string|max:255',
+
+            'description.en' => 'required|string',
+            'description.ar' => 'required|string',
+
+            'location.en' => 'required|string|max:255',
+            'location.ar' => 'required|string|max:255',
+
+            'images' => 'required|array',
+            'images.*' => 'string',
+
+            'status' => 'required|string|max:50',
+            'capacity' => 'required|integer|min:0',
+            'NumOfVolunteer' => 'required|integer|min:0',
         ];
     }
 }

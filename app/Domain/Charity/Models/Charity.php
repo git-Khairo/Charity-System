@@ -10,17 +10,29 @@ use App\Domain\Events\Models\Event;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Translatable\HasTranslations;
 
 class Charity extends Model
 {
      /** @use HasFactory<\Database\Factories\EventFactory> */
-    use HasFactory,Notifiable;
+    use HasFactory,Notifiable,HasTranslations;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
+
+    // make fields translatable
+    public array $translatable = [
+        'name',
+        'address',
+        'description',
+    ];
+
+    protected $casts = [
+        'images' => 'array', // store as array in PHP
+    ];
 
     protected $fillable = [
         'admin_id',

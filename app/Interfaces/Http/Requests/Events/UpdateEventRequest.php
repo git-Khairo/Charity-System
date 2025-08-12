@@ -23,12 +23,21 @@ class UpdateEventRequest extends FormRequest
     {
         return [
             'charity_id' => 'required|exists:charities,id',
-            'title' => 'sometimes|required|string|max:255',
-            'description' => 'sometimes|required|string|max:1000',
-            'location' => 'sometimes|required|string|max:255',
-            'status' => 'sometimes|required|string|in:active,inactive,pending', // adjust as needed
-            'capacity' => 'sometimes|required|integer|min:1',
-            'NumOfVolunteer' => 'sometimes|integer|'
+
+            'title.en' => 'sometimes|string|max:255',
+            'title.ar' => 'sometimes|string|max:255',
+
+            'description.en' => 'sometimes|string',
+            'description.ar' => 'sometimes|string',
+
+            'location.en' => 'sometimes|string|max:255',
+            'location.ar' => 'sometimes|string|max:255',
+
+            'images' => 'sometimes|array',
+            'images.*' => 'string',
+
+            'status' => 'sometimes|string|max:50',
+            'capacity' => 'sometimes|integer|min:0',
         ];
     }
 }

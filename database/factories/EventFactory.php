@@ -21,12 +21,22 @@ class EventFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->sentence(3),
-            'description' => $this->faker->paragraph,
-            'location' => $this->faker->city,
             'charity_id' => 1,
-            'status' => $this->faker->randomElement(['upcoming', 'completed']),
-            'capacity' => $this->faker->numberBetween(20, 100),
+            'title' => [
+                'en' => $this->faker->sentence(3),
+                'ar' => 'حدث ' . $this->faker->word(),
+            ],
+            'description' => [
+                'en' => $this->faker->paragraph(),
+                'ar' => 'الوصف ' . $this->faker->paragraph(),
+            ],
+            'location' => [
+                'en' => $this->faker->city(),
+                'ar' => 'المدينة ' . $this->faker->city(),
+            ],
+            'images' => [],
+            'status' => 'upcoming',
+            'capacity' => $this->faker->numberBetween(10, 200),
             'NumOfVolunteer' => 0,
         ];
     }

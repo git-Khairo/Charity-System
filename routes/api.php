@@ -4,6 +4,7 @@ use App\Http\Controllers\BeneficiaryController;
 use App\Http\Controllers\CharityController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\EventController;
+use App\Http\Middleware\SetLocaleFromHeader;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VolunteerController;
@@ -16,6 +17,10 @@ use App\Http\Middleware\RoleMiddleware;
     return $request->user();
 })->middleware('auth:sanctum');
 */
+
+Route::middleware([SetLocaleFromHeader::class])->group(function () {
+
+
 
 Route::post('/volunteer/register',[VolunteerController::class,'register']);
 Route::post('/volunteer/login',[VolunteerController::class,'login']);
@@ -98,3 +103,4 @@ Route::group(['middleware'=>['auth:sanctum']], function (){
     });
 });
 
+});

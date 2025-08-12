@@ -23,15 +23,21 @@ class CharityFactory extends Factory
         return [
             'admin_id' => 1,
             'category_id' => 1,
-            'name' => $this->faker->company,
-            'address' => $this->faker->address,
-            'description' => $this->faker->paragraphs(3, true),
-            'images' => json_encode([
-                $this->faker->imageUrl(),
-                $this->faker->imageUrl(),
-            ]),
-            'phonenumber' => $this->faker->phoneNumber,
-            'email' => $this->faker->unique()->safeEmail,
+            'name' => [
+                'en' => $this->faker->company(),
+                'ar' => 'مؤسسة ' . $this->faker->company(),
+            ],
+            'address' => [
+                'en' => $this->faker->address(),
+                'ar' => 'العنوان ' . $this->faker->streetAddress(),
+            ],
+            'description' => [
+                'en' => $this->faker->paragraph(),
+                'ar' => 'الوصف ' . $this->faker->paragraph(),
+            ],
+            'images' => [],
+            'phonenumber' => $this->faker->phoneNumber(),
+            'email' => $this->faker->companyEmail(),
         ];
     }
 }
