@@ -18,8 +18,11 @@ import ApplicationsPage from "./pages/volunteer/ApplicationsPage";
 import FeedbackPage from "./pages/volunteer/FeedbackPage";
 import NotificationsPage from "./pages/volunteer/NotificationsPage";
 import CharityDetails from "./pages/charity/CharityDetails";
-import BeneficiaryDashboard from "./components/BeneficiaryDashboard";
+import BeneficiaryDashboard from "./components/Benficiry/BeneficiaryDashboard";
 import CampaignDetails from "./pages/campain/CampaignDetails";
+import Applications from "./pages/BeneficiaryDashboard/Applications";
+import Notifications from "./pages/BeneficiaryDashboard/Notifications";
+import Feedbacks from "./pages/BeneficiaryDashboard/Feedbacks";
 
 const App = () => {
     return(
@@ -38,7 +41,11 @@ const App = () => {
                     <Route path='/beneficiary/signup' element={<BeneficiaryForm />} />
                     <Route path='/donate/:id' element={<DonationForm />} />
                     <Route path='/charity/:id' element={<CharityDetails />} />
-                    <Route path="/beneficiary-dashboard/:id" element={<BeneficiaryDashboard />} />
+                    <Route path="/beneficiary-dashboard/:id" element={<BeneficiaryDashboard />}>
+                        <Route index element={<Applications />} />
+                        <Route path="notifications" element={<Notifications />} />
+                        <Route path="feedbacks" element={<Feedbacks />} />
+                    </Route>
                     <Route path='/volunteer/:id'   element={<VolunteerLayout/>}>
                         <Route  path="profile"  element={<ProfilePage/>}/>
                         <Route  path="participations"  element={<ApplicationsPage/>}/>

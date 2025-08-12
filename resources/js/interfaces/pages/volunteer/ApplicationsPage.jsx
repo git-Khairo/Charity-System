@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {useOutletContext, useParams} from 'react-router-dom';
-import {useFetchUserEvents} from "../../../core/Volunteer/usecase/ useFetchUserEvent";
+import {useFetchUserEvents} from "../../../core/Volunteer/usecase/useFetchUserEvent";
+
 
 const ApplicationsPage = () => {
     const {user,authUser} = useOutletContext();

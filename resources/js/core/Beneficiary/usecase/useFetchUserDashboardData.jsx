@@ -8,15 +8,18 @@ export const useFetchUserDashboardData = () => {
 
     const [notifications, setNotifications] = useState([]);
     const [applications, setApplications] = useState([]);
+    const [feedbacks, setFeedbacks] = useState([]);
     const [userData, setUserData] = useState(null);
     const [fetchError, setFetchError] = useState(null);
 
     const fetchDashboardData = async () => {
         try {
-            const [notifRes, appsRes, userRes] = await Promise.all([
+            const [notifRes, appsRes, userRes,feedRes] = await Promise.all([
                 get('/api/myNotification'),
                 get('/api/myApplication'),
-                get(`/api/beneficiary/${id}`)
+                get(`/api/beneficiary/${id}`),
+                get(`/api/beneficiaryFeedback`)
+
             ]);
 
             if (notifRes && Array.isArray(notifRes.notifications)) {
@@ -29,6 +32,12 @@ export const useFetchUserDashboardData = () => {
                 setApplications(appsRes.applications);
             } else {
                 setApplications([]);
+            }
+            console.log(feedRes.Feedbacks);
+            if (feedRes && Array.isArray(feedRes.Feedbacks) ) {
+                setFeedbacks(feedRes.Feedbacks);
+            } else {
+                setFeedbacks([]);
             }
 
             if (userRes && userRes.beneficiary) {
@@ -50,6 +59,7 @@ export const useFetchUserDashboardData = () => {
         fetchDashboardData,
         notifications,
         applications,
+        feedbacks,
         userData,
         loading,
         error: fetchError || error,

@@ -43,6 +43,7 @@ Route::post('/donate/{id}/confirm', [DonationController::class, 'storeDonation']
 
 Route::post('/admin/login', [AdminController::class, 'login']);
 
+Route::get('/charity-feedback/{id}', [SuperAdminController::class, 'charityFeedback']);
 
 Route::group(['middleware'=>['auth:sanctum']], function (){
     Route::get('/user', [AdminController::class, 'verifyUser']);
@@ -55,6 +56,7 @@ Route::group(['middleware'=>['auth:sanctum']], function (){
         Route::put('/beneficiary/update/{id}', [BeneficiaryController::class, 'updateBeneficiary']);
         Route::get('/myApplication', [BeneficiaryController::class, 'myApplication']);
         Route::get('/myNotification', [BeneficiaryController::class, 'myNotification']);
+        Route::get('/beneficiaryFeedback', [BeneficiaryController::class, 'myFeedbacks']);
     });
 
 

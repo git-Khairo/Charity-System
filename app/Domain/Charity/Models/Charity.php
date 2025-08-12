@@ -54,7 +54,7 @@ class Charity extends Model
     }
 
     public function beneficiary_feedback(){
-        return $this->belongsTo(BeneficiaryFeedback::class);
+        return $this->hasMany(BeneficiaryFeedback::class);
     }
     protected static function newFactory()
     {

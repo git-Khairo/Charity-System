@@ -11,6 +11,7 @@ use App\Application\Beneficiary\UseCases\Login;
 use App\Application\Beneficiary\UseCases\Logout;
 use App\Application\Beneficiary\UseCases\Register;
 use App\Application\Beneficiary\UseCases\UpdateInfo;
+use App\Application\Volunteer\UseCases\Feedback;
 use App\Interfaces\Http\Requests\Beneficiary\ApplyForCharityRequest;
 use App\Interfaces\Http\Requests\Beneficiary\BeneficiaryFeedbackRequest;
 use App\Interfaces\Http\Requests\Beneficiary\LoginBeneficiaryRequest;
@@ -95,6 +96,14 @@ class BeneficiaryController extends Controller
     public function myNotification(AllNotification $useCase){
         $beneficiary = $useCase->userNotification();
         return response()->json(['message' => 'beneficiary notification', 'notifications' => $beneficiary],201);
+
+    }
+
+    public function myFeedbacks(CreateFeedback $useCase){
+
+        $myFeedback=$useCase->myFeedback();
+
+        return response()->json(['message' => 'User Feedback', 'Feedbacks' => $myFeedback],201);
 
     }
 }

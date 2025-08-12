@@ -23,6 +23,7 @@ use App\Infrastructure\Persistence\Eloquent\Beneficiary\EloquentBeneficiaryReque
 use App\Infrastructure\Persistence\Eloquent\Charity\EloquentCharityRepository;
 use App\Infrastructure\Persistence\Eloquent\Donation\EloquentDonationRepository;
 use App\Infrastructure\Persistence\Eloquent\Events\EloquentEventRepository;
+use App\Infrastructure\Persistence\Eloquent\Volunteer\EloquentVolunteerFeedbackRepository;
 use App\Infrastructure\Persistence\Eloquent\Volunteer\EloquentVolunteerNotificationRepository;
 use App\Infrastructure\Persistence\Eloquent\Volunteer\EloquentVolunteerParticipationRepository;
 use App\Infrastructure\Persistence\Eloquent\Volunteer\EloquentVolunteerRepository;
@@ -48,6 +49,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(BeneficiaryRequestRepositoryInterface::class, EloquentBeneficiaryRequestRepository::class);
         $this->app->bind(BaseRepositoryInterface::class, EloquentBeneficiaryNotificationRepository::class);
         $this->app->bind(SuperAdminRepositoriesInterface::class, EloquentSuperAdminRepository::class);
+        $this->app->bind(BaseRepositoryInterface::class, EloquentVolunteerFeedbackRepository::class);
     }
 
     /**

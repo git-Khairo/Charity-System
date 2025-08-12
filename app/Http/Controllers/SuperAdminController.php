@@ -8,6 +8,7 @@ use App\Application\Charity\UseCases\CreateCharity;
 use App\Application\Charity\UseCases\DeleteCharity;
 use App\Application\Charity\UseCases\UpdateCharity;
 use App\Application\SuperAdmin\useCases\CreateAdmin;
+use App\Application\SuperAdmin\useCases\DisplayAllFeedback;
 use App\Application\SuperAdmin\useCases\FinancialReport;
 use App\Application\SuperAdmin\useCases\Statistics;
 use App\Interfaces\Http\Requests\Admins\DonationFinancialReportRequest;
@@ -68,5 +69,12 @@ class SuperAdminController extends Controller
         $report=$useCase->report($request->validated());
         return  response()->json(['message' => 'this year report', 'report' => $report], 201);
 
+    }
+
+    public function charityFeedback($id,DisplayAllFeedback $useCase){
+
+        $feedback=$useCase->charityFeedback($id);
+
+        return  response()->json(['message' => 'this charity feedback', 'feedback' => $feedback], 201);
     }
 }
