@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom/client';
 import Home from "./pages/Home";
 import Charities from "./pages/Charities";
 import Campaigns from "./pages/Campaigns";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/Admin/Dashboard";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import About from "./pages/About";
 import Layout from "./components/Layout";
@@ -23,6 +23,9 @@ import CampaignDetails from "./pages/campain/CampaignDetails";
 import Applications from "./pages/BeneficiaryDashboard/Applications";
 import Notifications from "./pages/BeneficiaryDashboard/Notifications";
 import Feedbacks from "./pages/BeneficiaryDashboard/Feedbacks";
+import DashboardContent from "./pages/Admin/DashboardContent";
+import MyCharities from "./pages/BeneficiaryDashboard/MyCharities";
+import MyCampaigns from "./pages/volunteer/MyCampaigns";
 
 const App = () => {
     return(
@@ -31,7 +34,6 @@ const App = () => {
                 <Routes>
                     <Route element={<Layout />}>
                     <Route path="/" index element={<Home />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/charities" element={<Charities />} />
                     <Route path="/campaigns" element={<Campaigns />} />
                     <Route path="/about us" element={<About/>} />
@@ -45,14 +47,19 @@ const App = () => {
                         <Route index element={<Applications />} />
                         <Route path="notifications" element={<Notifications />} />
                         <Route path="feedbacks" element={<Feedbacks />} />
+                        <Route path="myCharities" element={<MyCharities />} />
                     </Route>
                     <Route path='/volunteer/:id'   element={<VolunteerLayout/>}>
                         <Route  path="profile"  element={<ProfilePage/>}/>
                         <Route  path="participations"  element={<ApplicationsPage/>}/>
                         <Route  path="feedback"  element={<FeedbackPage/>}/>
                         <Route  path="notifications"  element={<NotificationsPage/>}/>
+                        <Route path="myEvents" element={<MyCampaigns />} />
                     </Route>
                     <Route path="/campaign/:id" element={<CampaignDetails/>}/>
+                    </Route>
+                    <Route path="/dashboard" element={<Dashboard />}>
+                        <Route index element={<DashboardContent />} />
                     </Route>
                 </Routes>
             </AuthProvider>

@@ -129,7 +129,7 @@ export default function BeneficiaryDashboard() {
                     </NavLink>
 
                     <NavLink
-                        to="feedback"
+                        to="feedbacks"
                         className={({ isActive }) =>
                             `flex items-center gap-2 px-4 py-2 rounded-md ${
                                 isActive ? "bg-blue-600 text-white" : "hover:bg-blue-100"
@@ -149,11 +149,22 @@ export default function BeneficiaryDashboard() {
                     >
                         <NotificationIcon /> Notifications
                     </NavLink>
+
+                    <NavLink
+                        to="MyCharities"
+                        className={({ isActive }) =>
+                            `flex items-center gap-2 px-4 py-2 rounded-md ${
+                                isActive ? "bg-blue-600 text-white" : "hover:bg-blue-100"
+                            }`
+                        }
+                    >
+                        <NotificationIcon /> MyCharities
+                    </NavLink>
                 </div>
 
                 {/* Nested Page Content */}
                 <div className="mt-6">
-                    <Outlet context={{applications,notifications,feedbacks}}/>
+                    <Outlet context={{applications,notifications,feedbacks,authUser}}/>
                 </div>
             </main>
 

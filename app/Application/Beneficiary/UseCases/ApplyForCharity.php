@@ -54,4 +54,15 @@ class ApplyForCharity
 
         return $response ;
     }
+
+    public function MyCharities(){
+
+        $beneficiary=Auth::user();
+
+        $response=$this->repo->getMyCharities($beneficiary->id);
+
+
+        return $response->pluck('charity')->unique('id')->values();
+
+    }
 }

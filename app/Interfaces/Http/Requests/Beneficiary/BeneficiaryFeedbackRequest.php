@@ -24,6 +24,7 @@ class BeneficiaryFeedbackRequest extends FormRequest
         return [
             'title'       => 'required|string|min:3|max:255',
             'description' => 'required|string|min:10',
+            'rating'=>   'required|integer|min:1|max:5',
         ];
     }
 }

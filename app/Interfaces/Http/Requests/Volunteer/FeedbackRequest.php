@@ -26,6 +26,7 @@ class FeedbackRequest extends FormRequest
             'event_id' => 'required|exists:events,id',
             'title' => 'required|string|max:200',
             'description' => 'required|string|max:10000',
+            'rating'=>   'required|integer|min:1|max:5',
         ];
     }
 }

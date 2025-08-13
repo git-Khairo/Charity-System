@@ -18,6 +18,7 @@ use App\Interfaces\Http\Requests\Beneficiary\LoginBeneficiaryRequest;
 use App\Interfaces\Http\Requests\Beneficiary\RegisterBeneficiaryRequest;
 use App\Interfaces\Http\Requests\Beneficiary\UpdateBeneficiaryRequest;
 use App\Interfaces\Http\Resources\Beneficiary\BeneficiaryResource;
+use App\Interfaces\Http\Resources\Charity\CharityResource;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -105,5 +106,13 @@ class BeneficiaryController extends Controller
 
         return response()->json(['message' => 'User Feedback', 'Feedbacks' => $myFeedback],201);
 
+    }
+
+    public function myCharity(ApplyForCharity $useCase){
+
+        $myCharity=$useCase->MyCharities();
+
+
+        return response()->json(['message' => 'User charity', 'charities' =>  CharityResource::collection($myCharity)],201);
     }
 }

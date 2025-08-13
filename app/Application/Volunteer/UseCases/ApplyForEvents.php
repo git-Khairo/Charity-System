@@ -109,5 +109,16 @@ class ApplyForEvents
     }
 
 
+    public function volunteerEvents(){
+
+        $volunteer=Auth::user();
+
+        $response=$this->volunteerRepo->getMyEvent($volunteer->id);
+
+
+        return $response->pluck('event')->unique('id')->values();
+
+    }
+
 
 }

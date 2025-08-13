@@ -15,6 +15,7 @@ class CharityResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id'=>$this->id,
             'admin_id' => $this->admin_id,
             'name' => $this->name,
             'address' => $this->address,
@@ -22,7 +23,7 @@ class CharityResource extends JsonResource
             'images' => $this->images,
             'phonenumber' => $this->phonenumber,
             'email' => $this->email,
-            'categoryName' => $this->category->name, 
+            'categoryName' => $this->category->name,
         ];
     }
 }

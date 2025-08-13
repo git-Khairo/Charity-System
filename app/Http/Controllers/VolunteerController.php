@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Application\Beneficiary\UseCases\ApplyForCharity;
 use App\Application\Volunteer\UseCases\AllNotification;
 use App\Application\Volunteer\UseCases\ApplyForEvents;
 use App\Application\Volunteer\UseCases\Feedback;
@@ -14,6 +15,8 @@ use App\Interfaces\Http\Requests\Volunteer\LoginVolunteerRequest;
 use App\Interfaces\Http\Requests\Volunteer\StoreVolunteerRequest;
 use App\Interfaces\Http\Requests\Volunteer\UpdateVolunteerRequest;
 use App\Interfaces\Http\Requests\Volunteer\VolunteerReport;
+use App\Interfaces\Http\Resources\Charity\CharityResource;
+use App\Interfaces\Http\Resources\Events\EventResource;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -160,5 +163,12 @@ class VolunteerController extends Controller
 
         return response()->json(['message' => 'all the user notification', 'user notification' => $notification],200);
 
+    }
+
+    public function acceptedEvent(ApplyForEvents $useCase){
+
+        $myEvent=$useCase->volunteerEvents();
+
+        return response()->json(['message' => 'User events', 'events' =>  EventResource::collection($myEvent)],201);
     }
 }

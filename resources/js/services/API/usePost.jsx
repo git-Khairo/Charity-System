@@ -7,6 +7,8 @@ const usePost = () => {
 
   const post = async (url, body) => {
     setLoading(true);
+
+    console.log(url);
     try {
       const token = sessionStorage.getItem('token');
         const lang = localStorage.getItem('lang');
