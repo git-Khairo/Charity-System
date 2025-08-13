@@ -1,11 +1,13 @@
 export class Campaign {
-  constructor({ title, location, status, categoryName, charity_id }) {
+  constructor({ title, location, status, categoryName, charity_id,id,description }) {
     this.charityId = this.validateCharityId(charity_id);
     this.title = this.validateTitle(title);
     // this.description = this.validateDescription(description);
     this.location = this.validateLocation(location);
     this.status = this.validateStatus(status);
     this.categoryName = this.validateCategoryName(categoryName);
+    this.id=id;
+    this.description=description;
   }
 
   validateCharityId(charity_id) {

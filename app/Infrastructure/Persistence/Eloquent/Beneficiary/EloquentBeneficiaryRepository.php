@@ -79,9 +79,11 @@ class EloquentBeneficiaryRepository implements BeneficiaryRepositoryInterface
     public function createFeedback($id, array $data){
         $beneficiary = Auth::user();
 
+        //dd($data);
         // Create the feedback
         $feedback = BeneficiaryFeedback::create([
             'charity_id'     => $id,
+            'rating'=>$data['rating'],
             'beneficiary_id' => $beneficiary->id,
             'title'          => $data['title'] ?? null,
             'description'    => $data['description'] ?? null,
@@ -100,5 +102,15 @@ class EloquentBeneficiaryRepository implements BeneficiaryRepositoryInterface
 
         return $results;
 
+    }
+
+    public function getMyCharities($id)
+    {
+        $acceptedRequests = Request::with('charity')
+            ->where('beneficiary_id', $id)
+            ->where('status', 'Accepted')
+            ->get();
+
+        return $acceptedRequests;
     }
 }

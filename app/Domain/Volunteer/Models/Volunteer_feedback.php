@@ -19,6 +19,7 @@ class Volunteer_feedback extends Model
      */
     protected $fillable = [
         'volunteer_id',
+        'rating',
         'event_id',
         'title',
         'description'

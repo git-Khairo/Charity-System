@@ -46,6 +46,7 @@ const VolunteerLayout = () => {
                 { label: 'Notifications', icon: NotificationIcon, path: `/volunteer/${id}/notifications` },
                 { label: 'All My Feedback', icon: FeedbackIcon, path: `/volunteer/${id}/feedback` },
                 { label: 'All My Participations', icon: EventIcon, path: `/volunteer/${id}/participations` },
+                { label: 'All My Events', icon: EventIcon, path: `/volunteer/${id}/myEvents` },
                 { label: 'Edit Profile', icon: EditIcon },
             ]);
             console.log( );

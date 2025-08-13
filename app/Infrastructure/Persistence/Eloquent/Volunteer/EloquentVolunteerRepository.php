@@ -4,6 +4,7 @@ namespace App\Infrastructure\Persistence\Eloquent\Volunteer;
 
 
 use App\Domain\Events\Models\Event;
+use App\Domain\volunteer\Models\participation;
 use App\Domain\Volunteer\Models\Volunteer;
 use App\Domain\Volunteer\Models\Volunteer_feedback;
 use App\Domain\Volunteer\Repositories\VolunteerRepositoryInterface;
@@ -75,6 +76,7 @@ class EloquentVolunteerRepository implements VolunteerRepositoryInterface
     {
         $feedback=Volunteer_feedback::create([
             'volunteer_id' => Auth::id(), // Volunteer
+            'rating'=>$data['rating'],
             'event_id' => $data['event_id'],
             'title' => $data['title'],
             'description'=>$data['description']
@@ -181,5 +183,15 @@ class EloquentVolunteerRepository implements VolunteerRepositoryInterface
         return $allMonths;
     }
 
+    public function getMyEvent($id)
+    {
+
+        $acceptedRequests = participation::with('event')
+            ->where('volunteer_id', $id)
+            ->where('status', 'Accepted')
+            ->get();
+
+        return $acceptedRequests;
+    }
 
 }

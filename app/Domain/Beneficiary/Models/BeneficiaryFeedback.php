@@ -15,6 +15,7 @@ class BeneficiaryFeedback extends Model
     protected $fillable = [
         'title',
         'beneficiary_id',
+        'rating',
         'description',
         'charity_id'
     ];

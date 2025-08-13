@@ -62,6 +62,7 @@ Route::group(['middleware'=>['auth:sanctum']], function (){
         Route::get('/myApplication', [BeneficiaryController::class, 'myApplication']);
         Route::get('/myNotification', [BeneficiaryController::class, 'myNotification']);
         Route::get('/beneficiaryFeedback', [BeneficiaryController::class, 'myFeedbacks']);
+        Route::get('/beneficiaryCharity', [BeneficiaryController::class, 'myCharity']);
     });
 
 
@@ -73,6 +74,7 @@ Route::group(['middleware'=>['auth:sanctum']], function (){
         Route::post('/events/{id}/apply', [VolunteerController::class, 'applyForEvent']);
         Route::get('/myEvents', [VolunteerController::class, 'myEvents']);
         Route::get('/volunteer/{id}/notification', [VolunteerController::class, 'myNotification']);
+        Route::get('/volunteerEvent', [VolunteerController::class, 'acceptedEvent']);
     });
 
 

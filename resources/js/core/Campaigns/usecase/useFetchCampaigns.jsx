@@ -15,6 +15,7 @@ export const useFetchCampaigns = () => {
         const validatedCampaigns = result.events.map((item) => {
           try {
             return new Campaign({
+              id:item.id,
               charity_id: item.charity_id,
               title: item.title,
               location: item.location,

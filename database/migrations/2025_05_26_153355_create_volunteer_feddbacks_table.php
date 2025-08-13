@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('volunteer_feedbacks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('volunteer_id')->constrained('volunteers')->cascadeOnDelete();
+            $table->integer('rating');
             $table->foreignId('event_id')->constrained('events')->cascadeOnDelete();
             $table->string('title');
             $table->longText('description');

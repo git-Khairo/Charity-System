@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('beneficiary_feedback', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->integer('rating');
             $table->foreignId('beneficiary_id')->constrained('beneficiaries')->cascadeOnDelete();
             $table->foreignId('charity_id')->constrained('charities')->cascadeOnDelete();
             $table->longText('description');
