@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { FaBars, FaFacebook, FaInstagram, FaLanguage, FaMapPin, FaMoon, FaSun, FaTimes, FaTwitter, FaYoutube } from "react-icons/fa";
+import { FaBars, FaFacebook, FaInstagram, FaLanguage, FaMapPin, FaMoon, FaSun, FaTimes, FaTwitter, FaUser, FaYoutube } from "react-icons/fa";
 import { Link, Outlet } from "react-router-dom";
 import ScrollToTop from "../../services/Hooks/ScrollToTop";
 import { AuthContext } from "./AuthContext";
@@ -11,14 +11,33 @@ const Layout = () => {
     const dropdownRef = useRef(null);
     const [showSidebar, setShowSidebar] = useState(false);
     const { auth } = useContext(AuthContext);
+    const [ isProfileDropDownOpen, setIsProfileDropDownOpen ] = useState(false);
+
+    console.log(auth);
 
     const toggleDropdown = () => setIsLanguageDropDownOpen((prev) => !prev);
+
+    const toggleProfileDropdown = () => setIsProfileDropDownOpen((prev) => !prev);;
 
     const changeLanguage = (lang) => {
         setLanguage(lang);
         setIsLanguageDropDownOpen(false);
         localStorage.setItem('lang', lang);
     };
+
+    const handleClickOutside = (event) => {
+    if (!event.target.closest('.dropdown-container')) {
+      setIsProfileDropDownOpen(false);
+    }
+    };
+
+    // Add event listener for outside clicks
+    useEffect(() => {
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+        document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
 
     useEffect(() => {
         if (darkmode) {
@@ -116,7 +135,46 @@ const Layout = () => {
 
             {/* Log in / Sign up */}
             {auth.isAuthenticated ? (
-                <div>Logged in</div>
+                <div className="relative dropdown-container">
+                <button onClick={toggleProfileDropdown}>
+                    <FaUser className="text-3xl border-2 rounded-full p-1 border-light-primary" />
+                </button>
+
+                {/* Dropdown Menu */}
+                {isProfileDropDownOpen && (
+                    <div className="absolute -right-10 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+                    <ul className="py-1">
+                        <li>
+                        <Link
+                            to={`/${auth.user.valid.user.roles[0].name}/${auth.user.valid.user.id}/profile`}
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            onClick={() => setIsProfileDropDownOpen(false)} // Close dropdown on click
+                        >
+                            Profile
+                        </Link>
+                        </li>
+                        <li>
+                        <Link
+                            to={`/${auth.user.valid.user.roles[0].name}/${auth.user.valid.user.id}/notifications`}
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            onClick={() => setIsProfileDropDownOpen(false)}
+                        >
+                            Settings
+                        </Link>
+                        </li>
+                        <li>
+                        <Link
+                            to="/logout"
+                            className="block border-t-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            onClick={() => setIsProfileDropDownOpen(false)}
+                        >
+                            Logout
+                        </Link>
+                        </li>
+                    </ul>
+                    </div>
+                )}
+                </div>
             ) : (
             <>
                 <Link
