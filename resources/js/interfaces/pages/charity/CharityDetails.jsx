@@ -14,7 +14,6 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import {Link, useParams} from 'react-router-dom';
 import {AuthContext} from "../../components/AuthContext";
-import {useProfileVolunteer} from "../../../core/Volunteer/usecase/useProfileVolunteer";
 import {useFetchCharityDetails} from "../../../core/Charity/usecase/useFetchCharityDetails";
 
 const CharityDetails = ({ userType = 'guest' }) => {

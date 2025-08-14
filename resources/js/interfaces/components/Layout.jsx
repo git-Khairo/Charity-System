@@ -13,8 +13,6 @@ const Layout = () => {
     const { auth } = useContext(AuthContext);
     const [ isProfileDropDownOpen, setIsProfileDropDownOpen ] = useState(false);
 
-    console.log(auth);
-
     const toggleDropdown = () => setIsLanguageDropDownOpen((prev) => !prev);
 
     const toggleProfileDropdown = () => setIsProfileDropDownOpen((prev) => !prev);;
