@@ -11,6 +11,7 @@ export const useFetchCampaigns = () => {
     try {
       const result = await get('/api/events');
       if (result) {
+        console.log(result.events);
         // Map API data to Campaign entities
         const validatedCampaigns = result.events.map((item) => {
           try {

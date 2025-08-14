@@ -25,7 +25,6 @@ const useGet = () => {
       if (!res.ok) throw new Error('Get request failed');
 
       const result = await res.json();
-        console.log(result);
       setData(result);
       setError("");
       return result;
