@@ -16,6 +16,7 @@ export const useFetchCharities = () => {
         const validatedCharities = result.charities.map((item) => {
           try {
             return new Charity({
+              id: item.id,
               name: item.name,
               description: item.description,
             });

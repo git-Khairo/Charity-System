@@ -14,6 +14,7 @@ const useCharity = (initialCharitiesData) => {
     const [isPerPageDropdownOpen, setIsPerPageDropdownOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
 
+
     // Use the useFilter hook for filtering charities
     const { filteredData: filteredCharities, isFilterActive } = useFilter({
         data: initialCharitiesData || [], // Fallback to empty array if undefined
@@ -26,6 +27,7 @@ const useCharity = (initialCharitiesData) => {
         data: filteredCharities,
         sortBy,
     });
+
 
     // Calculate pagination
     const indexOfLastItem = currentPage * itemsPerPage;

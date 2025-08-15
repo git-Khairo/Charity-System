@@ -5,7 +5,6 @@ import {useFetchEventById} from "../../../core/Campaigns/usecase/useFetchEventBy
 import {useFetchCharityById} from "../../../core/Charity/usecase/useFetchCharityById";
 
 const CampaignDetails = () => {
-
     const [user, setUser] = useState(null);
     const { auth } = useContext(AuthContext);
     const { id } = useParams(); // assuming route is like /campaign/:id

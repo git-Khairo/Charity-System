@@ -15,9 +15,10 @@ class EventCardResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'charity_id' => $this->charity_id,
             'title' => $this->title,
-            'location' => $this->loaction,
+            'location' => $this->location,
             'status' => $this->status,
             'categoryName' => $this->charity->category->name,
         ];

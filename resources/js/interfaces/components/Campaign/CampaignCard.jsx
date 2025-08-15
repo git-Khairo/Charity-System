@@ -1,6 +1,8 @@
+import { Link } from "react-router-dom";
+
 const CampaignCard = ({ campaign }) => {
   return (
-    <div className="bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:shadow-md">
+    <Link to={`/campaign/${campaign.id}`} className="bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:shadow-md">
       <div className="relative h-48 overflow-hidden">
         <img
           src={campaign.image}
@@ -31,7 +33,7 @@ const CampaignCard = ({ campaign }) => {
           View Campaign
         </button>
       </div>
-    </div>
+    </Link>
   );
 };
 

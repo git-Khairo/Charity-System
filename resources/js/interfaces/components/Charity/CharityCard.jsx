@@ -1,4 +1,5 @@
 import { FaChevronRight } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const CharityCard = ({ charity, categories }) => {
     // Helper to get category name
@@ -23,7 +24,7 @@ const CharityCard = ({ charity, categories }) => {
     };
 
     return (
-        <div
+        <Link to={`/charity/${charity.id}`}
             className="bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:shadow-lg border border-[#97c9ea]"
         >
             <div className="h-48 overflow-hidden">
@@ -57,7 +58,7 @@ const CharityCard = ({ charity, categories }) => {
                     </button>
                   </div>
             </div>
-        </div>
+        </Link>
     );
 };
 
