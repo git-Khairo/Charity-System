@@ -22,7 +22,6 @@ class UpdateEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'charity_id' => 'required|exists:charities,id',
 
             'title.en' => 'sometimes|string|max:255',
             'title.ar' => 'sometimes|string|max:255',

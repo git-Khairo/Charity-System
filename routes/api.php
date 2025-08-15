@@ -85,13 +85,15 @@ Route::group(['middleware'=>['auth:sanctum']], function (){
         Route::get('/donations', [DonationController::class, 'getAllDonations']);
         Route::get('/donation/{id}', [DonationController::class, 'getDonation']);
         Route::get('/donation/charity/{id}', [DonationController::class, 'getDonationByCharity']);
-        Route::get('/admin/charity/events-by-month', [AdminController::class, 'activityReport']);
-        Route::get('/admin/charity/volunteer-in-events', [AdminController::class, 'volunteerStat']);
+        Route::post('/admin/charity/events-by-month', [AdminController::class, 'activityReport']);
+        Route::post('/admin/charity/volunteer-in-events', [AdminController::class, 'volunteerStat']);
         Route::post('/event/accept_volunteer', [AdminController::class, 'acceptVolunteer']);
         Route::post('/event/accept_beneficiary', [AdminController::class, 'acceptBeneficiary']);
-        Route::get('/admin/charity/beneficiary-in-charity', [AdminController::class, 'beneficiaryStat']);
+        Route::post('/admin/charity/beneficiary-in-charity', [AdminController::class, 'beneficiaryStat']);
         Route::get('/admin/charity/donors-in-charity', [AdminController::class, 'donorsStat']);
-        Route::get('/admin/charity/financialReport', [AdminController::class, 'financialReport']);
+        Route::post('/admin/charity/financialReport', [AdminController::class, 'financialReport']);
+        Route::post('/admin/charity/donorsChart', [AdminController::class, 'donationChart']);
+        Route::get('/admin/charity/charity-info', [AdminController::class, 'charityInfo']);
     });
 
     Route::middleware(RoleMiddleware::class.':SuperAdmin')->group(function () {

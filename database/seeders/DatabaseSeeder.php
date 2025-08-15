@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
         Charity::factory()->create([
             'admin_id' => $admin->id,  // <-- Use the actual ID here
         ]);
-        Event::factory()->count(5)->create();
+        Event::factory()->count(20)->create();
         Beneficiary::factory()->count(5)->create();
     }
 }

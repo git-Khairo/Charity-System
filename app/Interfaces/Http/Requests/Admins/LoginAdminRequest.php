@@ -23,7 +23,7 @@ class LoginAdminRequest extends FormRequest
     {
         return [
             'email'       => 'required|email|unique:beneficiaries,email',
-            'password'    => 'required|string|min:8|confirmed',
+            'password'    => 'required|string|min:8',
         ];
     }
 }

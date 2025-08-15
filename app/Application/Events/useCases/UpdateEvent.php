@@ -16,7 +16,7 @@ class UpdateEvent
 
 
     public function updateEvent($id,$data){
-        return $this->repo->update($id,$data->toArray());
+        return $this->repo->update($id,$data);
     }
 
 }

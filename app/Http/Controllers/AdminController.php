@@ -12,7 +12,10 @@ use App\Application\Admin\useCases\VerifyUser;
 use App\Application\Events\useCases\AddEvent;
 use App\Application\Events\useCases\DeleteEvent;
 use App\Application\Events\useCases\UpdateEvent;
+use App\Domain\Admins\Events\EventDeleted;
+use App\Domain\Admins\Events\EventUpdated;
 use App\Domain\Charity\Events\CharityEventCreated;
+use App\Domain\Events\Models\Event;
 use App\Interfaces\Http\Requests\Admins\AcceptBeneficiaryRequest;
 use App\Interfaces\Http\Requests\Admins\AcceptVolunteerRequest;
 use App\Interfaces\Http\Requests\Admins\ActivityReportRequest;
@@ -76,11 +79,15 @@ class AdminController extends Controller
 
     public function updateEvent(UpdateEventRequest $request, $id, UpdateEvent $usecase){
         $event = $usecase->updateEvent($id, $request->validated());
+        event(new EventUpdated($event->id));
         return response()->json(['message' => 'Updated Event', 'event' => new EventResource($event)], 201);
     }
 
-    public function deleteEvent($id, DeleteEvent $usecase){
-        $event = $usecase->deleteEvent($id);
+    public function deleteEvent($id){
+        $event= Event::findOrFail($id);
+
+        event(new EventDeleted($event));
+
         return response()->json(['message' => 'Deleted Event', 'event' => new EventResource($event)], 201);
     }
 
@@ -100,5 +107,16 @@ class AdminController extends Controller
         return response()->json(['valid' => $valid], 201);
     }
 
+    public function donationChart(VolunteerStatRequest $request,Statistics $useCase){
+
+        $report = $useCase->donorsStat($request->validated());
+        return response()->json(['message' => 'this year report', 'report' => $report], 201);
+    }
+
+    public function charityInfo(Statistics $useCase){
+
+        $report = $useCase->myCharity();
+        return response()->json(['message' => 'this year report', 'report' => $report], 201);
+    }
 
 }

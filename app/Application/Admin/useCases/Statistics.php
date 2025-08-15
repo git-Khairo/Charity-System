@@ -4,6 +4,7 @@ namespace App\Application\Admin\useCases;
 
 use App\Domain\Admins\Repositories\AdminRepositoriesInterface;
 use App\Domain\Donation\Repositories\DonationRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
 
 class Statistics
 {
@@ -76,4 +77,35 @@ class Statistics
 
     }
 
+
+    public function donorsStat($data){
+
+        $admin=Auth::user();
+
+        $admin->charity;
+
+        $charity=$admin['charity'];
+
+
+
+        $data['charity_id']=$charity->id;
+
+        return $this->donationRepo->DonationChart($data);
+
+    }
+
+    public function myCharity(){
+
+        $charities=$this->repo->charity();
+
+        $admin=Auth::user();
+
+        $admin->charity;
+
+        $charity=$admin['charity'];
+
+        return $charities->firstWhere('id', $charity->id);
+
+
+    }
 }

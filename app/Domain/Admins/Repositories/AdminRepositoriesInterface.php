@@ -13,4 +13,5 @@ interface AdminRepositoriesInterface
     public function volunteerStat($data);
     public function BeneficiaryStat($data);
     public function verify($token);
+    public function charity();
 }

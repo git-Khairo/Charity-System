@@ -114,4 +114,27 @@ class EloquentDonationRepository implements DonationRepositoryInterface
 
         return $donorBreakdown;
     }
+
+    public function DonationChart($data)
+    {
+
+        // Get unique donor count per month based on email
+        $monthlyCounts = DB::table('donations')
+            ->selectRaw('MONTH(created_at) as month, COUNT(DISTINCT email) as total')
+            ->whereYear('created_at', $data['year'])
+            ->where('charity_id', $data['charity_id'])
+            ->groupBy('month')
+            ->pluck('total', 'month')
+            ->toArray();
+
+        // Initialize all months to 0
+        $months = array_fill(1, 12, 0);
+
+        // Replace with actual counts
+        foreach ($monthlyCounts as $month => $count) {
+            $months[$month] = $count;
+        }
+
+        return $months;
+    }
 }

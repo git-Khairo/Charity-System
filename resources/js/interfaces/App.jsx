@@ -26,6 +26,7 @@ import Feedbacks from "./pages/BeneficiaryDashboard/Feedbacks";
 import DashboardContent from "./pages/Admin/DashboardContent";
 import MyCharities from "./pages/BeneficiaryDashboard/MyCharities";
 import MyCampaigns from "./pages/volunteer/MyCampaigns";
+import DeleteCampaigns from "./pages/Admin/DeleteCampaigns";
 
 const App = () => {
     return(
@@ -58,8 +59,9 @@ const App = () => {
                     </Route>
                     <Route path="/campaign/:id" element={<CampaignDetails/>}/>
                     </Route>
-                    <Route path="/dashboard" element={<Dashboard />}>
-                        <Route index element={<DashboardContent />} />
+                    <Route path='/dashboard/:id' element={<Dashboard />}>
+                        <Route path='' element={<DashboardContent />} />
+                        <Route  path="events/delete"  element={<DeleteCampaigns/>}/>
                     </Route>
                 </Routes>
             </AuthProvider>

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->json('description');    // translatable
             $table->json('location');       // translatable
             $table->string('status');
+            $table->string('date');
             $table->integer('capacity');
             $table->integer('NumOfVolunteer');
             $table->timestamps();

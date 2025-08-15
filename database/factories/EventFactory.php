@@ -36,6 +36,7 @@ class EventFactory extends Factory
             ],
             'images' => [],
             'status' => 'upcoming',
+            'date'=>'2025/9/9',
             'capacity' => $this->faker->numberBetween(10, 200),
             'NumOfVolunteer' => 0,
         ];

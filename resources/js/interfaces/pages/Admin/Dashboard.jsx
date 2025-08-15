@@ -1,13 +1,43 @@
 
-import React, { useState, useEffect, useRef } from 'react';
-import { Link, useLocation, Outlet } from 'react-router-dom';
+import React, {useState, useEffect, useRef, useContext} from 'react';
+import {Link, useLocation, Outlet, useParams} from 'react-router-dom';
 import Chart from 'chart.js/auto';
+import {AuthContext} from "../../components/AuthContext";
+import {
+    EditIcon,
+    EventIcon,
+    FeedbackIcon,
+    NotificationIcon,
+    ProfileIcon
+} from "../../components/Volunteer/SharedComponents";
 
 const Dashboard = () => {
     // State for sidebar visibility
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [openMenus, setOpenMenus] = useState({});
     const location = useLocation();
+    const [authUser, setAuthUser] = useState(null);
+    const [charity, setCharity] = useState(null);
+    const { login,auth } = useContext(AuthContext);
+    const { id } = useParams();
+
+    useEffect(() => {
+
+        if (auth.isAuthenticated) {
+            setAuthUser( auth.user.valid.user);
+        }
+
+    }, [auth.isAuthenticated,authUser]);
+
+
+    useEffect(() => {
+
+        if (authUser) {
+            setCharity( authUser.charity);
+        }
+
+    }, [authUser]);
+
 
     // Navigation array
     const navItems = [
@@ -28,8 +58,9 @@ const Dashboard = () => {
                 </svg>
             ),
             subItems: [
-                { label: 'Create an Event', path: '/events/Create' },
+                { label: 'Create an Event', path: '/dashboard//events/Create' },
                 { label: 'Update an Event', path: '/events/Update' },
+                { label: 'Delete an Event', path: `/dashboard/${id}/events/delete` },
             ],
         },
         {
@@ -81,6 +112,14 @@ const Dashboard = () => {
         }));
     };
 
+    if (!authUser || !charity) {
+        return (
+            <div className="flex items-center justify-center min-h-screen bg-black text-white">
+                <p>No user data available.</p>
+            </div>
+        );
+    }
+
     return (
         <div className="flex min-h-screen bg-gray-100 font-sans text-gray-900">
             {/* Sidebar */}
@@ -96,7 +135,7 @@ const Dashboard = () => {
                         </svg>
                     </div>
                     <div className="flex flex-col">
-                        <h1 className="text-lg font-bold text-gray-900">Helping Hands</h1>
+                        <h1 className="text-lg font-bold text-gray-900">{charity.name.en}</h1>
                         <p className="text-xs text-gray-500">Admin Panel</p>
                     </div>
                 </div>
@@ -156,7 +195,7 @@ const Dashboard = () => {
 
             {/* Main Content */}
             <main className="lg:ml-64 p-8 w-full transition-all duration-300">
-                <Outlet />
+                <Outlet context={{authUser,charity}} />
             </main>
         </div>
     );

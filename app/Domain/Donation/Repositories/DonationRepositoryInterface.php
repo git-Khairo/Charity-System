@@ -14,4 +14,6 @@ interface DonationRepositoryInterface
     public function getTotalDonationForEveryCharity();
     public function totalDonationByYear($data);
     public function totalDonorsByYear($data);
+    public function DonationChart($data);
+
 }
