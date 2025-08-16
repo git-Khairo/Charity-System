@@ -19,17 +19,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
-        $categories = ['Health', 'Education', 'Food', 'Shelter', 'Disaster Relief'];
-        foreach ($categories as $name) {
-            DB::table('categories')->insert([
-                'name' => $name,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-        }
-
+        $this->call(CategorySeeder::class);
         $this->call(CharitySeeder::class);
-
+        $this->call(EventSeeder::class);
     }
 }
