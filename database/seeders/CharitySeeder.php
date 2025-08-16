@@ -32,7 +32,7 @@ class CharitySeeder extends Seeder
                     'en' => 'Provides free tutoring programs and academic support for school and university students.',
                     'ar' => 'تقدم برامج دراسية مجانية ودورات تقوية لطلبة المدارس والجامعات'
                 ],
-                'images' => null,
+                'images' => '/storage/app/public/charities/noor.jpeg',
                 'phonenumber' => '0933445566',
                 'email' => 'info@alnoor.org'
             ],

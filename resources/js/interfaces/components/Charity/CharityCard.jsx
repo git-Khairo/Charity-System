@@ -29,7 +29,7 @@ const CharityCard = ({ charity, categories }) => {
         >
             <div className="h-48 overflow-hidden">
                 <img
-                   src={`https://readdy.ai/api/search-image?query=$%7Bcharity.imagePrompt%7D&width=600&height=400&seq=${charity.id}&orientation=landscape`}
+                   src={charity.images}
                     alt={charity.name}
                     className="w-full h-full object-cover object-top"
                 />
