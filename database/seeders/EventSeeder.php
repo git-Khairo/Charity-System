@@ -14,6 +14,6 @@ class EventSeeder extends Seeder
      */
     public function run(): void
     {
-        Event::factory()->count(20)->create(); // creates 20 fake events
+        
     }
 }

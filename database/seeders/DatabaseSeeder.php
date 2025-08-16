@@ -20,16 +20,6 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-       // DB::table('admins')->truncate();
-        // Ensure the 'admin' role exists
-        $adminRole=Role::firstOrCreate(['name' => 'Admin','guard_name' => 'api']);
-
-        $admin=Admin::factory()->create();
-
-        // Assign the 'admin' role
-        $admin->assignRole($adminRole);
-
-        Volunteer::factory()->count(10)->create();
         $categories = ['Health', 'Education', 'Food', 'Shelter', 'Disaster Relief'];
         foreach ($categories as $name) {
             DB::table('categories')->insert([
@@ -38,10 +28,8 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ]);
         }
-        Charity::factory()->create([
-            'admin_id' => $admin->id,  // <-- Use the actual ID here
-        ]);
-        Event::factory()->count(20)->create();
-        Beneficiary::factory()->count(5)->create();
+
+        $this->call(CharitySeeder::class);
+
     }
 }
