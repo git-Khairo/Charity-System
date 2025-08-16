@@ -32,49 +32,59 @@ class AcceptVolunteer
     }
 
 
-    public function accept($data){
+    public function accept($data)
+    {
+        $volunteer = $this->volunteerRepo->find($data['volunteer_id']);
+        $participation = $this->participationRepo->find($data['participation_id']);
+        $event = $this->eventRepo->find($data['event_id']);
 
-        $volunteer=$this->volunteerRepo->find($data['volunteer_id']);
+        // Check if the event has room for more volunteers
+        if ($event->NumOfVolunteer < $event->capacity) {
 
-        $participation=$this->participationRepo->find($data['participation_id']);
+            // Increment number of volunteers safely
+            $event->NumOfVolunteer += 1;
+            $event->save();
 
-        $event=$this->eventRepo->find($data['event_id']);
+            // Update participation status
+            $participation->status = $data['status'];
+            $participation->save();
 
-        $participation->status=$data['status'];
-        $participation->save();
+            // Prepare notification
+            $title = "You're Registered for: {$event->title}";
+            $message = "
+        Dear {$volunteer->name},
 
-        $title = "You're Registered for: {$event->title}";
+        Thank you for signing up to volunteer with us!
 
-        $message = "
-         Dear {$volunteer->name},
+        Here are the event details:
 
-         Thank you for signing up to volunteer with us!
+        Event: {$event->title}
+        Location: {$event->location}
+        Your status: {$participation->status}
 
-         Here are the event details:
+        Please arrive on time and bring any necessary materials.
+        If you have any questions, feel free to contact us.
 
-         Event: {$event->title}
-         Location: {$event->location}
-         Your status: {$participation->status}
+        We appreciate your commitment to making a difference!
 
-         Please arrive on time and bring any necessary materials.
-         If you have any questions, feel free to contact us.
+        Warm regards,
+        The Volunteer Coordination Team
+        ";
 
-         We appreciate your commitment to making a difference!
+            $notification = [
+                'volunteer_id' => $data['volunteer_id'],
+                'title' => $title,
+                'message' => $message
+            ];
 
-         Warm regards,
-         The Volunteer Coordination Team
-         ";
+            return $this->notificationRepo->create($notification);
 
-
-        $notification=[
-            'volunteer_id'=>$data['volunteer_id'],
-            'title'=>$title,
-            'message'=>$message
-        ];
-
-
-        return $this->notificationRepo->create($notification);
+        } else {
+            // Event is full
+            throw new \Exception("Cannot accept volunteer: event is full.");
+        }
     }
+
 
     public function getPartici($id){
 

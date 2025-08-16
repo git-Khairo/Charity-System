@@ -20,13 +20,15 @@ class SendNotificationJob implements ShouldQueue
     protected $userIds;
     protected $title;
     protected $message;
+    protected $beneficiaryId;
 
-    public function __construct($userIds,$message,$title)
+    public function __construct($beneficiaryId,$userIds,$message,$title)
     {
 
         $this->userIds=$userIds;
         $this->message=$message;
         $this->title=$title;
+        $this->beneficiaryId=$beneficiaryId;
       //  dd($this->userIds);
     }
 
@@ -37,6 +39,14 @@ class SendNotificationJob implements ShouldQueue
     {
 
         $users=$this->userIds;
+
+        foreach ($this->beneficiaryId as $beneficiaryId) {
+            beneficiary_notification::create([
+                'beneficiary_id' => $beneficiaryId,
+                'title' => $this->title,
+                'message' => $this->message,
+            ]);
+        }
 
         foreach ($users as $volunteerId) {
             Volunteer_notification::create([

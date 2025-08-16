@@ -1,43 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { usePagination } from "../../../services/Hooks/usePagination";
+import Pagination from "../../components/Pagination";
+import ParticipationCard from "../../components/Admin/ParticipationCard";
+
+import { useOutletContext } from "react-router-dom";
+import {useFetchParticipationRequests} from "../../../core/Admin/usecase/ useFetchParticipationRequests";
 
 const ParticipationRequests = () => {
-    const participationData = [
-        {
-            id: 1,
-            full_name: "John Doe",
-            email: "john.doe@example.com",
-            study: "Cardiovascular Health Study",
-            created_at: "2024-07-29T10:30:00.000Z",
-        },
-        {
-            id: 2,
-            full_name: "Jane Smith",
-            email: "jane.smith@example.com",
-            study: "Diabetes Prevention Program",
-            created_at: "2024-07-28T15:45:12.000Z",
-        },
-        {
-            id: 3,
-            full_name: "Peter Jones",
-            email: "peter.jones@example.com",
-            study: "Alzheimer's Disease Research",
-            created_at: "2024-07-28T09:00:05.000Z",
-        },
-        {
-            id: 4,
-            full_name: "Mary Williams",
-            email: "mary.williams@example.com",
-            study: "Cancer Genetics Study",
-            created_at: "2024-07-27T18:20:30.000Z",
-        },
-        {
-            id: 5,
-            full_name: "David Brown",
-            email: "david.brown@example.com",
-            study: "Mental Health in Young Adults",
-            created_at: "2024-07-27T11:10:00.000Z",
-        },
-    ];
+    const { charity } = useOutletContext();
+    const id = charity.id;
+
+    const { fetchParticipationRequests, participationData, loading, error } =
+        useFetchParticipationRequests({ id });
+
+    useEffect(() => {
+        fetchParticipationRequests();
+    }, [id]);
+
+    const {
+        currentPage,
+        setCurrentPage,
+        itemsPerPage,
+        setItemsPerPage,
+        totalPages,
+        paginatedData,
+    } = usePagination(participationData, 6);
+
+    const [selectedRequest, setSelectedRequest] = useState(null);
+
+    const openCard = (request) => setSelectedRequest(request);
+    const closeCard = () => setSelectedRequest(null);
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -47,16 +39,25 @@ const ParticipationRequests = () => {
         return `${day}/${month}/${year}`;
     };
 
+    // Function to refresh the list
+    const refreshRequests = () => {
+        fetchParticipationRequests();
+    };
+
     return (
         <div className="bg-gray-100 min-h-screen p-4 sm:p-6 md:p-8">
             <div className="max-w-4xl mx-auto">
                 <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">
                     Participation Requests
                 </h1>
+
                 <div className="bg-white rounded-lg shadow">
                     <div className="divide-y divide-gray-200">
-                        {participationData.map((request) => (
-                            <div key={request.id} className="p-6 flex items-start space-x-4">
+                        {paginatedData.map((request) => (
+                            <div
+                                key={request.id}
+                                className="p-6 flex items-start justify-between space-x-4"
+                            >
                                 <div className="flex-1">
                                     <p className="text-base font-bold text-gray-900">
                                         {request.full_name}
@@ -69,19 +70,38 @@ const ParticipationRequests = () => {
                                         {formatDate(request.created_at)}
                                     </p>
                                 </div>
-                                <div>
-                                    <a
-                                        href={`/participation-details?id=${request.id}`}
-                                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                                    >
-                                        View Details
-                                    </a>
-                                </div>
+
+                                <button
+                                    onClick={() => openCard(request)}
+                                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                >
+                                    View Details
+                                </button>
                             </div>
                         ))}
                     </div>
                 </div>
+
+                {/* Pagination Component */}
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    itemsPerPage={itemsPerPage}
+                    setCurrentPage={setCurrentPage}
+                    setItemsPerPage={setItemsPerPage}
+                    filteredData={participationData}
+                />
             </div>
+
+            {/* Participation Card Modal */}
+            {selectedRequest && (
+                <ParticipationCard
+                    isOpen={!!selectedRequest}
+                    onClose={closeCard}
+                    request={selectedRequest}
+                    onRefresh={refreshRequests}
+                />
+            )}
         </div>
     );
 };

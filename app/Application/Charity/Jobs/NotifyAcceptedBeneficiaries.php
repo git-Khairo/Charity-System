@@ -39,7 +39,7 @@ class NotifyAcceptedBeneficiaries implements ShouldQueue
 
         // Get accepted requests for this charity
         $requests = Request::where('charity_id', $this->charityId)
-            ->where('status', 'accepted')
+            ->where('status', 'Accepted')
             ->get();
 
        // dd($requests);

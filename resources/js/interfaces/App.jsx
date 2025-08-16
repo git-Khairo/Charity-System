@@ -29,6 +29,7 @@ import MyCampaigns from "./pages/volunteer/MyCampaigns";
 import DeleteCampaigns from "./pages/Admin/DeleteCampaigns";
 import UpdateCampaigns from "./pages/Admin/UpdateCampaigns";
 import CreateCampaign from "./pages/Admin/CreateCampaign";
+import ParticipationRequests from "./pages/Admin/ParticipationRequests";
 
 const App = () => {
     return(
@@ -66,6 +67,7 @@ const App = () => {
                         <Route  path="events/delete"  element={<DeleteCampaigns/>}/>
                         <Route  path="events/Update"  element={<UpdateCampaigns/>}/>
                         <Route  path="events/Create"  element={<CreateCampaign/>}/>
+                        <Route  path="requests/volunteers"  element={<ParticipationRequests/>}/>
                     </Route>
                 </Routes>
             </AuthProvider>

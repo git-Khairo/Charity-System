@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { FiX, FiMail, FiPhone, FiMapPin, FiClock, FiHeart, FiBook, FiUsers, FiStar, FiCamera, FiTool, FiCalendar } from "react-icons/fi";
+import {
+    FiX, FiMail, FiPhone, FiMapPin, FiClock,
+    FiHeart, FiBook, FiUsers, FiStar, FiCamera, FiTool, FiCalendar,
+    FiCheckCircle, FiXCircle
+} from "react-icons/fi";
+import usePost from "../../../services/API/usePost";
 
 // Field icons
 const fieldIcons = {
@@ -54,35 +59,19 @@ const categoryColors = {
     technical: "bg-green-100 text-green-800",
 };
 
-const ParticipationCard = () => {
-    const [isOpen, setIsOpen] = useState(false);
 
-    const request = {
-        id: 1,
-        full_name: "Jane Doe",
-        phone_number: "1234567890",
-        address: "123 Main Street, Springfield",
-        email: "janedoe@example.com",
-        study: "Bachelor of Science in Nursing",
-        national_number: "A1234567",
-        gender: "male",
-        why_charity: "I love helping people.",
-        availability_for_volunteering: "Weekends",
-        preferred_time: "Morning",
-        Developmental: 0,
-        Child_care: 1,
-        Training: 1,
-        Shelter_and_relief: 0,
-        Events_and_conferences: 0,
-        Awareness_campaigns: 1,
-        Elderly_care: 0,
-        Supporting_women: 0,
-        Maintenance_technician: 0,
-        field_media_photography: 0,
-        Administrative_field: 0,
-        status: "pending",
-        created_at: "2025-08-15T21:16:45.000000Z",
-    };
+const ParticipationCard = ({ isOpen, onClose, request }) => {
+    const [status, setStatus] = useState(request.status);
+    const { post, loading } = usePost();
+
+    // State for showing success/error popup
+    const [popup, setPopup] = useState({
+        open: false,
+        success: false,
+        message: "",
+    });
+
+    if (!isOpen) return null;
 
     const formatDate = (dateString) =>
         new Date(dateString).toLocaleDateString();
@@ -91,69 +80,133 @@ const ParticipationCard = () => {
         .filter(([key, value]) => fieldLabels[key] && value === 1)
         .map(([key]) => key);
 
+    const handleAccept = async () => {
+        try {
+            const payload = {
+                event_id: request.event_id,
+                volunteer_id: request.volunteer_id,
+                participation_id:request.id,
+                status: "Accepted",
+            };
+
+            const result = await post(`/api/event/accept_volunteer`, payload);
+
+            if (result) {
+                setStatus("Accepted");
+                setPopup({
+                    open: true,
+                    success: true,
+                    message: `${request.full_name} has been successfully accepted!`,
+                });
+            }
+        } catch (err) {
+            setPopup({
+                open: true,
+                success: false,
+                message: "Something went wrong while accepting the request. Please try again.",
+            });
+        }
+    };
+
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
-            <button
-                onClick={() => setIsOpen(true)}
-                className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition"
-            >
-                View Participation Details
-            </button>
+        <>
+            {/* Main card */}
+            <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-40 backdrop-blur-sm">
+                <div className="bg-white rounded-2xl shadow-2xl w-full max-w-xl p-6 relative animate-fadeIn overflow-y-auto max-h-[90vh]">
+                    <button
+                        onClick={onClose}
+                        className="absolute top-4 right-4 text-gray-500 hover:text-gray-800"
+                    >
+                        <FiX size={24} />
+                    </button>
 
-            {isOpen && (
-                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-40 backdrop-blur-sm">
-                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-xl p-6 relative animate-fadeIn overflow-y-auto max-h-[90vh]">
-                        <button
-                            onClick={() => setIsOpen(false)}
-                            className="absolute top-4 right-4 text-gray-500 hover:text-gray-800"
-                        >
-                            <FiX size={24} />
-                        </button>
+                    <h2 className="text-2xl font-bold mb-4 text-gray-900">{request.full_name}</h2>
 
-                        <h2 className="text-2xl font-bold mb-4 text-gray-900">{request.full_name}</h2>
+                    <div className="space-y-2 text-gray-700">
+                        <p className="flex items-center gap-2"><FiMail /> {request.email}</p>
+                        <p className="flex items-center gap-2"><FiPhone /> {request.phone_number}</p>
+                        <p className="flex items-center gap-2"><FiMapPin /> {request.address}</p>
+                        <p><strong>Study:</strong> {request.study}</p>
+                        <p><strong>National Number:</strong> {request.national_number}</p>
+                        <p><strong>Gender:</strong> {request.gender}</p>
+                        <p><strong>Why Charity:</strong> {request.why_charity}</p>
+                        <p className="flex items-center gap-2"><FiClock /> <strong>Availability:</strong> {request.availability_for_volunteering}, {request.preferred_time}</p>
+                        <p><strong>Status:</strong> {status}</p>
+                        <p><strong>Created At:</strong> {formatDate(request.created_at)}</p>
+                    </div>
 
-                        <div className="space-y-2 text-gray-700">
-                            <p className="flex items-center gap-2"><FiMail /> {request.email}</p>
-                            <p className="flex items-center gap-2"><FiPhone /> {request.phone_number}</p>
-                            <p className="flex items-center gap-2"><FiMapPin /> {request.address}</p>
-                            <p><strong>Study:</strong> {request.study}</p>
-                            <p><strong>National Number:</strong> {request.national_number}</p>
-                            <p><strong>Gender:</strong> {request.gender}</p>
-                            <p><strong>Why Charity:</strong> {request.why_charity}</p>
-                            <p className="flex items-center gap-2"><FiClock /> <strong>Availability:</strong> {request.availability_for_volunteering}, {request.preferred_time}</p>
-                            <p><strong>Status:</strong> {request.status}</p>
-                            <p><strong>Created At:</strong> {formatDate(request.created_at)}</p>
-                        </div>
+                    {/* Preferred Fields */}
+                    <div className="mt-6">
+                        <h3 className="font-semibold text-gray-800 mb-3">Preferred Fields</h3>
+                        {preferredFields.length > 0 ? (
+                            <div className="grid grid-cols-2 gap-4">
+                                {preferredFields.map((field, index) => (
+                                    <div
+                                        key={index}
+                                        className={`flex items-center gap-2 p-3 rounded-lg shadow-sm hover:scale-105 transition transform ${categoryColors[fieldCategories[field]]}`}
+                                    >
+                                        <div className="text-xl">{fieldIcons[field]}</div>
+                                        <span className="font-medium">{fieldLabels[field]}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="text-gray-500 italic">No preferred fields selected.</p>
+                        )}
+                    </div>
 
-                        <div className="mt-6">
-                            <h3 className="font-semibold text-gray-800 mb-3">Preferred Fields</h3>
-                            {preferredFields.length > 0 ? (
-                                <div className="grid grid-cols-2 gap-4">
-                                    {preferredFields.map((field, index) => (
-                                        <div
-                                            key={index}
-                                            className={`flex items-center gap-2 p-3 rounded-lg shadow-sm hover:scale-105 transition transform ${categoryColors[fieldCategories[field]]}`}
-                                        >
-                                            <div className="text-xl">{fieldIcons[field]}</div>
-                                            <span className="font-medium">{fieldLabels[field]}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                            ) : (
-                                <p className="text-gray-500 italic">No preferred fields selected.</p>
-                            )}
-                        </div>
-
+                    {/* Actions */}
+                    <div className="mt-6 flex gap-4">
                         <button
                             onClick={() => alert(`Finding ${request.full_name}...`)}
-                            className="mt-6 w-full py-3 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition"
+                            className="flex-1 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
                         >
-                            Find Me #
+                            Find Me
+                        </button>
+
+                        <button
+                            onClick={handleAccept}
+                            disabled={loading || status === "Accepted"}
+                            className={`flex-1 py-3 rounded-lg shadow transition ${
+                                status === "Accepted"
+                                    ? "bg-gray-400 text-white cursor-not-allowed"
+                                    : "bg-green-600 text-white hover:bg-green-700"
+                            }`}
+                        >
+                            {loading ? "Accepting..." : status === "Accepted" ? "Accepted" : "Accept"}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {/* Success/Error Popup */}
+            {popup.open && (
+                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-40 backdrop-blur-sm">
+                    <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 text-center animate-fadeIn">
+                        {popup.success ? (
+                            <FiCheckCircle className="text-green-600 text-6xl mx-auto mb-4" />
+                        ) : (
+                            <FiXCircle className="text-red-600 text-6xl mx-auto mb-4" />
+                        )}
+
+                        <h2 className="text-2xl font-bold mb-2">
+                            {popup.success ? "Success!" : "Error"}
+                        </h2>
+                        <p className="text-gray-700 mb-6">{popup.message}</p>
+
+                        <button
+                            onClick={() => {
+                                setPopup({ ...popup, open: false });
+                                window.location.reload();
+                            }}
+                            className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
+                        >
+                            Close
                         </button>
                     </div>
                 </div>
             )}
-        </div>
+        </>
     );
 };
 

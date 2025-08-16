@@ -2,9 +2,9 @@ import {useContext, useEffect, useState} from "react";
 import { useFetchCharities } from "../../../core/Charity/usecase/useFetchCharities";
 import useCharity from "../../../core/Charity/usecase/useCharity";
 import Pagination from "../../components/Pagination";
-import FeedbackModal from "../../components/Benficiry/ FeedbackModal";
 import {useGetMyCharities} from "../../../core/Beneficiary/usecase/useGetMyCharities";
 import {useOutletContext} from "react-router-dom";
+import FeedbackModal from "../../components/Benficiry/FeedbackModal";
 
 
 const MyCharities = () => {
