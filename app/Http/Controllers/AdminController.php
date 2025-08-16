@@ -119,4 +119,12 @@ class AdminController extends Controller
         return response()->json(['message' => 'this year report', 'report' => $report], 201);
     }
 
+    public function Participation($id,AcceptVolunteer $useCase){
+
+        $request=$useCase->getPartici($id);
+
+        return response()->json(['message' => 'all Participation', 'participation' => $request], 201);
+
+    }
+
 }

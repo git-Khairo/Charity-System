@@ -21,7 +21,9 @@ export const useFetchCampaigns = () => {
               title: item.title,
               location: item.location,
               status: item.status,
-              categoryName: item.categoryName
+              categoryName: item.categoryName,
+              updated_at:item.updated_at,
+              created_at:item.created_at,
             });
           } catch (err) {
             console.log(`Skipping invalid campaign: ${err.message}`);

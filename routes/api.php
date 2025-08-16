@@ -4,6 +4,7 @@ use App\Http\Controllers\BeneficiaryController;
 use App\Http\Controllers\CharityController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\UploadController;
 use App\Http\Middleware\SetLocaleFromHeader;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -47,6 +48,9 @@ Route::post('/donate/{id}/confirm', [DonationController::class, 'storeDonation']
 
 
 Route::post('/admin/login', [AdminController::class, 'login']);
+
+
+Route::post('/upload', [UploadController::class, 'store']);
 
 Route::get('/charity-feedback/{id}', [SuperAdminController::class, 'charityFeedback']);
 
@@ -94,11 +98,12 @@ Route::group(['middleware'=>['auth:sanctum']], function (){
         Route::post('/admin/charity/financialReport', [AdminController::class, 'financialReport']);
         Route::post('/admin/charity/donorsChart', [AdminController::class, 'donationChart']);
         Route::get('/admin/charity/charity-info', [AdminController::class, 'charityInfo']);
+        Route::put('/charity/update/{id}', [SuperAdminController::class, 'updateCharity']);
+        Route::get('/admin/participation/{id}', [AdminController::class, 'Participation']);
     });
 
     Route::middleware(RoleMiddleware::class.':SuperAdmin')->group(function () {
         Route::post('/charity/create', [SuperAdminController::class, 'createCharity']);
-        Route::put('/charity/update/{id}', [SuperAdminController::class, 'updateCharity']);
         Route::delete('/charity/delete/{id}', [SuperAdminController::class, 'deleteCharity']);
         Route::get('/super_admin/charity/beneficiary-in-charity', [SuperAdminController::class, 'beneficiaryStat']);
         Route::get('/super_admin/charity/volunteer-in-events', [SuperAdminController::class, 'volunteerStat']);

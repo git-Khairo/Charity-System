@@ -27,6 +27,8 @@ import DashboardContent from "./pages/Admin/DashboardContent";
 import MyCharities from "./pages/BeneficiaryDashboard/MyCharities";
 import MyCampaigns from "./pages/volunteer/MyCampaigns";
 import DeleteCampaigns from "./pages/Admin/DeleteCampaigns";
+import UpdateCampaigns from "./pages/Admin/UpdateCampaigns";
+import CreateCampaign from "./pages/Admin/CreateCampaign";
 
 const App = () => {
     return(
@@ -62,6 +64,8 @@ const App = () => {
                     <Route path='/dashboard/:id' element={<Dashboard />}>
                         <Route path='' element={<DashboardContent />} />
                         <Route  path="events/delete"  element={<DeleteCampaigns/>}/>
+                        <Route  path="events/Update"  element={<UpdateCampaigns/>}/>
+                        <Route  path="events/Create"  element={<CreateCampaign/>}/>
                     </Route>
                 </Routes>
             </AuthProvider>

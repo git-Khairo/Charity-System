@@ -1,5 +1,5 @@
 export class Campaign {
-  constructor({ title, location, status, categoryName, charity_id,id,description }) {
+  constructor({ title, location, status, categoryName, charity_id,id,description,updated_at,created_at }) {
     this.charityId = this.validateCharityId(charity_id);
     this.title = this.validateTitle(title);
     // this.description = this.validateDescription(description);
@@ -8,6 +8,8 @@ export class Campaign {
     this.categoryName = this.validateCategoryName(categoryName);
     this.id=id;
     this.description=description;
+    this.updated_at=updated_at;
+      this.created_at=created_at;
   }
 
   validateCharityId(charity_id) {

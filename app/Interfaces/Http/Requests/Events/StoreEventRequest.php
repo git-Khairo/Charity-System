@@ -30,14 +30,16 @@ class StoreEventRequest extends FormRequest
             'description.en' => 'required|string',
             'description.ar' => 'required|string',
 
+            'date' => 'required|string',
+
             'location.en' => 'required|string|max:255',
             'location.ar' => 'required|string|max:255',
 
             'images' => 'required|array',
             'images.*' => 'string',
 
-            'status' => 'required|string|max:50',
-            'capacity' => 'required|integer|min:0',
+            'status' => 'required|string',
+            'capacity' => 'required|integer|min:1',
             'NumOfVolunteer' => 'required|integer|min:0',
         ];
     }

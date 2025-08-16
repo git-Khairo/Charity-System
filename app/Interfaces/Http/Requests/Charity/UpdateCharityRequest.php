@@ -22,8 +22,6 @@ class UpdateCharityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'admin_id' => 'required|exists:admins,id',
-            'category_id' => 'required|exists:categories,id',
 
             // translations are arrays with locale keys
             'name.en' => 'sometimes|string|max:255',
@@ -37,8 +35,7 @@ class UpdateCharityRequest extends FormRequest
 
             'images' => 'sometimes|array',
             'images.*' => 'string',
-            'phonenumber' => 'sometimes|string',
-            'email' => 'sometimes|email',
+
         ];
     }
 }

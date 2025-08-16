@@ -76,4 +76,10 @@ class AcceptVolunteer
         return $this->notificationRepo->create($notification);
     }
 
+    public function getPartici($id){
+
+
+        return $this->participationRepo->allParticipation($id);
+    }
+
 }

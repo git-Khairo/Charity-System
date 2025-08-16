@@ -39,6 +39,8 @@ class Event extends Model
         'status',
         'capacity',
         'NumOfVolunteer',
+        'images',
+        'date'
     ];
 
     public function feedback(){

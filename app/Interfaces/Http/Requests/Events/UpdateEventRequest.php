@@ -26,8 +26,11 @@ class UpdateEventRequest extends FormRequest
             'title.en' => 'sometimes|string|max:255',
             'title.ar' => 'sometimes|string|max:255',
 
+
             'description.en' => 'sometimes|string',
             'description.ar' => 'sometimes|string',
+
+            'date' => 'sometimes|string',
 
             'location.en' => 'sometimes|string|max:255',
             'location.ar' => 'sometimes|string|max:255',

@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import { useCampaign } from "../../../core/Campaigns/usecase/useCampaign";
 import Pagination from "../../components/Pagination";
-import { useGetVolunteerEvents } from "../../../core/Volunteer/usecase/UseGetVolunteerEvents";
 import { useOutletContext } from "react-router-dom";
 import useDelete from "../../../services/API/useDelete";
-import {useFetchCampaignByCharity} from "../../../core/Campaigns/usecase/useFetchCampaignByCharity";
-
+import { useFetchCampaignByCharity } from "../../../core/Campaigns/usecase/useFetchCampaignByCharity";
 
 const DeleteCampaigns = () => {
-
     const { remove, loading: deleteLoading, error: deleteError } = useDelete();
-    const [selectedCampaign, setSelectedCampaign] = useState(null); // campaign being deleted
-    const { authUser ,charity} = useOutletContext();
-    const id=charity.id;
-    const { fetchCampaigns, campaigns, loading, error } = useFetchCampaignByCharity({id});
+    const [selectedCampaign, setSelectedCampaign] = useState(null);
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [isSuccessOpen, setIsSuccessOpen] = useState(false);
+    const [campaignToDelete, setCampaignToDelete] = useState(null);
+
+    const { authUser, charity } = useOutletContext();
+    const id = charity.id;
+    const { fetchCampaigns, campaigns, loading, error } = useFetchCampaignByCharity({ id });
 
     useEffect(() => {
         fetchCampaigns();
@@ -34,18 +35,22 @@ const DeleteCampaigns = () => {
         prevPage,
     } = useCampaign(campaigns || []);
 
-    console.log(campaigns);
+    const confirmDelete = (campaign) => {
+        setCampaignToDelete(campaign);
+        setIsConfirmOpen(true);
+    };
 
-    const handleDelete = async (campaign) => {
-        if (!window.confirm(`Are you sure you want to delete "${campaign.title}"?`)) return;
+    const handleDelete = async () => {
+        if (!campaignToDelete) return;
 
         try {
-            setSelectedCampaign(campaign);
-            await remove(`/api/event/delete/${campaign.id}`);
-            alert("Event deleted successfully");
-            fetchCampaigns(); // refresh the list
+            setSelectedCampaign(campaignToDelete);
+            await remove(`/api/event/delete/${campaignToDelete.id}`);
+            setIsConfirmOpen(false);
+            setIsSuccessOpen(true);
+            fetchCampaigns();
         } catch (err) {
-            alert("Failed to delete event: " + err.message);
+            console.error("Failed to delete event:", err);
         } finally {
             setSelectedCampaign(null);
         }
@@ -64,7 +69,7 @@ const DeleteCampaigns = () => {
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm
-                       focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                 </div>
 
@@ -95,10 +100,10 @@ const DeleteCampaigns = () => {
                                     </span>
                                 </div>
                                 <button
-                                    onClick={() => handleDelete(campaign)}
+                                    onClick={() => confirmDelete(campaign)}
                                     disabled={deleteLoading && selectedCampaign?.id === campaign.id}
                                     className="px-4 py-2 text-sm font-medium text-white
-                             bg-red-600 hover:bg-red-700 rounded-lg shadow-sm disabled:opacity-50"
+                                    bg-red-600 hover:bg-red-700 rounded-lg shadow-sm disabled:opacity-50"
                                 >
                                     {deleteLoading && selectedCampaign?.id === campaign.id
                                         ? "Deleting..."
@@ -143,6 +148,51 @@ const DeleteCampaigns = () => {
                     </div>
                 )}
             </main>
+
+            {/* Confirmation Modal */}
+            {isConfirmOpen && (
+                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                    <div className="bg-white rounded-lg shadow-lg p-6 w-96">
+                        <h2 className="text-lg font-semibold mb-4">Confirm Deletion</h2>
+                        <p className="mb-6">
+                            Are you sure you want to delete "{campaignToDelete?.title}"? This action cannot be undone.
+                        </p>
+                        <div className="flex justify-end space-x-3">
+                            <button
+                                onClick={() => setIsConfirmOpen(false)}
+                                className="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleDelete}
+                                disabled={deleteLoading}
+                                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded"
+                            >
+                                {deleteLoading ? "Deleting..." : "Delete"}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Success Modal */}
+            {isSuccessOpen && (
+                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                    <div className="bg-white rounded-lg shadow-lg p-6 w-96 text-center">
+                        <h2 className="text-lg font-semibold mb-4 text-green-600">Deleted Successfully</h2>
+                        <p className="mb-6">
+                            The campaign "{campaignToDelete?.title}" has been deleted successfully.
+                        </p>
+                        <button
+                            onClick={() => setIsSuccessOpen(false)}
+                            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded"
+                        >
+                            OK
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
