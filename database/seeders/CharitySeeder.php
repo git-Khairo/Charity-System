@@ -32,7 +32,7 @@ class CharitySeeder extends Seeder
                     'en' => 'Provides free tutoring programs and academic support for school and university students.',
                     'ar' => 'تقدم برامج دراسية مجانية ودورات تقوية لطلبة المدارس والجامعات'
                 ],
-                'images' => '/storage/app/public/charities/noor.jpeg',
+                'images' => '/storage/charities/noor.jpeg',
                 'phonenumber' => '0933445566',
                 'email' => 'info@alnoor.org'
             ],
@@ -50,7 +50,7 @@ class CharitySeeder extends Seeder
                     'en' => 'Offers primary medical services and mobile clinics in impoverished rural areas.',
                     'ar' => 'تقدم خدمات طبية أولية وعيادات متنقلة للقرى والمناطق المحرومة'
                 ],
-                'images' => null,
+                'images' => '/storage/charities/charity1.jpeg',
                 'phonenumber' => '0955667788',
                 'email' => 'rahma@health.org'
             ],
@@ -68,7 +68,7 @@ class CharitySeeder extends Seeder
                     'en' => 'Trains women in vocational skills and supports small-business initiatives.',
                     'ar' => 'تهدف لتعليم النساء مهارات مهنية وتمكين اقتصادي'
                 ],
-                'images' => null,
+                'images' => '/storage/charities/charity2.jpeg',
                 'phonenumber' => '0944221133',
                 'email' => 'women@tamkeen.org'
             ],
@@ -86,7 +86,7 @@ class CharitySeeder extends Seeder
                     'en' => 'Supports orphaned children with education, psychological support, and vocational training.',
                     'ar' => 'ترعى الأطفال اليتامى وتؤمن لهم التعليم والرعاية الكاملة'
                 ],
-                'images' => null,
+                'images' => '/storage/charities/charity3.jpeg',
                 'phonenumber' => '0988776655',
                 'email' => 'dayr@orphans.org'
             ],
@@ -104,7 +104,7 @@ class CharitySeeder extends Seeder
                     'en' => 'Implements environmental awareness campaigns, tree-planting, and cleanup drives.',
                     'ar' => 'تعمل على التوعية البيئية وحملات تنظيف وتشجير'
                 ],
-                'images' => null,
+                'images' => '/storage/charities/charity4.jpeg',
                 'phonenumber' => '0966443388',
                 'email' => 'green@b2na.org'
             ],
@@ -122,7 +122,7 @@ class CharitySeeder extends Seeder
                     'en' => 'Provides food aid and emergency assistance during natural disasters and crises.',
                     'ar' => 'تقدم سلال غذائية ومساعدات طارئة في الأزمات'
                 ],
-                'images' => null,
+                'images' => '/storage/charities/charity5.jpeg',
                 'phonenumber' => '0997766554',
                 'email' => 'hope@relief.org'
             ],
@@ -140,7 +140,7 @@ class CharitySeeder extends Seeder
                     'en' => 'Develops youth skills and facilitates volunteering and entrepreneurship.',
                     'ar' => 'منصة لتطوير مهارات الشباب وفتح فرص عمل'
                 ],
-                'images' => null,
+                'images' => '/storage/charities/charity6.jpeg',
                 'phonenumber' => '0923344556',
                 'email' => 'shabab@future.org'
             ]
