@@ -176,7 +176,7 @@ class EloquentAdminRepository implements AdminRepositoriesInterface
                 //  dd(  $charity->events
                 //    ->flatMap-> voluntee);
                 $volunteerCount = $charity->events
-                    ->flatMap-> volunteer
+                    ->flatMap-> acceptedVolunteers
                     ->pluck('volunteer_id')
                     ->unique()
                     ->count();
@@ -184,12 +184,14 @@ class EloquentAdminRepository implements AdminRepositoriesInterface
                 // Count distinct beneficiaries (requests)
                 $beneficiaryCount = DB::table('requests')
                     ->where('charity_id', $charity->id)
+                    ->where('status','Accepted')
                     ->distinct('beneficiary_id')
                     ->count('beneficiary_id');
 
                 // Count distinct donors
                 $donorCount = DB::table('donations')
                     ->select('email', DB::raw('COUNT(*) as total_donations'))
+                    ->where('status','Accepted')
                     ->groupBy('email')
                     ->get();
 

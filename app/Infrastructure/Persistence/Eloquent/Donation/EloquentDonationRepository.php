@@ -89,9 +89,11 @@ class EloquentDonationRepository implements DonationRepositoryInterface
         $endDate = $data['end'];
         $charityId = $data['charity_id'];
 
+
+
         $totalAmount = DB::table('donations')
             ->whereBetween('created_at', [$startDate, $endDate])
-            ->where('status', 'completed')
+            ->where('status', 'Accepted')
             ->where('charity_id', $charityId)
             ->sum('amount');
 
@@ -107,7 +109,7 @@ class EloquentDonationRepository implements DonationRepositoryInterface
         $donorBreakdown = DB::table('donations')
             ->select('email', 'name', DB::raw('SUM(amount) as total_donated'))
             ->whereBetween('created_at', [$startDate, $endDate])
-            ->where('status', 'completed')
+            ->where('status', 'Accepted')
             ->where('charity_id', $charityId)
             ->groupBy('email', 'name')
             ->get();

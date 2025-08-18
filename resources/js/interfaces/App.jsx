@@ -30,6 +30,8 @@ import DeleteCampaigns from "./pages/Admin/DeleteCampaigns";
 import UpdateCampaigns from "./pages/Admin/UpdateCampaigns";
 import CreateCampaign from "./pages/Admin/CreateCampaign";
 import ParticipationRequests from "./pages/Admin/ParticipationRequests";
+import ActivityDashboard from "./pages/Admin/ActivityDashboard";
+import GovernmentReport from "./pages/Admin/GovernmentReport";
 
 const App = () => {
     return(
@@ -68,6 +70,8 @@ const App = () => {
                         <Route  path="events/Update"  element={<UpdateCampaigns/>}/>
                         <Route  path="events/Create"  element={<CreateCampaign/>}/>
                         <Route  path="requests/volunteers"  element={<ParticipationRequests/>}/>
+                        <Route  path="reports/activity"  element={<ActivityDashboard/>}/>
+                        <Route  path="reports/financial"  element={<GovernmentReport/>}/>
                     </Route>
                 </Routes>
             </AuthProvider>

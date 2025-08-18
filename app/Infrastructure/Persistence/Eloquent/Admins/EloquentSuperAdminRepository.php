@@ -46,13 +46,14 @@ class EloquentSuperAdminRepository implements SuperAdminRepositoriesInterface
               //  dd(  $charity->events
                 //    ->flatMap-> voluntee);
                 $volunteerCount = $charity->events
-                    ->flatMap-> volunteer
+                    ->flatMap-> acceptedVolunteers
                     ->pluck('volunteer_id')
                     ->unique()
                     ->count();
 
                 // Count distinct beneficiaries (requests)
                 $beneficiaryCount = DB::table('requests')
+                    ->where('status','Accepted')
                     ->where('charity_id', $charity->id)
                     ->distinct('beneficiary_id')
                     ->count('beneficiary_id');
@@ -60,6 +61,7 @@ class EloquentSuperAdminRepository implements SuperAdminRepositoriesInterface
                 // Count distinct donors
                 $donorCount = DB::table('donations')
                     ->select('email', DB::raw('COUNT(*) as total_donations'))
+                    ->where('status','Accepted')
                     ->groupBy('email')
                     ->get();
 

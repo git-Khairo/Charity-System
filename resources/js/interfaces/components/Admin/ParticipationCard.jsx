@@ -6,6 +6,7 @@ import {
 } from "react-icons/fi";
 import usePost from "../../../services/API/usePost";
 
+
 // Field icons
 const fieldIcons = {
     Developmental: <FiStar />,
@@ -59,51 +60,44 @@ const categoryColors = {
     technical: "bg-green-100 text-green-800",
 };
 
-
 const ParticipationCard = ({ isOpen, onClose, request }) => {
     const [status, setStatus] = useState(request.status);
     const { post, loading } = usePost();
 
-    // State for showing success/error popup
-    const [popup, setPopup] = useState({
-        open: false,
-        success: false,
-        message: "",
-    });
+    const [popup, setPopup] = useState({ open: false, success: false, message: "" });
 
     if (!isOpen) return null;
 
-    const formatDate = (dateString) =>
-        new Date(dateString).toLocaleDateString();
+    const formatDate = (dateString) => new Date(dateString).toLocaleDateString();
 
     const preferredFields = Object.entries(request)
         .filter(([key, value]) => fieldLabels[key] && value === 1)
         .map(([key]) => key);
 
-    const handleAccept = async () => {
+    const updateStatus = async (newStatus) => {
         try {
             const payload = {
                 event_id: request.event_id,
                 volunteer_id: request.volunteer_id,
-                participation_id:request.id,
-                status: "Accepted",
+                participation_id: request.id,
+                status: newStatus,
             };
 
             const result = await post(`/api/event/accept_volunteer`, payload);
 
             if (result) {
-                setStatus("Accepted");
+                setStatus(newStatus);
                 setPopup({
                     open: true,
                     success: true,
-                    message: `${request.full_name} has been successfully accepted!`,
+                    message: `${request.full_name} has been successfully ${newStatus.toLowerCase()}!`,
                 });
             }
         } catch (err) {
             setPopup({
                 open: true,
                 success: false,
-                message: "Something went wrong while accepting the request. Please try again.",
+                message: `Something went wrong while updating the request to ${newStatus}. Please try again.`,
             });
         }
     };
@@ -165,15 +159,27 @@ const ParticipationCard = ({ isOpen, onClose, request }) => {
                         </button>
 
                         <button
-                            onClick={handleAccept}
-                            disabled={loading || status === "Accepted"}
+                            onClick={() => updateStatus("Accepted")}
+                            disabled={loading || status === "Accepted" || status === "Rejected"}
                             className={`flex-1 py-3 rounded-lg shadow transition ${
-                                status === "Accepted"
+                                status === "Accepted" || status === "Rejected"
                                     ? "bg-gray-400 text-white cursor-not-allowed"
                                     : "bg-green-600 text-white hover:bg-green-700"
                             }`}
                         >
-                            {loading ? "Accepting..." : status === "Accepted" ? "Accepted" : "Accept"}
+                            {loading ? "Processing..." : status === "Accepted" ? "Accepted" : "Accept"}
+                        </button>
+
+                        <button
+                            onClick={() => updateStatus("Rejected")}
+                            disabled={loading || status === "Rejected" || status === "Accepted"}
+                            className={`flex-1 py-3 rounded-lg shadow transition ${
+                                status === "Rejected" || status === "Accepted"
+                                    ? "bg-gray-400 text-white cursor-not-allowed"
+                                    : "bg-red-600 text-white hover:bg-red-700"
+                            }`}
+                        >
+                            {loading ? "Processing..." : status === "Rejected" ? "Rejected" : "Reject"}
                         </button>
                     </div>
                 </div>

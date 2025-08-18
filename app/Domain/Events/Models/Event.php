@@ -55,6 +55,11 @@ class Event extends Model
         return $this->hasMany(participation::class);
     }
 
+    public function acceptedVolunteers()
+    {
+        return $this->hasMany(participation::class)->where('status', 'Accepted');
+    }
+
     protected static function newFactory()
     {
         return \Database\Factories\EventFactory::new();

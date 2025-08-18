@@ -26,6 +26,7 @@ class FinancialReport
         $start = Carbon::createFromFormat('Y-m', $data['start'])->startOfMonth();
         $end = Carbon::createFromFormat('Y-m', $data['end'])->endOfMonth();
 
+
         $charityId = $data['charity_id'];
 
         $validData=[

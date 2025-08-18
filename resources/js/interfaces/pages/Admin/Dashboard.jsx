@@ -96,8 +96,8 @@ const Dashboard = () => {
                 </svg>
             ),
             subItems: [
-                { label: 'Activity Report', path: '/reports/activity' },
-                { label: 'Financial Report', path: '/reports/financial' },
+                { label: 'Activity Report', path: `/dashboard/${id}/reports/activity`},
+                { label: 'Financial Report', path: `/dashboard/${id}/reports/financial` },
             ],
         },
     ];

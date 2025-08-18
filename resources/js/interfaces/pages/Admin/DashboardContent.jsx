@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useOutletContext, useParams } from 'react-router-dom';
 import Chart from 'chart.js/auto';
 import { useFetchCharityDashboardData } from "../../../core/Admin/usecase/useFetchCharityDashboardData";
+import {useFetchParticipationRequests} from "../../../core/Admin/usecase/ useFetchParticipationRequests";
+import ParticipationCard from "../../components/Admin/ParticipationCard";
 
 const DashboardContent = () => {
     const { authUser } = useOutletContext();
@@ -12,17 +14,22 @@ const DashboardContent = () => {
     const availableYears = Array.from({ length: 5 }, (_, i) => `${currentYear - i}`);
     const [selectedYear, setSelectedYear] = useState(`${currentYear}`);
 
+    const { fetchParticipationRequests, participationData } = useFetchParticipationRequests({ id });
+    console.log(participationData);
+    const [selectedParticipationRequest, setSelectedParticipationRequest] = useState(null);
+
+    useEffect(() => {
+        fetchParticipationRequests();
+    }, [id]);
+
+    const openParticipationCard = (request) => setSelectedParticipationRequest(request);
+    const closeParticipationCard = () => setSelectedParticipationRequest(null);
+
     const { setChartData, chartData, metrics, checkboxes, setCheckboxes, loading, error } =
         useFetchCharityDashboardData(selectedYear);
 
     console.log(chartData);
 
-    const [requests, setRequests] = useState([
-        { id: 1, type: 'New Volunteer Application', details: 'John Doe - Food Drive', status: 'pending' },
-        { id: 2, type: 'Donation Request', details: 'Jane Smith - $100', status: 'pending' },
-        { id: 3, type: 'Beneficiary Application', details: 'The Miller Family', status: 'pending' },
-        { id: 4, type: 'New Volunteer Application', details: 'Emily White - Community Garden', status: 'pending' },
-    ]);
 
     const chartRef = useRef(null);
     const chartInstanceRef = useRef(null);
@@ -157,44 +164,40 @@ const DashboardContent = () => {
                     </div>
                 </div>
 
-                {/* Recent Requests Card */}
+                {/* Recent Requests Card */}{/* Participation Requests Card */}
                 <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-lg transition-shadow duration-300">
-                    <h2 className="text-xl font-bold text-gray-900 mb-4">Recent Requests</h2>
+                    <h2 className="text-xl font-bold text-gray-900 mb-4">Participation Requests</h2>
                     <div className="space-y-4">
-                        {requests.map((request, index) => (
-                            <React.Fragment key={request.id}>
-                                <div className="flex items-start justify-between">
-                                    <div>
-                                        <p className="font-semibold text-sm text-gray-900">{request.type}</p>
-                                        <p className="text-xs text-gray-500 mt-1">{request.details}</p>
-                                        {request.status !== 'pending' && (
-                                            <p className="text-xs font-medium text-gray-600 mt-1">
-                                                Status: {request.status.charAt(0).toUpperCase() + request.status.slice(1)}
-                                            </p>
-                                        )}
-                                    </div>
-                                    {request.status === 'pending' ? (
-                                        <div className="flex gap-2 flex-shrink-0">
-                                            <button
-                                                className="bg-green-50 text-green-600 py-1.5 px-4 rounded-md text-sm font-semibold hover:bg-green-100 focus:ring-2 focus:ring-green-500"
-                                                onClick={() => handleRequestAction(request.id, 'Accepted')}
-                                            >
-                                                Accept
-                                            </button>
-                                            <button
-                                                className="bg-red-50 text-red-600 py-1.5 px-4 rounded-md text-sm font-semibold hover:bg-red-100 focus:ring-2 focus:ring-red-500"
-                                                onClick={() => handleRequestAction(request.id, 'Rejected')}
-                                            >
-                                                Reject
-                                            </button>
-                                        </div>
-                                    ) : null}
+                        {participationData.slice(0, 4).map((request) => (
+                            <div key={request.id} className="flex items-start justify-between">
+                                <div>
+                                    <p className="font-semibold text-sm text-gray-900">{request.full_name}</p>
+                                    <p className="text-xs text-gray-500 mt-1">Study: {request.study}</p>
+                                    <p className="text-xs text-gray-500">Email: {request.email}</p>
+                                    <p className="text-xs text-gray-400 mt-1">
+                                        {new Date(request.created_at).toLocaleDateString()}
+                                    </p>
                                 </div>
-                                {index !== requests.length - 1 && <hr className="border-gray-200" />}
-                            </React.Fragment>
+                                <button
+                                    onClick={() => openParticipationCard(request)}
+                                    className="bg-blue-600 text-white py-1.5 px-4 rounded-md text-sm font-semibold hover:bg-blue-700 focus:ring-2 focus:ring-blue-500"
+                                >
+                                    View
+                                </button>
+                            </div>
                         ))}
                     </div>
                 </div>
+
+                {/* Participation Card Modal */}
+                {selectedParticipationRequest && (
+                    <ParticipationCard
+                        isOpen={!!selectedParticipationRequest}
+                        onClose={closeParticipationCard}
+                        request={selectedParticipationRequest}
+                        onRefresh={fetchParticipationRequests}
+                    />
+                )}
             </div>
         </main>
     );
