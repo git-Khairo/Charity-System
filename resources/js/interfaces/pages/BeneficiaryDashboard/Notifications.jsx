@@ -1,12 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { NotificationIcon } from '../../components/Volunteer/SharedComponents';
 import NotificationModal from '../../components/Volunteer/NotificationModal';
 import { formatDistanceToNow } from 'date-fns';
+import {usePagination} from "../../../services/Hooks/usePagination";
+import Pagination from "../../components/Pagination";
 
 const Notifications = () => {
-    const { notifications, darkMode } = useOutletContext(); // Get darkMode too
+    const { notifications, darkMode } = useOutletContext();
     const [selectedNotification, setSelectedNotification] = useState(null);
+
+    // Pagination
+    const {
+        currentPage,
+        setCurrentPage,
+        itemsPerPage,
+        setItemsPerPage,
+        totalPages,
+        paginatedData,
+    } = usePagination(notifications || [], 5); // 5 notifications per page
+
+    useEffect(() => {
+        setCurrentPage(1); // Reset page when notifications change
+    }, [notifications]);
 
     return (
         <section
@@ -19,10 +35,10 @@ const Notifications = () => {
             <h2 className="text-2xl font-bold mb-6">My Notifications</h2>
 
             <div className="flex flex-col gap-6">
-                {notifications?.length === 0 ? (
+                {paginatedData.length === 0 ? (
                     <p className="text-center text-gray-500">No notifications available</p>
                 ) : (
-                    notifications.map((notification, index) => (
+                    paginatedData.map((notification, index) => (
                         <div
                             key={index}
                             className={`rounded-2xl p-6 flex flex-col justify-between shadow-lg hover:shadow-xl transition duration-300 border ${
@@ -61,6 +77,20 @@ const Notifications = () => {
                     ))
                 )}
             </div>
+
+            {/* Pagination */}
+            {totalPages > 0 && (
+                <div className="mt-6 flex justify-center">
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        itemsPerPage={itemsPerPage}
+                        setCurrentPage={setCurrentPage}
+                        setItemsPerPage={setItemsPerPage}
+                        filteredData={notifications}
+                    />
+                </div>
+            )}
 
             <NotificationModal
                 isOpen={!!selectedNotification}

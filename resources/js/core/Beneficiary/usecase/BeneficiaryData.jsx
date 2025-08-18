@@ -11,7 +11,7 @@ export const colors = {
 };
 
 export const statusColor = {
-  "Under Review": "text-yellow-500",
+  "pending": "text-yellow-500",
   Accepted: "text-green-600",
   Rejected: "text-red-600",
 };

@@ -125,6 +125,7 @@ class VolunteerController extends Controller
      * */
     public function applyForEvent(ApplyEventRequest $request,ApplyForEvents $useCase,$id){
 
+
         $response=$useCase->applyForEvent($request->validated(),$id);
 
         return response()->json(['message' => 'apply done successfully', 'response' => $response],201);

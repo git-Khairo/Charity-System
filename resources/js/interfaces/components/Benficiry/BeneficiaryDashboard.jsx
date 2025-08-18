@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Outlet, NavLink, useParams } from "react-router-dom";
+import { Outlet, NavLink, useParams, useLocation } from "react-router-dom";
 import EditProfileModal from "./EditProfileModal";
 import { useBeneficiaryData } from "../../../core/Beneficiary/usecase/useBeneficiaryData";
-import { useApplications } from "../../../core/Beneficiary/usecase/useApplications";
 import { useFetchUserDashboardData } from "../../../core/Beneficiary/usecase/useFetchUserDashboardData";
 import { colors } from "../../../core/Beneficiary/usecase/BeneficiaryData";
 import { AuthContext } from "../AuthContext";
@@ -14,6 +13,7 @@ export default function BeneficiaryDashboard() {
     const { login, auth } = useContext(AuthContext);
     const [authUser, setAuthUser] = useState(null);
     const { id } = useParams();
+    const location = useLocation(); // detect route changes
 
     const {
         fetchDashboardData,
@@ -25,25 +25,6 @@ export default function BeneficiaryDashboard() {
         error,
     } = useFetchUserDashboardData();
 
-    console.log(userData);
-
-    useEffect(() => {
-        if (
-            auth.isAuthenticated &&
-            authUser &&
-            authUser.id === parseInt(id) &&
-            authUser.roles.some((role) => role.name === "Beneficiary")
-        ) {
-            fetchDashboardData();
-        }
-    }, [id, authUser]);
-
-    useEffect(() => {
-        if (auth.isAuthenticated) {
-            setAuthUser(auth.user.valid.user);
-        }
-    }, [auth.isAuthenticated, id]);
-
     const {
         formEdit,
         isEditing,
@@ -53,8 +34,26 @@ export default function BeneficiaryDashboard() {
         handleFormChange,
     } = useBeneficiaryData();
 
+    // Set auth user
+    useEffect(() => {
+        if (auth.isAuthenticated) {
+            setAuthUser(auth.user.valid.user);
+        }
+    }, [auth.isAuthenticated, id]);
 
+    // Fetch dashboard data on authUser set or route change
+    useEffect(() => {
+        if (
+            auth.isAuthenticated &&
+            authUser &&
+            authUser.id === parseInt(id) &&
+            authUser.roles.some((role) => role.name === "Beneficiary")
+        ) {
+            fetchDashboardData();
+        }
+    }, [location.pathname, authUser]); // refresh on tab change
 
+    // Dark mode styling
     useEffect(() => {
         document.body.style.backgroundColor = darkMode
             ? colors.backgroundDark
@@ -62,41 +61,11 @@ export default function BeneficiaryDashboard() {
         document.body.style.color = darkMode ? colors.textDark : colors.textLight;
     }, [darkMode]);
 
-    if (loading) {
-        return (
-            <div className="flex items-center justify-center min-h-screen bg-black text-white">
-                <p>Loading profile...</p>
-            </div>
-        );
-    }
-
-    if (error) {
-        return (
-            <div className="flex items-center justify-center min-h-screen bg-black text-red-500">
-                <p>Error loading profile: {error}</p>
-            </div>
-        );
-    }
-
-    if (
-        !authUser ||
-        authUser.id !== parseInt(id) ||
-        authUser.roles.some((role) => role.name !== "Beneficiary")
-    ) {
-        return (
-            <div className="flex items-center justify-center min-h-screen bg-black text-white">
-                <p>Access denied.</p>
-            </div>
-        );
-    }
-
-    if (!userData) {
-        return (
-            <div className="flex items-center justify-center min-h-screen bg-black text-white">
-                <p>No user data available.</p>
-            </div>
-        );
-    }
+    if (loading) return <div className="flex items-center justify-center min-h-screen bg-black text-white"><p>Loading profile...</p></div>;
+    if (error) return <div className="flex items-center justify-center min-h-screen bg-black text-red-500"><p>Error loading profile: {error}</p></div>;
+    if (!authUser || authUser.id !== parseInt(id) || authUser.roles.some((role) => role.name !== "Beneficiary"))
+        return <div className="flex items-center justify-center min-h-screen bg-black text-white"><p>Access denied.</p></div>;
+    if (!userData) return <div className="flex items-center justify-center min-h-screen bg-black text-white"><p>No user data available.</p></div>;
 
     return (
         <div
@@ -107,22 +76,16 @@ export default function BeneficiaryDashboard() {
             }}
         >
             <main className="flex-grow container mx-auto p-6 space-y-10">
-                {/* User Info Header */}
-                <UserInfo
-                    userData={userData}
-                    darkMode={darkMode}
-                    openEdit={openEdit}
-                />
+                <UserInfo userData={userData} darkMode={darkMode} openEdit={openEdit} />
 
                 {/* Navigation */}
                 <div className="flex justify-center space-x-6 my-4 text-lg font-medium">
                     <NavLink
                         to=""
                         end
+                        onClick={() => fetchDashboardData()}
                         className={({ isActive }) =>
-                            `flex items-center gap-2 px-4 py-2 rounded-md ${
-                                isActive ? "bg-blue-600 text-white" : "hover:bg-blue-100"
-                            }`
+                            `flex items-center gap-2 px-4 py-2 rounded-md ${isActive ? "bg-blue-600 text-white" : "hover:bg-blue-100"}`
                         }
                     >
                         <EventIcon /> Applications
@@ -130,10 +93,9 @@ export default function BeneficiaryDashboard() {
 
                     <NavLink
                         to="feedbacks"
+                        onClick={() => fetchDashboardData()}
                         className={({ isActive }) =>
-                            `flex items-center gap-2 px-4 py-2 rounded-md ${
-                                isActive ? "bg-blue-600 text-white" : "hover:bg-blue-100"
-                            }`
+                            `flex items-center gap-2 px-4 py-2 rounded-md ${isActive ? "bg-blue-600 text-white" : "hover:bg-blue-100"}`
                         }
                     >
                         <FeedbackIcon /> Feedback
@@ -141,10 +103,9 @@ export default function BeneficiaryDashboard() {
 
                     <NavLink
                         to="notifications"
+                        onClick={() => fetchDashboardData()}
                         className={({ isActive }) =>
-                            `flex items-center gap-2 px-4 py-2 rounded-md ${
-                                isActive ? "bg-blue-600 text-white" : "hover:bg-blue-100"
-                            }`
+                            `flex items-center gap-2 px-4 py-2 rounded-md ${isActive ? "bg-blue-600 text-white" : "hover:bg-blue-100"}`
                         }
                     >
                         <NotificationIcon /> Notifications
@@ -152,10 +113,9 @@ export default function BeneficiaryDashboard() {
 
                     <NavLink
                         to="MyCharities"
+                        onClick={() => fetchDashboardData()}
                         className={({ isActive }) =>
-                            `flex items-center gap-2 px-4 py-2 rounded-md ${
-                                isActive ? "bg-blue-600 text-white" : "hover:bg-blue-100"
-                            }`
+                            `flex items-center gap-2 px-4 py-2 rounded-md ${isActive ? "bg-blue-600 text-white" : "hover:bg-blue-100"}`
                         }
                     >
                         <NotificationIcon /> MyCharities
@@ -164,7 +124,7 @@ export default function BeneficiaryDashboard() {
 
                 {/* Nested Page Content */}
                 <div className="mt-6">
-                    <Outlet context={{applications,notifications,feedbacks,authUser}}/>
+                    <Outlet context={{ applications, notifications, feedbacks, authUser }} />
                 </div>
             </main>
 

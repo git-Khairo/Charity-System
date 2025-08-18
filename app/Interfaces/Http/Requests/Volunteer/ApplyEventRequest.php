@@ -30,6 +30,18 @@ class ApplyEventRequest extends FormRequest
             'availability_for_volunteering' => 'required',
             'preferred_time' => 'required',
 
+            'Developmental' => 'required',
+            'Child_care' => 'required',
+            'Training' => 'required',
+            'Shelter_and_relief' => 'required',
+            'Events_and_conferences' => 'required',
+            'Awareness_campaigns' => 'required',
+            'Elderly_care' => 'required',
+            'Supporting_women' => 'required',
+            'Maintenance_technician' => 'required',
+            'field_media_photography' => 'required',
+            'Administrative_field' => 'required',
+
         ];
     }
 }

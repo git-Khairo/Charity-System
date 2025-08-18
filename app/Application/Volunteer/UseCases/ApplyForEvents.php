@@ -24,6 +24,7 @@ class ApplyForEvents
       $volunteer=Auth::user();
       $event=$this->eventRepo->find($id);
 
+
         // Check for duplicate application
         if ($volunteer->participation()->where('event_id', $event->id)->exists()) {
             return ['message' => 'You have already applied to this event.'];

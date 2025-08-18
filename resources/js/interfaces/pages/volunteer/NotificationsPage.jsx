@@ -1,51 +1,66 @@
-import React, { useEffect, useState } from 'react';
-import {useOutletContext, useParams} from 'react-router-dom';
-import { NotificationIcon } from '../../components/Volunteer/SharedComponents';
-import NotificationModal from '../../components/Volunteer/NotificationModal';
-import { formatDistanceToNow } from 'date-fns';
-import useGet from "../../../services/API/useGet";
-import {useFetchNotifications} from "../../../core/Volunteer/usecase/useFetchNotifications";
-
+import React, { useEffect, useState } from "react";
+import { useOutletContext, useParams } from "react-router-dom";
+import { NotificationIcon } from "../../components/Volunteer/SharedComponents";
+import NotificationModal from "../../components/Volunteer/NotificationModal";
+import { formatDistanceToNow } from "date-fns";
+import { useFetchNotifications } from "../../../core/Volunteer/usecase/useFetchNotifications";
+import Pagination from "../../components/Pagination";
+import { usePagination } from "../../../services/Hooks/usePagination";
 
 const NotificationsPage = () => {
-    const {user,authUser} = useOutletContext();
+    const { user, authUser } = useOutletContext();
     const { id } = useParams();
     const [selectedNotification, setSelectedNotification] = useState(null);
-    const { fetchNotifications, notifications, loading, error } = useFetchNotifications();
-
+    const { fetchNotifications, notifications, loading, error } =
+        useFetchNotifications();
 
     useEffect(() => {
         fetchNotifications();
     }, []);
 
-    console.log(authUser.id===parseInt(id) );
+    // Pagination hook
+    const {
+        currentPage,
+        setCurrentPage,
+        itemsPerPage,
+        setItemsPerPage,
+        totalPages,
+        paginatedData,
+    } = usePagination(notifications || [], 6);
 
-    if (authUser.id!==parseInt(id) || authUser.roles.some(role => role.name !== 'Volunteer')){
+    // Reset to first page when notifications change
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [notifications]);
+
+    // Access control
+    if (
+        authUser.id !== parseInt(id) ||
+        !authUser.roles.some((role) => role.name === "Volunteer")
+    ) {
         return (
             <div className="flex items-center justify-center min-h-screen bg-black text-white">
-                <p>Fuck off.....</p>
+                <p>Access denied</p>
             </div>
         );
     }
 
-   if (loading) {
+    if (loading) {
         return (
             <div className="flex items-center justify-center min-h-screen bg-black text-white">
-                <p>Loading profile...</p>
+                <p>Loading notifications...</p>
             </div>
         );
     }
 
-    // Error state
     if (error) {
         return (
             <div className="flex items-center justify-center min-h-screen bg-black text-red-500">
-                <p>Error loading profile: {error}</p>
+                <p>Error loading notifications: {error}</p>
             </div>
         );
     }
 
-    // If user is null (just in case)
     if (!user) {
         return (
             <div className="flex items-center justify-center min-h-screen bg-black text-white">
@@ -54,13 +69,18 @@ const NotificationsPage = () => {
         );
     }
 
+    if (!notifications || notifications.length === 0) {
+        return (
+            <div className="flex items-center justify-center min-h-screen bg-black text-white">
+                <p>No notifications found.</p>
+            </div>
+        );
+    }
+
     return (
         <main className="container mx-auto flex-1 px-4 py-8 sm:px-6 lg:px-8">
-            {loading && <p className="text-white">Loading notifications...</p>}
-            {error && <p className="text-red-500">Error: {error}</p>}
-
             <div className="flex flex-col gap-6">
-                {notifications?.map((notification, index) => (
+                {paginatedData.map((notification, index) => (
                     <div
                         key={index}
                         className="bg-[#111111] rounded-lg shadow-md p-6 transition-transform duration-150 hover:shadow-lg flex flex-col h-full"
@@ -75,11 +95,13 @@ const NotificationsPage = () => {
                             </h3>
                             <p className="text-sm text-gray-400 line-clamp-3 mb-4">
                                 {notification.message.slice(0, 100)}
-                                {notification.message.length > 100 && '...'}
+                                {notification.message.length > 100 && "..."}
                             </p>
                             {notification.created_at && (
                                 <p className="text-xs text-gray-400">
-                                    {formatDistanceToNow(new Date(notification.created_at), { addSuffix: true })}
+                                    {formatDistanceToNow(new Date(notification.created_at), {
+                                        addSuffix: true,
+                                    })}
                                 </p>
                             )}
                         </div>
@@ -95,6 +117,16 @@ const NotificationsPage = () => {
                     </div>
                 ))}
             </div>
+
+            {/* Pagination Component */}
+            <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                itemsPerPage={itemsPerPage}
+                setCurrentPage={setCurrentPage}
+                setItemsPerPage={setItemsPerPage}
+                filteredData={notifications}
+            />
 
             <NotificationModal
                 isOpen={!!selectedNotification}

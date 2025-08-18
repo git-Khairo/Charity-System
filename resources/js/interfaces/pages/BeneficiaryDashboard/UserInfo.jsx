@@ -8,7 +8,7 @@ return (
 className="bg-white rounded-xl shadow p-6 flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-10"
 style={{ backgroundColor: darkMode ? "#1e293b" : "white" }}
 >
-<img src={userData.avatar} alt="User Avatar" className="rounded-full w-32 h-32 border-4 border-blue-400" />
+
 <div className="flex-grow">
 <h2 className="text-3xl font-bold mb-4">Beneficiary Details</h2>
 <p>

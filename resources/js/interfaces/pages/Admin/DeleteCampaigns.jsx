@@ -11,6 +11,7 @@ const DeleteCampaigns = () => {
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
     const [isSuccessOpen, setIsSuccessOpen] = useState(false);
     const [campaignToDelete, setCampaignToDelete] = useState(null);
+    const campaignsPerPage = 6;
 
     const { authUser, charity } = useOutletContext();
     const id = charity.id;
@@ -137,7 +138,7 @@ const DeleteCampaigns = () => {
                         <Pagination
                             currentPage={currentPage}
                             totalPages={totalPages}
-                            itemsPerPage={itemsPerPage}
+                            itemsPerPage={campaignsPerPage}
                             setCurrentPage={setCurrentPage}
                             setItemsPerPage={setItemsPerPage}
                             paginate={paginate}

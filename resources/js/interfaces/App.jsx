@@ -50,7 +50,7 @@ const App = () => {
                     <Route path='/donate/:id' element={<DonationForm />} />
                     <Route path='/charity/:id' element={<CharityDetails />} />
                     <Route path="/beneficiary/:id" element={<BeneficiaryDashboard />}>
-                        <Route path='profile' element={<Applications />} />
+                        <Route path='' element={<Applications />} />
                         <Route path="notifications" element={<Notifications />} />
                         <Route path="feedbacks" element={<Feedbacks />} />
                         <Route path="myCharities" element={<MyCharities />} />

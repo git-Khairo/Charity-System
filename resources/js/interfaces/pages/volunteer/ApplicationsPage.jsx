@@ -1,6 +1,8 @@
 import React, {useEffect} from 'react';
 import {useOutletContext, useParams} from 'react-router-dom';
 import {useFetchUserEvents} from "../../../core/Volunteer/usecase/useFetchUserEvent";
+import Pagination from "../../components/Pagination";
+import {usePagination} from "../../../services/Hooks/usePagination";
 
 
 const ApplicationsPage = () => {
@@ -22,6 +24,19 @@ const ApplicationsPage = () => {
             </div>
         );
     }
+
+    const applications = userEvent ;
+
+    const {
+        currentPage,
+        setCurrentPage,
+        itemsPerPage,
+        setItemsPerPage,
+        totalPages,
+        paginatedData,
+    } = usePagination(applications, 6);
+
+
 
 
     if (loading) {
@@ -58,7 +73,8 @@ const ApplicationsPage = () => {
         );
     }
 
-    const applications = userEvent ;
+
+
 
     console.log(applications);
 
@@ -102,6 +118,16 @@ const ApplicationsPage = () => {
           </div>
         ))}
       </div>
+
+        {/* Pagination Component */}
+        <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            itemsPerPage={itemsPerPage}
+            setCurrentPage={setCurrentPage}
+            setItemsPerPage={setItemsPerPage}
+            filteredData={applications}
+        />
     </main>
   );
 };

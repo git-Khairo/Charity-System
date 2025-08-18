@@ -12,6 +12,7 @@ const CreateCampaign = () => {
     const charityId = charity.id;
 
     const { fetchCampaigns, campaigns, loading, error } = useFetchCampaignByCharity({ id: charityId });
+    const campaignsPerPage = 6;
 
     useEffect(() => {
         fetchCampaigns();
@@ -108,7 +109,7 @@ const CreateCampaign = () => {
                         <Pagination
                             currentPage={currentPage}
                             totalPages={totalPages}
-                            itemsPerPage={itemsPerPage}
+                            itemsPerPage={campaignsPerPage}
                             setCurrentPage={setCurrentPage}
                             setItemsPerPage={setItemsPerPage}
                             paginate={paginate}

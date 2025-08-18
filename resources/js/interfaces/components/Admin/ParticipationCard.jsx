@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import {
     FiX, FiMail, FiPhone, FiMapPin, FiClock,
     FiHeart, FiBook, FiUsers, FiStar, FiCamera, FiTool, FiCalendar,
     FiCheckCircle, FiXCircle
 } from "react-icons/fi";
 import usePost from "../../../services/API/usePost";
+import {useFetchVolunteer} from "../../../core/Volunteer/usecase/useFetchVolunteer";
 
 
 // Field icons
@@ -66,13 +67,23 @@ const ParticipationCard = ({ isOpen, onClose, request }) => {
 
     const [popup, setPopup] = useState({ open: false, success: false, message: "" });
 
-    if (!isOpen) return null;
+    const { fetchVolunteer, volunteerData, error } = useFetchVolunteer({ id:request.volunteer_id });
+
+    const [qrPopup, setQrPopup] = useState(false);
+
+        if (!isOpen) return null;
 
     const formatDate = (dateString) => new Date(dateString).toLocaleDateString();
 
     const preferredFields = Object.entries(request)
         .filter(([key, value]) => fieldLabels[key] && value === 1)
         .map(([key]) => key);
+
+    console.log(volunteerData);
+
+    useEffect(() => {
+        fetchVolunteer();
+    }, [request.volunteer_id]);
 
     const updateStatus = async (newStatus) => {
         try {
@@ -152,7 +163,7 @@ const ParticipationCard = ({ isOpen, onClose, request }) => {
                     {/* Actions */}
                     <div className="mt-6 flex gap-4">
                         <button
-                            onClick={() => alert(`Finding ${request.full_name}...`)}
+                            onClick={() => setQrPopup(true)}
                             className="flex-1 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
                         >
                             Find Me
@@ -206,6 +217,26 @@ const ParticipationCard = ({ isOpen, onClose, request }) => {
                                 window.location.reload();
                             }}
                             className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
+                        >
+                            Close
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {/* QR Code Popup */}
+            {qrPopup && volunteerData && (
+                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-40 backdrop-blur-sm">
+                    <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 text-center animate-fadeIn">
+                        <h2 className="text-2xl font-bold mb-4 text-gray-900">Volunteer QR Code</h2>
+                        <img
+                            src={volunteerData.qr_code_path}
+                            alt="Volunteer QR Code"
+                            className="mx-auto w-48 h-48"
+                        />
+                        <button
+                            onClick={() => setQrPopup(false)}
+                            className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
                         >
                             Close
                         </button>

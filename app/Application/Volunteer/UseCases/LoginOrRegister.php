@@ -26,7 +26,7 @@ class LoginOrRegister
 
     public function generateAndSaveVolunteerQrCode(int $volunteerId)
     {
-        $url = '127.0.0.1:8000' . '/volunteer/' . $volunteerId;
+        $url = '127.0.0.1:8000' . '/volunteer/' . $volunteerId . '/profile' ;
 
         $builder = new Builder(
             writer: new SvgWriter(),

@@ -1,14 +1,13 @@
+import React, { useEffect } from "react";
+import { statusColor } from "../../../core/Beneficiary/usecase/BeneficiaryData";
+import { useApplications } from "../../../core/Beneficiary/usecase/useApplications";
+import { useOutletContext } from "react-router-dom";
+import Pagination from "../../components/Pagination";
+import { usePagination } from "../../../services/Hooks/usePagination";
+import {formatDistanceToNow} from "date-fns";
 
-
-import React from "react";
-import {statusColor} from "../../../core/Beneficiary/usecase/BeneficiaryData";
-import {useApplications} from "../../../core/Beneficiary/usecase/useApplications";
-import {useOutletContext} from "react-router-dom";
-
-
-export default function Applications({  darkMode }) {
-
-    const {applications} = useOutletContext();
+export default function Applications({ darkMode }) {
+    const { applications } = useOutletContext();
 
     const {
         filterStatus,
@@ -16,7 +15,20 @@ export default function Applications({  darkMode }) {
         filteredApplications,
     } = useApplications(applications || []);
 
-    console.log(filteredApplications);
+    // Pagination
+    const {
+        currentPage,
+        setCurrentPage,
+        itemsPerPage,
+        setItemsPerPage,
+        totalPages,
+        paginatedData,
+    } = usePagination(filteredApplications || [], 5); // 5 items per page
+
+    useEffect(() => {
+        setCurrentPage(1); // Reset to first page when filteredApplications change
+    }, [filteredApplications]);
+
     return (
         <section
             className="bg-white rounded-xl shadow p-6"
@@ -26,7 +38,7 @@ export default function Applications({  darkMode }) {
 
             {/* Filter Buttons */}
             <div className="mb-4 flex flex-wrap gap-3">
-                {["All", "Under Review", "Accepted", "Rejected"].map((status) => (
+                {["All", "pending", "Accepted", "Rejected"].map((status) => (
                     <button
                         key={status}
                         onClick={() => setFilterStatus(status)}
@@ -42,13 +54,11 @@ export default function Applications({  darkMode }) {
             </div>
 
             {/* List */}
-
-
-            {filteredApplications.length === 0 ? (
+            {paginatedData.length === 0 ? (
                 <p className="text-center text-gray-500">No applications found</p>
             ) : (
                 <ul className="space-y-6">
-                    {filteredApplications.map((app) => (
+                    {paginatedData.map((app) => (
                         <li
                             key={app.id}
                             className={`rounded-2xl p-6 flex flex-col md:flex-row justify-between items-start md:items-center transition duration-300 ease-in-out border shadow-lg hover:shadow-xl ${
@@ -63,7 +73,7 @@ export default function Applications({  darkMode }) {
                             </div>
                             <div className="text-right">
                                 <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
-                                    Date: {app.date}
+                                    Date:  {formatDistanceToNow(new Date(app.date), { addSuffix: true })}
                                 </p>
                                 <p className={`text-base font-semibold ${statusColor[app.status]}`}>
                                     Status: {app.status}
@@ -73,7 +83,20 @@ export default function Applications({  darkMode }) {
                     ))}
                 </ul>
             )}
-        </section>
 
+            {/* Pagination */}
+            {totalPages > 1 && (
+                <div className="mt-6 flex justify-center">
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        itemsPerPage={itemsPerPage}
+                        setCurrentPage={setCurrentPage}
+                        setItemsPerPage={setItemsPerPage}
+                        filteredData={filteredApplications}
+                    />
+                </div>
+            )}
+        </section>
     );
 }

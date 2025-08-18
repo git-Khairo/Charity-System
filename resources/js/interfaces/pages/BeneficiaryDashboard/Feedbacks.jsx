@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import {
     EventIcon,
@@ -10,12 +10,28 @@ import {
     DesignServicesIcon,
 } from '../../components/Volunteer/SharedComponents';
 import FeedbackModal from '../../components/Volunteer/FeedbackModal';
+import Pagination from '../../components/Pagination';
+import { usePagination } from '../../../services/Hooks/usePagination';
 
 const Feedback = () => {
-    const { feedbacks, darkMode } = useOutletContext(); // darkMode passed from parent
+    const { feedbacks, darkMode } = useOutletContext();
     const [selectedFeedback, setSelectedFeedback] = useState(null);
 
-    // Simple icon selector based on feedback type/title
+    // Pagination
+    const {
+        currentPage,
+        setCurrentPage,
+        itemsPerPage,
+        setItemsPerPage,
+        totalPages,
+        paginatedData,
+    } = usePagination(feedbacks || [], 5); // 5 feedbacks per page
+
+    useEffect(() => {
+        setCurrentPage(1); // Reset page when feedbacks change
+    }, [feedbacks]);
+
+    // Icon selector
     const getIcon = (title = '') => {
         const lower = title.toLowerCase();
         if (lower.includes('event')) return <EventIcon className="w-5 h-5 mr-2" />;
@@ -37,10 +53,10 @@ const Feedback = () => {
             <h2 className="text-2xl font-bold mb-6">My Feedback</h2>
 
             <div className="flex flex-col gap-6">
-                {feedbacks.length === 0 ? (
+                {paginatedData.length === 0 ? (
                     <p className="text-gray-500 text-center">No feedbacks available.</p>
                 ) : (
-                    feedbacks.map((feedback, index) => (
+                    paginatedData.map((feedback, index) => (
                         <div
                             key={feedback.id || index}
                             className={`rounded-2xl p-6 flex flex-col justify-between shadow-lg hover:shadow-xl transition duration-300 border ${
@@ -75,6 +91,20 @@ const Feedback = () => {
                     ))
                 )}
             </div>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+                <div className="mt-6 flex justify-center">
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        itemsPerPage={itemsPerPage}
+                        setCurrentPage={setCurrentPage}
+                        setItemsPerPage={setItemsPerPage}
+                        filteredData={feedbacks}
+                    />
+                </div>
+            )}
 
             <FeedbackModal
                 isOpen={!!selectedFeedback}
