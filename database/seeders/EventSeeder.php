@@ -27,7 +27,7 @@ class EventSeeder extends Seeder
                         'description_en' => 'A free educational camp for children with recreational activities and academic support.',
                         'location_ar' => 'مقر الجمعية - دمشق',
                         'location_en' => 'Charity Headquarters - Damascus',
-                        'image' => 'https://images.unsplash.com/photo-1591130234524-2c58efb4e9c7',
+                        'image' => json_encode(['/storage/events/event8.jpeg', '/storage/events/event24.jpeg', '/storage/events/event19.jpeg', '/storage/events/event9.jpeg']),
                     ],
                     [
                         'title_ar' => 'حملة العودة للمدارس',
@@ -37,7 +37,7 @@ class EventSeeder extends Seeder
                         'description_en' => 'Distribution of school bags and stationery for students in need.',
                         'location_ar' => 'دمشق',
                         'location_en' => 'Damascus',
-                        'image' => 'https://images.unsplash.com/photo-1562771247-bb1c9f2b2e4c',
+                        'image' => json_encode(['/storage/events/event5.jpeg', '/storage/events/event15.jpeg', '/storage/events/event22.jpeg']),
                     ],
                 ]
             ],
@@ -53,7 +53,7 @@ class EventSeeder extends Seeder
                         'description_en' => 'Providing free medical consultations in rural areas.',
                         'location_ar' => 'ريف دمشق',
                         'location_en' => 'Rural Damascus',
-                        'image' => 'https://images.unsplash.com/photo-1603398938378-24b62d3ea5e9',
+                        'image' => json_encode(['/storage/events/event7.jpeg', '/storage/events/event25.jpeg']),
                     ],
                     [
                         'title_ar' => 'أسبوع التوعية الصحية',
@@ -63,7 +63,7 @@ class EventSeeder extends Seeder
                         'description_en' => 'Educational campaigns in schools and markets about hygiene and healthy nutrition.',
                         'location_ar' => 'دمشق',
                         'location_en' => 'Damascus',
-                        'image' => 'https://images.unsplash.com/photo-1588776814546-ec47a2f0cb09',
+                        'image' => json_encode(['/storage/events/event2.jpeg', '/storage/events/event12.jpeg', '/storage/events/event17.jpeg']),
                     ],
                 ]
             ],
@@ -79,18 +79,8 @@ class EventSeeder extends Seeder
                         'description_en' => 'Showcase of products from women participating in empowerment programs.',
                         'location_ar' => 'حلب',
                         'location_en' => 'Aleppo',
-                        'image' => 'https://images.unsplash.com/photo-1598970434795-0c54fe7c0642',
-                    ],
-                    [
-                        'title_ar' => 'دورة مهارات القيادة',
-                        'title_en' => 'Leadership Skills Course',
-                        'date' => '2025-09-12',
-                        'description_ar' => 'تدريب نساء على المهارات الإدارية والقيادية.',
-                        'description_en' => 'Training women in administrative and leadership skills.',
-                        'location_ar' => 'دمشق',
-                        'location_en' => 'Damascus',
-                        'image' => 'https://images.unsplash.com/photo-1573497019440-99a5a4f56f4c',
-                    ],
+                        'image' => json_encode(['/storage/events/event21.jpeg']),
+                    ]
                 ]
             ],
             // جمعية دار اليتيم
@@ -105,7 +95,7 @@ class EventSeeder extends Seeder
                         'description_en' => 'A celebration dedicated to orphan children including games and gifts.',
                         'location_ar' => 'حمص',
                         'location_en' => 'Homs',
-                        'image' => 'https://images.unsplash.com/photo-1595526114035-7a5a6b16ef6b',
+                        'image' => json_encode(['/storage/events/event4.jpeg', '/storage/events/event6.jpeg', '/storage/events/event10.jpeg']),
                     ],
                     [
                         'title_ar' => 'مشروع كفالة طالب يتيم',
@@ -115,7 +105,7 @@ class EventSeeder extends Seeder
                         'description_en' => 'Educational support program for orphans through sponsorships.',
                         'location_ar' => 'طرطوس',
                         'location_en' => 'Tartous',
-                        'image' => 'https://images.unsplash.com/photo-1616587892266-3b3d7c8cb0d6',
+                        'image' => json_encode(['/storage/events/event5.jpeg', '/storage/events/event10.jpeg', '/storage/events/event15.jpeg']),
                     ],
                 ]
             ],
@@ -131,7 +121,7 @@ class EventSeeder extends Seeder
                         'description_en' => 'Volunteer day to clean Tartous beach with students and civilians.',
                         'location_ar' => 'طرطوس',
                         'location_en' => 'Tartous',
-                        'image' => 'https://images.unsplash.com/photo-1524492412937-4961d66aa114',
+                        'image' => json_encode(['/storage/events/event12.jpeg']),
                     ],
                     [
                         'title_ar' => 'يوم التشجير الوطني',
@@ -141,7 +131,7 @@ class EventSeeder extends Seeder
                         'description_en' => 'Planting more than 500 trees in collaboration with schools.',
                         'location_ar' => 'اللاذقية',
                         'location_en' => 'Latakia',
-                        'image' => 'https://images.unsplash.com/photo-1501004318641-b39e6451bec6',
+                        'image' => json_encode(['/storage/events/event17.jpeg', '/storage/events/event16.jpeg', '/storage/events/event11.jpeg']),
                     ],
                 ]
             ],
@@ -157,7 +147,7 @@ class EventSeeder extends Seeder
                         'description_en' => 'Distribution of food baskets in needy areas.',
                         'location_ar' => 'دمشق',
                         'location_en' => 'Damascus',
-                        'image' => 'https://images.unsplash.com/photo-1584261454321-379b4f5c74f0',
+                        'image' => json_encode(['/storage/events/event2.jpeg', '/storage/events/event25.jpeg', '/storage/events/event23.jpeg', '/storage/events/event20.jpeg']),
                     ],
                     [
                         'title_ar' => 'حملة الشتاء الدافئ',
@@ -167,7 +157,7 @@ class EventSeeder extends Seeder
                         'description_en' => 'Clothes, blankets, and heating fuel for displaced people.',
                         'location_ar' => 'حلب',
                         'location_en' => 'Aleppo',
-                        'image' => 'https://images.unsplash.com/photo-1603570419985-0c1a7db8c3b9',
+                        'image' => json_encode(['/storage/events/event14.jpeg', '/storage/events/event1.jpeg']),
                     ],
                 ]
             ],
@@ -183,18 +173,8 @@ class EventSeeder extends Seeder
                         'description_en' => 'An event bringing together youth with mentors and investors.',
                         'location_ar' => 'دمشق',
                         'location_en' => 'Damascus',
-                        'image' => 'https://images.unsplash.com/photo-1603570418171-ff779df9b17b',
-                    ],
-                    [
-                        'title_ar' => 'برنامج التدريب الصيفي',
-                        'title_en' => 'Summer Training Program',
-                        'date' => '2025-07-01',
-                        'description_ar' => 'دورات تدريبية في المهارات الرقمية للشباب.',
-                        'description_en' => 'Training courses in digital skills for youth.',
-                        'location_ar' => 'حماة',
-                        'location_en' => 'Hama',
-                        'image' => 'https://images.unsplash.com/photo-1531482615713-2afd69097998',
-                    ],
+                        'image' => json_encode(['/storage/events/event3.jpeg', '/storage/events/event18.jpeg', '/storage/events/event21.jpeg']),
+                    ]
                 ]
             ],
         ];

@@ -1,15 +1,13 @@
 export class Campaign {
-  constructor({ title, location, status, categoryName, charity_id,id,description,updated_at,created_at }) {
+  constructor({ title, location, status, categoryName, charity_id,id,description, images }) {
     this.charityId = this.validateCharityId(charity_id);
     this.title = this.validateTitle(title);
-    // this.description = this.validateDescription(description);
+    this.description = description;
     this.location = this.validateLocation(location);
     this.status = this.validateStatus(status);
     this.categoryName = this.validateCategoryName(categoryName);
     this.id=id;
-    this.description=description;
-    this.updated_at=updated_at;
-      this.created_at=created_at;
+    this.images = images;
   }
 
   validateCharityId(charity_id) {
@@ -41,9 +39,9 @@ export class Campaign {
   // }
 
   validateLocation(location) {
-    // if (!location || typeof location !== 'string' || location.trim().length === 0) {
-    //   throw new Error('Invalid or missing campaign location');
-    // }
+    if (!location || typeof location !== 'string' || location.trim().length === 0) {
+      throw new Error('Invalid or missing campaign location');
+    }
     return location?.trim();
   }
 

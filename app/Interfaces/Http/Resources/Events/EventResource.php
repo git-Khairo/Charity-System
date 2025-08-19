@@ -18,14 +18,13 @@ class EventResource extends JsonResource
             'id'=>$this->id,
             'charity_id' => $this->charity_id,
             'title' => $this->title,
+            'images' => $this->images,
             'description' => $this->description,
             'location' => $this->location,
             'status' => $this->status,
             'capacity' => $this->capacity,
             'NumOfVolunteer' => $this->NumOfVolunteer,
             'categoryName' => $this->charity->category->name,
-            'updated_at'=>$this->updated_at,
-            'created_at'=>$this->created_at,
         ];
     }
 }

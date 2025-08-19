@@ -5,7 +5,7 @@ const CampaignCard = ({ campaign }) => {
     <Link to={`/campaign/${campaign.id}`} className="bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:shadow-md">
       <div className="relative h-48 overflow-hidden">
         <img
-          src={campaign.image}
+          src={campaign.images[0]}
           alt={campaign.title}
           className="w-full h-full object-cover object-top"
         />

@@ -11,7 +11,6 @@ export const useFetchEventById = () => {
         try {
             const result = await get(`/api/event/${id}`);
             if (result) {
-                console.log(result.event);
                 setEvent(result.event);
                 setFetchError(null);
             } else {

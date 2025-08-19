@@ -11,7 +11,6 @@ export const useFetchCampaigns = () => {
     try {
       const result = await get('/api/events');
       if (result) {
-        console.log(result.events);
         // Map API data to Campaign entities
         const validatedCampaigns = result.events.map((item) => {
           try {
@@ -22,8 +21,8 @@ export const useFetchCampaigns = () => {
               location: item.location,
               status: item.status,
               categoryName: item.categoryName,
-              updated_at:item.updated_at,
-              created_at:item.created_at,
+              images: JSON.parse(item.images[0]),
+              description : item.description
             });
           } catch (err) {
             console.log(`Skipping invalid campaign: ${err.message}`);

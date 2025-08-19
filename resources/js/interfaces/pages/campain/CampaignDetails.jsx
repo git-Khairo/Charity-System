@@ -7,7 +7,7 @@ import {useFetchCharityById} from "../../../core/Charity/usecase/useFetchCharity
 const CampaignDetails = () => {
     const [user, setUser] = useState(null);
     const { auth } = useContext(AuthContext);
-    const { id } = useParams(); // assuming route is like /campaign/:id
+    const { id } = useParams();
 
     const {
         fetchEvent,
@@ -15,7 +15,6 @@ const CampaignDetails = () => {
          eventLoading,
          eventError
     } = useFetchEventById();
-   console.log(!eventLoading);
     const {
         fetchCharity,
         charity,
@@ -28,6 +27,7 @@ const CampaignDetails = () => {
         fetchEvent(id);
     }, []);
 
+    console.log(event);
     useEffect(() => {
 
         if (auth.isAuthenticated) {
