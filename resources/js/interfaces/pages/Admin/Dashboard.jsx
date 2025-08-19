@@ -17,7 +17,7 @@ const Dashboard = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [openMenus, setOpenMenus] = useState({});
     const location = useLocation();
-    const [authUser, setAuthUser] = useState(null);
+    const [authUser, setAuthUser] = useState({});
     const [charity, setCharity] = useState(null);
     const { login,auth } = useContext(AuthContext);
     const { id } = useParams();
