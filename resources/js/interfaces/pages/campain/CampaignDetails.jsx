@@ -12,8 +12,8 @@ const CampaignDetails = () => {
     const {
         fetchEvent,
         event,
-         eventLoading,
-         eventError
+        eventLoading,
+        eventError
     } = useFetchEventById();
     const {
         fetchCharity,
@@ -27,7 +27,6 @@ const CampaignDetails = () => {
         fetchEvent(id);
     }, []);
 
-    console.log(event);
     useEffect(() => {
 
         if (auth.isAuthenticated) {
@@ -37,8 +36,8 @@ const CampaignDetails = () => {
     }, [auth.isAuthenticated,id,user]);
 
     useEffect(() => {
-        if (event && event.charity_id) {
-            fetchCharity(event.charity_id);
+        if (event && event.charityId) {
+            fetchCharity(event.charityId);
         }
     }, [event]);
 
@@ -79,13 +78,15 @@ const CampaignDetails = () => {
         );
     }
 
+    console.log(event);
+
     return (
         <div className="bg-[#f8fafc] text-[#1e293b] font-sans antialiased">
             {/* Header Section */}
             <div
                 className="relative h-[350px] bg-cover bg-center"
                 style={{
-                    backgroundImage: `url("https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&w=1600&q=80")`,
+                    backgroundImage: `url(${event.images[0]})`,
                 }}
             >
                 <div className="absolute inset-0 bg-gradient-to-r from-[#002366]/40 to-[#0044cc]/40 flex flex-col justify-center items-center px-6 text-center">
@@ -125,9 +126,9 @@ const CampaignDetails = () => {
 
                                 <h3 className="text-xl font-semibold text-[#002366] mt-8 mb-4">Gallery</h3>
                                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6">
-                                    <img src="https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?auto=format&fit=crop&w=600&q=80" className="rounded-lg shadow-md object-cover h-48 w-full" />
-                                    <img src="https://images.pexels.com/photos/6646918/pexels-photo-6646918.jpeg?auto=compress&cs=tinysrgb&w=600" className="rounded-lg shadow-md object-cover h-48 w-full" />
-                                    <img src="https://images.pexels.com/photos/4546135/pexels-photo-4546135.jpeg?auto=compress&cs=tinysrgb&w=600" className="rounded-lg shadow-md object-cover h-48 w-full" />
+                                    {event.images && event.images.map((img, index) => 
+                                        <img src={img} key={index} className="rounded-lg shadow-md object-cover h-48 w-full" />
+                                    )}
                                 </div>
                             </div>
                         </div>

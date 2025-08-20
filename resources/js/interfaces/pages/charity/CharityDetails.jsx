@@ -16,9 +16,9 @@ import {Link, useParams} from 'react-router-dom';
 import {AuthContext} from "../../components/AuthContext";
 import {useFetchCharityDetails} from "../../../core/Charity/usecase/useFetchCharityDetails";
 
-const CharityDetails = ({ userType = 'guest' }) => {
+const CharityDetails = () => {
     const { id } = useParams();
-    const { login,auth } = useContext(AuthContext);
+    const { auth } = useContext(AuthContext);
     const {fetchCharityData, charity,events,feedbacks,loading,error } = useFetchCharityDetails();
     const [user, setUser] = useState(null);
 
@@ -111,12 +111,12 @@ const CharityDetails = ({ userType = 'guest' }) => {
             {/* Cover Section */}
             <div
                 className="relative h-72 bg-cover bg-center"
-                style={{ backgroundImage: `url(${charity.images[0]})` }}
+                style={{ backgroundImage: `url(${charity.images})` }}
             >
                 <div className="absolute inset-0 bg-gradient-to-t from-[#24527a] via-[#24527a]/60 to-transparent opacity-90" />
                 <div className="relative z-10 flex flex-col items-center justify-center h-full text-white text-center p-4">
                     <img
-                        src={charity.images[1]}
+                        src={charity.images}
                         alt="Charity Logo"
                         className="w-28 h-28 rounded-full border-4 border-white shadow-lg mb-4 object-cover"
                     />
@@ -173,8 +173,8 @@ const CharityDetails = ({ userType = 'guest' }) => {
                         {events.map((event) => (
                             <div key={event.id} className="p-4">
                                 <div className="border rounded-lg shadow h-full flex flex-col overflow-hidden">
-                                    <div className="bg-gray-100 h-44 flex items-center justify-center text-[#24527a] text-lg font-semibold">
-                                        {event.categoryName}
+                                    <div className="h-56 w-full overflow-hidden">
+                                        <img src={event.images[0]} alt="" className="w-full h-full object-cover object-center" />
                                     </div>
                                     <div className="p-6 flex flex-col justify-between flex-grow">
                                         <div>

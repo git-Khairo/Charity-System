@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import useGet from '../../../services/API/useGet';
+import { Campaign } from '../../Campaigns/entity/Campaign';
 
 export const useFetchCharityDetails = () => {
     const { id } = useParams(); // expects /charity/:id
@@ -18,22 +19,13 @@ export const useFetchCharityDetails = () => {
                 get(`/api/charity/events/${id}`),
                 get(`/api/charity-feedback/${id}`)
             ]);
-
-            console.log(feedbacksRes);
             // Set charity
             if (charityRes?.charity) {
-                let parsedImages = [];
-                try {
-                    parsedImages = JSON.parse(charityRes.charity.images || '[]');
-                } catch (parseErr) {
-                    console.warn('Failed to parse images:', parseErr);
-                }
-
                 setCharity({
                     name: charityRes.charity.name,
                     address: charityRes.charity.address,
                     description: charityRes.charity.description,
-                    images: parsedImages,
+                    images: charityRes.charity.images,
                     phonenumber: charityRes.charity.phonenumber,
                     email: charityRes.charity.email,
                     categoryName: charityRes.charity.categoryName
@@ -43,7 +35,26 @@ export const useFetchCharityDetails = () => {
             }
 
             // Set all events
-            setEvents(Array.isArray(eventsRes?.events) ? eventsRes.events : []);
+            const validatedEvents = eventsRes.events.map((item) => {
+                try{
+                    return new Campaign({
+                        id:item.id,
+                        charity_id: item.charity_id,
+                        title: item.title,
+                        location: item.location,
+                        status: item.status,
+                        categoryName: item.categoryName,
+                        images: JSON.parse(item.images[0]),
+                        description : item.description,
+                        capacity: item.capacity,
+                        NumOfVolunteer: item.NumOfvolunteer
+                    })
+                }catch (err) {
+                    console.log(`Skipping invalid campaign: ${err.message}`);
+                    return null;
+                }
+            })
+            setEvents(validatedEvents);
 
             // Set all feedbacks
             setFeedbacks(Array.isArray(feedbacksRes?.feedback) ? feedbacksRes.feedback : []);

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import useGet from '../../../services/API/useGet';
-import { useParams } from 'react-router-dom';
+import { Campaign } from '../entity/Campaign';
 
 export const useFetchEventById = () => {
     const { get, loading, error } = useGet();
@@ -11,7 +11,19 @@ export const useFetchEventById = () => {
         try {
             const result = await get(`/api/event/${id}`);
             if (result) {
-                setEvent(result.event);
+            const validatedCampaign = new Campaign({
+                    id: result.event.id,
+                    charity_id: result.event.charity_id,
+                    title: result.event.title,
+                    location: result.event.location,
+                    status: result.event.status,
+                    categoryName: result.event.categoryName,
+                    images: JSON.parse(result.event.images),
+                    description : result.event.description,
+                    capacity: result.event.capacity,
+                    NumOfVolunteer: result.event.NumOfVolunteer,
+                });
+                setEvent(validatedCampaign);
                 setFetchError(null);
             } else {
                 setEvent(null);

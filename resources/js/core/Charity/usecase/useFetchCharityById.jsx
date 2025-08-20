@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import useGet from '../../../services/API/useGet';
-import { useParams } from 'react-router-dom';
+import { Charity } from '../../Charity/entity/Charity';
 
 export const useFetchCharityById = () => {
     const { get, loading, error } = useGet();
@@ -11,7 +11,13 @@ export const useFetchCharityById = () => {
         try {
             const result = await get(`/api/charity/${id}`);
             if (result) {
-                setCharity(result.charity);
+                const validatedCharity = new Charity({
+                    id: result.charity.id,
+                    name: result.charity.name,
+                    description: result.charity.description,
+                    images: result.charity.images,
+                });
+                setCharity(validatedCharity);
                 setFetchError(null);
             } else {
                 setCharity(null);
