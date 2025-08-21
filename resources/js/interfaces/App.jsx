@@ -3,7 +3,7 @@ import Home from "./pages/Home";
 import Charities from "./pages/Charities";
 import Campaigns from "./pages/Campaigns";
 import Dashboard from "./pages/Admin/Dashboard";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useParams, Navigate } from "react-router-dom";
 import About from "./pages/About";
 import Layout from "./components/Layout";
 import Login from './pages/Login';
@@ -32,6 +32,17 @@ import CreateCampaign from "./pages/Admin/CreateCampaign";
 import ParticipationRequests from "./pages/Admin/ParticipationRequests";
 import ActivityDashboard from "./pages/Admin/ActivityDashboard";
 import GovernmentReport from "./pages/Admin/GovernmentReport";
+import AdminLogin from './pages/Admin/AdminLogin';
+
+const AdminLoginPassword = ({ children }) => {
+    const { password } = useParams();
+
+    if(password == '12345'){
+        return children
+    }else{
+        return <Navigate to={'/'} />
+    }
+}
 
 const App = () => {
     return(
@@ -49,6 +60,7 @@ const App = () => {
                     <Route path='/beneficiary/signup' element={<BeneficiaryForm />} />
                     <Route path='/donate/:id' element={<DonationForm />} />
                     <Route path='/charity/:id' element={<CharityDetails />} />
+                    <Route path="/campaign/:id" element={<CampaignDetails/>}/>
                     <Route path="/beneficiary/:id" element={<BeneficiaryDashboard />}>
                         <Route path='' element={<Applications />} />
                         <Route path="notifications" element={<Notifications />} />
@@ -62,8 +74,12 @@ const App = () => {
                         <Route  path="notifications"  element={<NotificationsPage/>}/>
                         <Route path="myEvents" element={<MyCampaigns />} />
                     </Route>
-                    <Route path="/campaign/:id" element={<CampaignDetails/>}/>
                     </Route>
+                    <Route path='/admin/:password/login' element={
+                        <AdminLoginPassword>
+                            <AdminLogin/>
+                        </AdminLoginPassword>
+                    } />
                     <Route path='/dashboard/:id' element={<Dashboard />}>
                         <Route path='' element={<DashboardContent />} />
                         <Route  path="events/delete"  element={<DeleteCampaigns/>}/>
