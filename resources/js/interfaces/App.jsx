@@ -33,6 +33,7 @@ import ParticipationRequests from "./pages/Admin/ParticipationRequests";
 import ActivityDashboard from "./pages/Admin/ActivityDashboard";
 import GovernmentReport from "./pages/Admin/GovernmentReport";
 import AdminLogin from './pages/Admin/AdminLogin';
+import SuperDashboard from './pages/SuperAdmin/SuperDashboard';
 
 const AdminLoginPassword = ({ children }) => {
     const { password } = useParams();
@@ -80,8 +81,11 @@ const App = () => {
                             <AdminLogin/>
                         </AdminLoginPassword>
                     } />
+                    <Route path='/superadmin/dashboard' element={<SuperDashboard />} >
+
+                    </Route>
                     <Route path='/dashboard/:id' element={<Dashboard />}>
-                        <Route path='' element={<DashboardContent />} />
+                        <Route  path='' element={<DashboardContent />} />
                         <Route  path="events/delete"  element={<DeleteCampaigns/>}/>
                         <Route  path="events/Update"  element={<UpdateCampaigns/>}/>
                         <Route  path="events/Create"  element={<CreateCampaign/>}/>

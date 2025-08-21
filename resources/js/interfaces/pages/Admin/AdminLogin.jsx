@@ -43,9 +43,12 @@ const AdminLogin = () => {
     try {
       const result = await post('/api/admin/login', { email, password });
       
-      login(result.user.token);
+      login(result.user.token, result.user.user);
 
-      console.log(auth);
+      if(result.user.user.name == 'Super Admin'){
+        navigate('/superadmin/dashboard');
+        return;
+      }
       
       navigate(`/dashboard/${result.user.user.id}`)
     } catch (err) {
