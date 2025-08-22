@@ -1,15 +1,6 @@
-
-import React, {useState, useEffect, useRef, useContext} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import {Link, useLocation, Outlet, useParams} from 'react-router-dom';
-import Chart from 'chart.js/auto';
 import {AuthContext} from "../../components/AuthContext";
-import {
-    EditIcon,
-    EventIcon,
-    FeedbackIcon,
-    NotificationIcon,
-    ProfileIcon
-} from "../../components/Volunteer/SharedComponents";
 import UpdateCharity from "../../components/Admin/UpdateCharity";
 
 const Dashboard = () => {
@@ -19,7 +10,7 @@ const Dashboard = () => {
     const location = useLocation();
     const [authUser, setAuthUser] = useState({});
     const [charity, setCharity] = useState(null);
-    const { login,auth } = useContext(AuthContext);
+    const { auth } = useContext(AuthContext);
     const { id } = useParams();
     const [showCharityModal, setShowCharityModal] = useState(false); // modal state
 

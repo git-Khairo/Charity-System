@@ -34,6 +34,7 @@ import ActivityDashboard from "./pages/Admin/ActivityDashboard";
 import GovernmentReport from "./pages/Admin/GovernmentReport";
 import AdminLogin from './pages/Admin/AdminLogin';
 import SuperDashboard from './pages/SuperAdmin/SuperDashboard';
+import SuperDashboardContent from './pages/SuperAdmin/SuperDashboardContent';
 
 const AdminLoginPassword = ({ children }) => {
     const { password } = useParams();
@@ -82,7 +83,7 @@ const App = () => {
                         </AdminLoginPassword>
                     } />
                     <Route path='/superadmin/dashboard' element={<SuperDashboard />} >
-
+                        <Route  path='' element={<SuperDashboardContent />} />
                     </Route>
                     <Route path='/dashboard/:id' element={<Dashboard />}>
                         <Route  path='' element={<DashboardContent />} />

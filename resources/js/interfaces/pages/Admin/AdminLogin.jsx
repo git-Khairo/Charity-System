@@ -10,7 +10,7 @@ const AdminLogin = () => {
   const [passwordError, setPasswordError] = useState('');
   const { post, error, loading } = usePost();
   const navigate = useNavigate();
-  const { login, auth } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
 
   const validateForm = () => {
     let isValid = true;
@@ -42,9 +42,10 @@ const AdminLogin = () => {
 
     try {
       const result = await post('/api/admin/login', { email, password });
+
       
       login(result.user.token, result.user.user);
-
+      
       if(result.user.user.name == 'Super Admin'){
         navigate('/superadmin/dashboard');
         return;

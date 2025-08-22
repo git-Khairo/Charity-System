@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
         .then(res => res.json())
         .then(data => {
           if (data && data.valid !== false) {
-            setAuth({ isAuthenticated: true, user: data.user || data });
+            setAuth({ isAuthenticated: true, user: data.valid.user || data });
           } else {
             setAuth({ isAuthenticated: false, user: null });
             sessionStorage.removeItem('token');
