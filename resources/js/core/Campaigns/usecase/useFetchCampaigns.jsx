@@ -20,7 +20,7 @@ export const useFetchCampaigns = () => {
               title: item.title,
               location: item.location,
               status: item.status,
-              categoryName: item.categoryName,
+              category: item.categoryName,
               images: JSON.parse(item.images[0]),
               description : item.description
             });

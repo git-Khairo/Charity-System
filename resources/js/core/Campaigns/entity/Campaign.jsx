@@ -1,11 +1,11 @@
 export class Campaign {
-  constructor({ title, location, status, categoryName, charity_id,id,description, images, capacity, NumOfVolunteer }) {
+  constructor({ title, location, status, category, charity_id,id,description, images, capacity, NumOfVolunteer }) {
     this.charityId = this.validateCharityId(charity_id);
     this.title = this.validateTitle(title);
     this.description = description;
     this.location = this.validateLocation(location);
     this.status = this.validateStatus(status);
-    this.categoryName = this.validateCategoryName(categoryName);
+    this.category = this.validateCategoryName(category);
     this.id=id;
     this.images = images;
     this.capacity = capacity;
@@ -30,7 +30,7 @@ export class Campaign {
     if (!categoryName || typeof categoryName !== 'string' || categoryName.trim().length === 0) {
       throw new Error('Invalid or missing campaign categoryName');
     }
-    return categoryName.trim();
+    return categoryName.trim().toLowerCase();
   }
 
   // validateDescription(description) {

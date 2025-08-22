@@ -19,8 +19,8 @@ const { fetchCampaigns, campaigns, loading, error } = useFetchCampaigns();
     { id: "health", name: "Health" },
     { id: "environment", name: "Environment" },
     { id: "food", name: "Food & Hunger" },
-    { id: "animals", name: "Animal Welfare" },
-    { id: "disaster", name: "Disaster Relief" },
+    { id: "shelter", name: "Shelter" },
+    { id: "disaster relief", name: "Disaster Relief" },
   ];
   
   const statuses = ["All", "Active", "Completed", "Upcoming"];

@@ -11,6 +11,7 @@ export function useCampaign(initialCampaignsData = []) {
   const [currentPage, setCurrentPage] = useState(1);
   const campaignsPerPage = 6;
 
+  console.log(initialCampaignsData);
   // Use useFilter for filtering campaigns
   const { filteredData: filteredCampaigns, isFilterActive } = useFilter({
     data: initialCampaignsData,
