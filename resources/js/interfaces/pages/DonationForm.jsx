@@ -88,7 +88,7 @@ const PersonalInfoStep = ({ formData, handleChange, nextStep, errors }) => {
 };
 
 // Step 2: Payment Method
-const PaymentMethodStep = ({ formData, handlePaymentSelect, handleBankStatementUpload, handleSubmit, clientSecret, errors }) => {
+const PaymentMethodStep = ({ formData, handlePaymentSelect, handleBankStatementUpload, handleSubmit, clientSecret, errors, validateStep }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [processing, setProcessing] = useState(false);
@@ -96,7 +96,7 @@ const PaymentMethodStep = ({ formData, handlePaymentSelect, handleBankStatementU
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const stepErrors = handleSubmit('validate');
+    const stepErrors = validateStep(2);
     if (Object.keys(stepErrors).length !== 0) return;
 
     if (formData.payment === 'wallet' && stripe && elements) {
@@ -254,6 +254,7 @@ const DonationForm = () => {
     nextStep,
     prevStep,
     loading,
+    validateStep,
   } = useDonation();
 
   return (
@@ -302,6 +303,7 @@ const DonationForm = () => {
               handleSubmit={handleSubmit}
               clientSecret={clientSecret}
               errors={errors}
+              validateStep={validateStep}
             />
           </Elements>
         )}

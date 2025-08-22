@@ -35,6 +35,7 @@ import GovernmentReport from "./pages/Admin/GovernmentReport";
 import AdminLogin from './pages/Admin/AdminLogin';
 import SuperDashboard from './pages/SuperAdmin/SuperDashboard';
 import SuperDashboardContent from './pages/SuperAdmin/SuperDashboardContent';
+import DonationRequests from './pages/Admin/DonationRequests';
 
 const AdminLoginPassword = ({ children }) => {
     const { password } = useParams();
@@ -91,6 +92,7 @@ const App = () => {
                         <Route  path="events/Update"  element={<UpdateCampaigns/>}/>
                         <Route  path="events/Create"  element={<CreateCampaign/>}/>
                         <Route  path="requests/volunteers"  element={<ParticipationRequests/>}/>
+                        <Route  path="requests/donations" element={<DonationRequests />} />
                         <Route  path="reports/activity"  element={<ActivityDashboard/>}/>
                         <Route  path="reports/financial"  element={<GovernmentReport/>}/>
                     </Route>

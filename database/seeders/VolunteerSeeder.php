@@ -13,6 +13,6 @@ class VolunteerSeeder extends Seeder
      */
     public function run(): void
     {
-        Volunteer::factory()->count(50)->create();
+        Volunteer::factory()->count(10)->create();
     }
 }

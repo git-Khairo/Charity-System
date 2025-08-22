@@ -14,6 +14,10 @@ class Request extends Model
      * @var list<string>
      */
     protected $fillable = [
+        'full_name',
+        'email',
+        'phonenumber',
+        'address',
         'charity_id',
         'beneficiary_id',
         'details',

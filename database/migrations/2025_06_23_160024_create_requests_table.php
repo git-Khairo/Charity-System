@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('charity_id')->constrained('charities')->cascadeOnDelete();
             $table->foreignId('beneficiary_id')->constrained('beneficiaries')->cascadeOnDelete();
+            $table->string('full_name');
+            $table->text('phonenumber');
+            $table->string('address');
+            $table->string('email');
             $table->longText('details');
             $table->integer('priority');
             $table->string('status');

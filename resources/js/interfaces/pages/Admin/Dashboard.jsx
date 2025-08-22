@@ -18,7 +18,7 @@ const Dashboard = () => {
     useEffect(() => {
 
         if (auth.isAuthenticated) {
-            setAuthUser( auth.user.valid.user);
+            setAuthUser( auth.user);
         }
 
     }, [auth.isAuthenticated,authUser]);
@@ -76,7 +76,7 @@ const Dashboard = () => {
             subItems: [
                 { label: 'Volunteer Requests', path: `/dashboard/${id}/requests/volunteers` },
                 { label: 'Beneficiary Requests', path: '/requests/beneficiaries' },
-                { label: 'Accept Donations', path: '/requests/donations' },
+                { label: 'Accept Donations', path: `/dashboard/${id}/requests/donations` },
             ],
         },
         {

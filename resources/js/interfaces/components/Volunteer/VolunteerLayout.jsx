@@ -20,7 +20,7 @@ const VolunteerLayout = () => {
     const [isEditModalOpen, setEditModalOpen] = useState(false);
     const [navItems, setNavItems] = useState([]);
     const [authUser, setAuthUser] = useState(null);
-    const { login,auth } = useContext(AuthContext);
+    const { auth } = useContext(AuthContext);
     const { fetchProfileVolunteer, user, loading, error } = useProfileVolunteer(id);
 
     console.log( loading);
@@ -35,7 +35,7 @@ const VolunteerLayout = () => {
     useEffect(() => {
 
          if (auth.isAuthenticated) {
-     setAuthUser( auth.user.valid.user);
+     setAuthUser( auth.user);
 
       }
 

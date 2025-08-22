@@ -15,7 +15,7 @@ const Layout = () => {
 
     const toggleDropdown = () => setIsLanguageDropDownOpen((prev) => !prev);
 
-    const toggleProfileDropdown = () => setIsProfileDropDownOpen((prev) => !prev);;
+    const toggleProfileDropdown = () => setIsProfileDropDownOpen((prev) => !prev);
 
     const changeLanguage = (lang) => {
         setLanguage(lang);
@@ -144,7 +144,7 @@ const Layout = () => {
                     <ul className="py-1">
                         <li>
                         <Link
-                            to={`/${auth.user.valid.user.roles[0].name}/${auth.user.valid.user.id}/profile`}
+                            to={`/${auth.user.roles[0].name}/${auth.user.id}/profile`}
                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                             onClick={() => setIsProfileDropDownOpen(false)} // Close dropdown on click
                         >
@@ -153,7 +153,7 @@ const Layout = () => {
                         </li>
                         <li>
                         <Link
-                            to={`/${auth.user.valid.user.roles[0].name}/${auth.user.valid.user.id}/notifications`}
+                            to={`/${auth.user.roles[0].name}/${auth.user.id}/notifications`}
                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                             onClick={() => setIsProfileDropDownOpen(false)}
                         >

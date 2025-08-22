@@ -5,12 +5,12 @@ import { useBeneficiaryData } from "../../../core/Beneficiary/usecase/useBenefic
 import { useFetchUserDashboardData } from "../../../core/Beneficiary/usecase/useFetchUserDashboardData";
 import { colors } from "../../../core/Beneficiary/usecase/BeneficiaryData";
 import { AuthContext } from "../AuthContext";
-import { ProfileIcon, EventIcon, NotificationIcon, FeedbackIcon, EditIcon } from "../Volunteer/SharedComponents";
+import { EventIcon, NotificationIcon, FeedbackIcon } from "../Volunteer/SharedComponents";
 import UserInfo from "../../pages/BeneficiaryDashboard/UserInfo";
 
 export default function BeneficiaryDashboard() {
     const [darkMode, setDarkMode] = useState(false);
-    const { login, auth } = useContext(AuthContext);
+    const { auth } = useContext(AuthContext);
     const [authUser, setAuthUser] = useState(null);
     const { id } = useParams();
     const location = useLocation(); // detect route changes
@@ -37,7 +37,7 @@ export default function BeneficiaryDashboard() {
     // Set auth user
     useEffect(() => {
         if (auth.isAuthenticated) {
-            setAuthUser(auth.user.valid.user);
+            setAuthUser(auth.user);
         }
     }, [auth.isAuthenticated, id]);
 
