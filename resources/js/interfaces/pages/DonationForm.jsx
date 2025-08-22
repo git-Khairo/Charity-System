@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CardElement, Elements, useElements, useStripe } from '@stripe/react-stripe-js';
 import useDonation from '../../core/Donation/usecase/useDonation';
 import { loadStripe } from '@stripe/stripe-js';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useFetchCharityDetails } from '../../core/Charity/usecase/useFetchCharityDetails';
 
 const stripePromise = loadStripe(window.STRIPE_PUBLIC_KEY);
 
@@ -242,6 +243,9 @@ const ConfirmationStep = ({ formData, prevStep, errors, loading }) => {
 
 // Main DonationForm Component
 const DonationForm = () => {
+  const [searchParams] = useSearchParams(); // Get query parameters
+  const img = searchParams.get('img');
+
   const {
     step,
     formData,
@@ -261,7 +265,7 @@ const DonationForm = () => {
     <div className="flex min-h-screen bg-[#f9f9f9] text-[#000111] font-sans">
       <div className="w-[500px] h-screen overflow-hidden shadow-2xl rounded-r-3xl border-r border-gray-300">
         <img
-          src="https://www.welcome.com"
+          src={img}
           alt="Charity Visual"
           className="w-full h-full object-cover rounded-r-3xl"
           style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.2)' }}

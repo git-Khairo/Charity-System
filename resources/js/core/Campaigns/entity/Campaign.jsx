@@ -1,11 +1,11 @@
 export class Campaign {
-  constructor({ title, location, status, category, charity_id,id,description, images, capacity, NumOfVolunteer }) {
+  constructor({ title, location, status, categoryName, charity_id,id,description, images, capacity, NumOfVolunteer }) {
     this.charityId = this.validateCharityId(charity_id);
     this.title = this.validateTitle(title);
     this.description = description;
     this.location = this.validateLocation(location);
     this.status = this.validateStatus(status);
-    this.category = this.validateCategoryName(category);
+    this.categoryName = this.validateCategoryName(categoryName);
     this.id=id;
     this.images = images;
     this.capacity = capacity;

@@ -37,6 +37,7 @@ export const useFetchCharityDetails = () => {
             // Set all events
             const validatedEvents = eventsRes.events.map((item) => {
                 try{
+                    console.log(item);
                     return new Campaign({
                         id:item.id,
                         charity_id: item.charity_id,

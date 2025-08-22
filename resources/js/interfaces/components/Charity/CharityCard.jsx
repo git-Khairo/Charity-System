@@ -53,9 +53,9 @@ const CharityCard = ({ charity, categories }) => {
                       View Details
                       <FaChevronRight />
                     </button>
-                    <button className="!rounded-button whitespace-nowrap bg-[#97c9ea] hover:bg-[#7ab9e0] text-[#002366] py-2 px-4 rounded-lg transition-colors duration-300 cursor-pointer">
+                    <Link to={`/donate/${charity.id}?img=${charity.images}`} className="!rounded-button whitespace-nowrap bg-[#97c9ea] hover:bg-[#7ab9e0] text-[#002366] py-2 px-4 rounded-lg transition-colors duration-300 cursor-pointer">
                       Donate
-                    </button>
+                    </Link>
                   </div>
             </div>
         </Link>

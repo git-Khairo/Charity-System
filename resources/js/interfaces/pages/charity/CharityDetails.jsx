@@ -22,6 +22,8 @@ const CharityDetails = () => {
     const {fetchCharityData, charity,events,feedbacks,loading,error } = useFetchCharityDetails();
     const [user, setUser] = useState(null);
 
+    console.log(feedbacks);
+
 
 
     useEffect(() => {
@@ -31,11 +33,10 @@ const CharityDetails = () => {
     useEffect(() => {
 
         if (auth.isAuthenticated) {
-            setUser(auth.user.valid.user);
+            setUser(auth.user);
 
         }
     }, [auth.isAuthenticated,id,user]);
-    //console.log(auth.user.valid.user);
 
     if (loading) {
         return (
@@ -96,7 +97,7 @@ const CharityDetails = () => {
         }
         return (
             <div className="flex justify-center">
-                <Link to="/donate" className={`${baseClass} bg-[#24527a] text-white`}>
+                <Link to={`/donate/${charity.id}`} className={`${baseClass} bg-[#24527a] text-white`}>
                     Donate Now
                 </Link>
             </div>

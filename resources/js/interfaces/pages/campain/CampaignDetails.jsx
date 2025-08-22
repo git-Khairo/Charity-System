@@ -30,7 +30,7 @@ const CampaignDetails = () => {
     useEffect(() => {
 
         if (auth.isAuthenticated) {
-            setUser(auth.user.valid.user);
+            setUser(auth.user);
 
         }
     }, [auth.isAuthenticated,id,user]);
@@ -42,9 +42,9 @@ const CampaignDetails = () => {
     }, [event]);
 
     const getAction = () => {
-        if (!user) return { label: "Donate Now", route: "/donate" };
-        if ( user.roles.some(role => role.name === 'Volunteer')) return { label: "Volunteer Now", route: "/volunteer/apply" };
-        if ( user.roles.some(role => role.name === 'Beneficiary')) return { label: "Apply Now", route: "/beneficiary/apply" };
+        if (!user && charity) return { label: "Donate Now", route: `/donate/${charity.id}?img=${charity.images}` };
+        if ( user && user.roles.some(role => role.name === 'Volunteer')) return { label: "Volunteer Now", route: "/volunteer/apply" };
+        if ( user && user.roles.some(role => role.name === 'Beneficiary')) return { label: "Apply Now", route: "/beneficiary/apply" };
         return { label: "Support", route: "/" };
     };
 

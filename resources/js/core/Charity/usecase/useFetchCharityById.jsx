@@ -16,6 +16,7 @@ export const useFetchCharityById = () => {
                     name: result.charity.name,
                     description: result.charity.description,
                     images: result.charity.images,
+                    categoryName: result.charity.categoryName
                 });
                 setCharity(validatedCharity);
                 setFetchError(null);

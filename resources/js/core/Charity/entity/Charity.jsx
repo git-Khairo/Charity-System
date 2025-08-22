@@ -1,11 +1,11 @@
 // src/core/Charity/model/Charity.js
 export class Charity {
-  constructor({ name, description,id, images, category }) {
+  constructor({ name, description,id, images, categoryName }) {
     this.name = this.validateName(name);
     this.description = this.validateDescription(description);
     this.id = id;
     this.images = images;
-    this.category = this.validateCategory(category);
+    this.categoryName = this.validateCategory(categoryName);
   }
 
   validateName(name) {
