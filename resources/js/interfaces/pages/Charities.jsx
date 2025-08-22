@@ -19,8 +19,8 @@ const Charities = () => {
     { id: "health", name: "Health" },
     { id: "environment", name: "Environment" },
     { id: "food", name: "Food & Hunger" },
-    { id: "animals", name: "Animal Welfare" },
-    { id: "disaster", name: "Disaster Relief" },
+    { id: "shelter", name: "Shelter" },
+    { id: "disaster relief", name: "Disaster Relief" },
   ];
 
   // Sort options
@@ -43,20 +43,13 @@ const Charities = () => {
     setIsCategoryDropdownOpen,
     isSortDropdownOpen,
     setIsSortDropdownOpen,
-    isPerPageDropdownOpen,
-    setIsPerPageDropdownOpen,
     searchTerm,
     setSearchTerm,
     filteredCharities,
-    sortedCharities,
     currentCharities,
     totalPages,
-    paginate,
     clearFilters,
     isFilterActive,
-    getVisiblePageNumbers,
-    indexOfFirstItem,
-    indexOfLastItem,
   } = useCharity(charities || []); // Fallback to empty array
 
   return (

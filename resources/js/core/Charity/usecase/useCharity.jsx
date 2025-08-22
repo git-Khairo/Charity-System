@@ -14,6 +14,8 @@ const useCharity = (initialCharitiesData) => {
     const [isPerPageDropdownOpen, setIsPerPageDropdownOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
 
+    console.log(initialCharitiesData);
+
 
     // Use the useFilter hook for filtering charities
     const { filteredData: filteredCharities, isFilterActive } = useFilter({

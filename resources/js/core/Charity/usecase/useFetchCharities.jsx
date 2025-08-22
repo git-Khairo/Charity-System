@@ -20,6 +20,7 @@ export const useFetchCharities = () => {
               name: item.name,
               description: item.description,
               images: item.images,
+              category: item.categoryName,
             });
           } catch (err) {
             console.warn(`Skipping invalid charity: ${err.message}`);

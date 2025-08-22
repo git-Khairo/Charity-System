@@ -1,11 +1,11 @@
 // src/core/Charity/model/Charity.js
 export class Charity {
-  constructor({ name, description,id, images }) {
+  constructor({ name, description,id, images, category }) {
     this.name = this.validateName(name);
     this.description = this.validateDescription(description);
     this.id = id;
     this.images = images;
-    // this.category = this.validateCategory(category);
+    this.category = this.validateCategory(category);
   }
 
   validateName(name) {
@@ -22,21 +22,21 @@ export class Charity {
     return description.trim();
   }
 
-//   validateCategory(category) {
-//     const validCategories = [
-//       'all',
-//       'education',
-//       'health',
-//       'environment',
-//       'food',
-//       'animals',
-//       'disaster',
-//     ];
-//     if (!category || !validCategories.includes(category)) {
-//       throw new Error('Invalid or missing charity category');
-//     }
-//     return category;
-//   }
+  validateCategory(category) {
+    const validCategories = [
+      'all',
+      'education',
+      'health',
+      'environment',
+      'food',
+      'shelter',
+      'disaster relief',
+    ];
+    if (!category || !validCategories.includes(category.toLowerCase())) {
+      throw new Error('Invalid or missing charity category');
+    }
+    return category.toLowerCase();
+  }
 
   toJSON() {
     return {
