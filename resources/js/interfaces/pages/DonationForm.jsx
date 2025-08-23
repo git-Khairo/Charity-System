@@ -121,7 +121,7 @@ const PaymentMethodStep = ({ formData, handlePaymentSelect, handleBankStatementU
         setProcessing(false);
       }
     } else if (formData.payment === 'bank') {
-      // handleSubmit(null); // Proceed to review for bank transfer
+      handleSubmit();
     }
   };
 
@@ -142,7 +142,7 @@ const PaymentMethodStep = ({ formData, handlePaymentSelect, handleBankStatementU
             checked={formData.payment === 'bank'}
             readOnly
           />
-          <span className="ml-2">Bank Transfer</span>
+          <span className="ml-2">Bank Invoice</span>
         </div>
         <div
           onClick={() => handlePaymentSelect('wallet')}
@@ -157,7 +157,7 @@ const PaymentMethodStep = ({ formData, handlePaymentSelect, handleBankStatementU
             checked={formData.payment === 'wallet'}
             readOnly
           />
-          <span className="ml-2">Online Payment (Stripe)</span>
+          <span className="ml-2">Online Payment</span>
         </div>
       </div>
       {errors.payment && <p className="mt-1 text-sm text-red-500">{errors.payment}</p>}

@@ -36,6 +36,7 @@ import AdminLogin from './pages/Admin/AdminLogin';
 import SuperDashboard from './pages/SuperAdmin/SuperDashboard';
 import SuperDashboardContent from './pages/SuperAdmin/SuperDashboardContent';
 import DonationRequests from './pages/Admin/DonationRequests';
+import DonationDetails from './components/Donation/DonationDetails';
 
 const AdminLoginPassword = ({ children }) => {
     const { password } = useParams();
@@ -93,6 +94,7 @@ const App = () => {
                         <Route  path="events/Create"  element={<CreateCampaign/>}/>
                         <Route  path="requests/volunteers"  element={<ParticipationRequests/>}/>
                         <Route  path="requests/donations" element={<DonationRequests />} />
+                        <Route  path='donation/details/:don' element={<DonationDetails />} />
                         <Route  path="reports/activity"  element={<ActivityDashboard/>}/>
                         <Route  path="reports/financial"  element={<GovernmentReport/>}/>
                     </Route>

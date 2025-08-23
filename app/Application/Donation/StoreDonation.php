@@ -22,7 +22,7 @@ class StoreDonation
     public function storeDonation($id, $data){
         if($data['payment'] == 'bank'){
             $path = $data->file('bankStatement')->store('donations', 'public');
-            $data['image'] = $path;
+            $data['image'] = '/storage/' . $path;
             return $this->repo->createImage($id, $data->toArray());
         }else{
             $donation = $this->repo->createCard($id, $data->toArray());

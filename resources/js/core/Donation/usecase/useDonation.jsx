@@ -125,7 +125,6 @@ const useDonation = () => {
 
         if (!res.ok) throw new Error(`Post request failed: ${res.statusText}`);
 
-        console.log('error here');
 
         const result = await res.json();
         if (result.error) throw new Error(result.error);
