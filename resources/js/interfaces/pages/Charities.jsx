@@ -23,6 +23,8 @@ const Charities = () => {
     { id: "disaster relief", name: "Disaster Relief" },
   ];
 
+  console.log(charities);
+
   // Sort options
   const sortOptions = [
     { id: "newest", name: "Newest First" },

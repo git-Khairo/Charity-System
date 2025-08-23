@@ -39,7 +39,7 @@ const CharityCard = ({ charity, categories }) => {
                     <span
                         className={`inline-block px-3 py-1 text-xs font-semibold rounded-full ${getCategoryColorClass(charity.category)}`}
                     >
-                        {getCategoryName(charity.category)}
+                        {getCategoryName(charity.categoryName)}
                     </span>
                 </div>
                 <h3 className="text-xl font-bold text-[#000111] mb-2 line-clamp-2">
