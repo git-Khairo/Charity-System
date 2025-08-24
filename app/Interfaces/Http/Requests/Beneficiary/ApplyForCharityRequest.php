@@ -22,9 +22,11 @@ class ApplyForCharityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'details'    => 'required|string|min:10',
-            'priority'   => 'required|integer|between:1,5',
-            'status'     => 'required|string|in:pending,approved,rejected',
+            'details'    => 'required|string|min:3',
+            'maritalStatus'     => 'required|string',
+            'workStatus' =>  'required|string',
+            'numOfMembers' => 'required|numeric',
+            'needs' => 'required|string'
          ];
     }
 }

@@ -21,8 +21,10 @@ class Request extends Model
         'charity_id',
         'beneficiary_id',
         'details',
-        'priority',
-        'status'
+        'maritalStatus',
+        'workStatus',
+        'needs',
+        'numOfMembers'
     ];
 
     public function beneficiary(){

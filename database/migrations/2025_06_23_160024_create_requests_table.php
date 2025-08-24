@@ -20,8 +20,10 @@ return new class extends Migration
             $table->string('address');
             $table->string('email');
             $table->longText('details');
-            $table->integer('priority');
-            $table->string('status');
+            $table->string('maritalStatus');
+            $table->string('workStatus');
+            $table->string('needs');
+            $table->integer('numOfMembers');
             $table->timestamps();
         });
     }

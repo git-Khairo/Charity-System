@@ -72,7 +72,7 @@ const App = () => {
                         <Route path="feedbacks" element={<Feedbacks />} />
                         <Route path="myCharities" element={<MyCharities />} />
                     </Route>
-                    <Route path="/beneficiary/:id/apply" element={<BeneficiaryApplyForm />} />
+                    <Route path="/beneficiary/apply/:id" element={<BeneficiaryApplyForm />} />
                     <Route path='/volunteer/:id'   element={<VolunteerLayout/>}>
                         <Route  path="profile"  element={<ProfilePage/>}/>
                         <Route  path="participations"  element={<ApplicationsPage/>}/>

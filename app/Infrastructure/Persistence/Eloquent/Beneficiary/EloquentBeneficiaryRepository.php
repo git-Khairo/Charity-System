@@ -68,9 +68,15 @@ class EloquentBeneficiaryRepository implements BeneficiaryRepositoryInterface
         $request = Request::create([
             'charity_id'     => $id,
             'beneficiary_id' => $beneficiary->id,
+            'full_name'      => $beneficiary->name,
+            'email'          => $beneficiary->email,
+            'address'        => $beneficiary->address,
+            'phonenumber'    => $beneficiary->phonenumber,
             'details'        => $data['details'] ?? null,
-            'priority'       => $data['priority'] ?? 'normal', // default if not provided
-            'status'         => $data['status'] ?? 'pending',  // default if not provided
+            'maritalStatus'  => $data['maritalStatus'] ?? null,
+            'workStatus'     => $data['workStatus'] ?? null,
+            'needs'          => $data['needs'] ?? null,
+            'numOfMembers'   => $data['numOfMembers'] ?? null,
         ]);
 
         return $request;
