@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Application\Donation\ConfirmDonation;
 use App\Application\Donation\GetDonation;
 use App\Application\Donation\GetDonationByCharity;
 use App\Application\Donation\GetDonations;
@@ -42,6 +43,11 @@ class DonationController extends Controller
 
     public function getPaymentIntent($id, DonationCheckRequest $request, GetPaymentIntent $usecase){
         $donation = $usecase->getIntent($id, $request);
+        return response()->json(['message' => 'Donation Stored', 'donations' => $donation], 201);
+    }
+
+    public function confirmDonation(DonationRequest $request, ConfirmDonation $usecase){
+        $donation = $usecase->confirm($request->toArray());
         return response()->json(['message' => 'Donation Stored', 'donations' => $donation], 201);
     }
 }

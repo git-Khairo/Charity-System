@@ -89,6 +89,7 @@ Route::group(['middleware'=>['auth:sanctum']], function (){
         Route::get('/donations', [DonationController::class, 'getAllDonations']);
         Route::get('/donation/{id}', [DonationController::class, 'getDonation']);
         Route::get('/donation/charity/{id}', [DonationController::class, 'getDonationByCharity']);
+        Route::post('/donation/{id}/confirmation', [DonationController::class, 'confirmDonation']);
         Route::post('/admin/charity/events-by-month', [AdminController::class, 'activityReport']);
         Route::post('/admin/charity/volunteer-in-events', [AdminController::class, 'volunteerStat']);
         Route::post('/event/accept_volunteer', [AdminController::class, 'acceptVolunteer']);

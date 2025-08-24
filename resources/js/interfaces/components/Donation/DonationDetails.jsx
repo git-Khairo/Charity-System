@@ -1,17 +1,22 @@
-import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import useGet from "../../../services/API/useGet";
+import usePost from "../../../services/API/usePost";
+import { AuthContext } from "../AuthContext";
 
 const DonationDetails = () => {
   const { id, don } = useParams();
   const { get, loading, error } = useGet();
+  const { post, loading: postLoading, error: postError } = usePost();
   const [donation, setDonation] = useState(null);
+  const navigate = useNavigate();
+  const { auth } = useContext(AuthContext);
+
 
   useEffect(() => {
     const fetchDonation = async () => {
       try {
         const data = await get(`/api/donation/${don}`);
-        console.log(data);
         setDonation(data.donations);
       } catch (err) {
         console.error("Error fetching donation details:", err);
@@ -20,6 +25,26 @@ const DonationDetails = () => {
 
     fetchDonation();
   }, [don]);
+
+  const handleDecision = async (decision) => {
+    try{
+      donation['decision'] = decision;
+
+      delete donation.image;
+
+      const result = post(`/api/donation/${donation.id}/confirmation`, donation);
+
+      if(!result){
+        alert(postError);
+      }
+
+      if(!postLoading){
+        navigate(`/dashboard/${auth.user.id}/requests/donations`);
+      }
+    }catch(err){
+      alert('Error' + err);
+    }
+  }
 
   if (loading) return <p className="p-6">Loading donation details...</p>;
   if (error) return <p className="p-6 text-red-600">Error: {error}</p>;
@@ -65,16 +90,16 @@ const DonationDetails = () => {
       </div>
 
     <div className="flex justify-between gap-2">
-        {donation.image && (
+        {donation.image && donation.status == 'pending' && (
             <div className="space-x-3">
               <button
-                onClick={() => handleDecision(donation.id, "accepted")}
+                onClick={() => handleDecision("accepted")}
                 className="px-3 py-1 rounded bg-green-500 text-white hover:bg-green-600"
               >
                 Accept
               </button>
               <button
-                onClick={() => handleDecision(donation.id, "rejected")}
+                onClick={() => handleDecision("rejected")}
                 className="px-3 py-1 rounded bg-red-500 text-white hover:bg-red-600"
               >
                 Reject

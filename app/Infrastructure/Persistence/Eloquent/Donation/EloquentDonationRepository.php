@@ -139,4 +139,16 @@ class EloquentDonationRepository implements DonationRepositoryInterface
 
         return $months;
     }
+
+    public function confirm($data){
+        $donation = Donation::findOrFail($data['id']);
+        if ($data['decision'] == 'accepted') {
+            $donation->status = 'accepted';
+            $donation->save();
+        }else{
+            $donation->status = 'rejected';
+            $donation->save();
+        }
+        return $donation;
+    }
 }

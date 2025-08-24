@@ -28,7 +28,8 @@ class DonationRequest extends FormRequest
             'address'        => 'required|string|max:255',
             'amount'         => 'required|numeric|min:1',
             'image'          => 'nullable|image|max:2048',
-            'paymentIntentId' => 'nullable'
+            'paymentIntentId'=> 'nullable',
+            'decision'       => 'sometimes|string'
         ];
     }
 }
