@@ -89,7 +89,7 @@ const CharityDetails = () => {
         } else if (user && user.roles.some(role => role.name === 'Beneficiary')) {
             return (
                 <div className="flex flex-col items-center gap-4">
-                    <Link to="/apply" className={`${baseClass} bg-[#e2f0ff] text-[#24527a]`}>
+                    <Link to={`/beneficiary/${auth.user.id}/apply`} className={`${baseClass} bg-[#e2f0ff] text-[#24527a]`}>
                         Apply for Support
                     </Link>
                 </div>

@@ -37,6 +37,7 @@ import SuperDashboard from './pages/SuperAdmin/SuperDashboard';
 import SuperDashboardContent from './pages/SuperAdmin/SuperDashboardContent';
 import DonationRequests from './pages/Admin/DonationRequests';
 import DonationDetails from './components/Donation/DonationDetails';
+import BeneficiaryApplyForm from '../interfaces/components/Benficiry/BeneficiaryApplyForm';
 
 const AdminLoginPassword = ({ children }) => {
     const { password } = useParams();
@@ -71,6 +72,7 @@ const App = () => {
                         <Route path="feedbacks" element={<Feedbacks />} />
                         <Route path="myCharities" element={<MyCharities />} />
                     </Route>
+                    <Route path="/beneficiary/:id/apply" element={<BeneficiaryApplyForm />} />
                     <Route path='/volunteer/:id'   element={<VolunteerLayout/>}>
                         <Route  path="profile"  element={<ProfilePage/>}/>
                         <Route  path="participations"  element={<ApplicationsPage/>}/>
