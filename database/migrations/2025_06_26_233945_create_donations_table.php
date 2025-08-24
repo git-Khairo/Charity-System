@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->decimal('amount', 8, 2);
             $table->string('payment_intent_id')->nullable();
-            $table->string('status')->default('pending');
+            $table->string('status')->default('accepted');
             $table->timestamps();
         });
     }
