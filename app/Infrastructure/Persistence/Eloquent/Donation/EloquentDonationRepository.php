@@ -29,6 +29,7 @@ class EloquentDonationRepository implements DonationRepositoryInterface
             'amount' => $data['amount'],
             'charity_id' => $id,
             'payment_intent_id' => $data['paymentIntentId'],
+            'status' => 'accepted'
         ]);
 
         return $donation;
@@ -43,6 +44,7 @@ class EloquentDonationRepository implements DonationRepositoryInterface
             'amount' => $data['amount'],
             'charity_id' => $id,
             'image' => $data['image'],
+            'status' => 'pending'
         ]);
 
         return $donation;
