@@ -1,6 +1,6 @@
 import { useState } from "react";
 import usePost from '../../../services/API/usePost';
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const useBeneficiaryForm = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +13,7 @@ const useBeneficiaryForm = () => {
   const [errors, setErrors] = useState({});
   const { post, loading, error: postError } = usePost();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const maritalStatusOptions = ["Single", "Married", "Divorced", "Widowed"];
   const workStatusOptions = ["Retired", "Employeed", "Unemployeed", "Student"]; // Renamed for clarity
@@ -92,6 +93,8 @@ const useBeneficiaryForm = () => {
         numOfMembers: 0,
       });
       setErrors({});
+
+      navigate('/charities');
     } catch (err) {
       setErrors({ submit: `Submission failed: ${err.message}` });
     }
