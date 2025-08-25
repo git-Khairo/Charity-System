@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState, useRef} from 'react';
 import Slider from 'react-slick';
 import {
     FaFacebook,
@@ -19,24 +19,20 @@ import {useFetchCharityDetails} from "../../../core/Charity/usecase/useFetchChar
 const CharityDetails = () => {
     const { id } = useParams();
     const { auth } = useContext(AuthContext);
-    const {fetchCharityData, charity,events,feedbacks,loading,error } = useFetchCharityDetails();
+    const {fetchCharityData, charity, events, feedbacks, loading, error } = useFetchCharityDetails();
     const [user, setUser] = useState(null);
 
-    console.log(feedbacks);
-
-
+    const eventsRef = useRef(null);
 
     useEffect(() => {
         fetchCharityData();
     }, [id]);
 
     useEffect(() => {
-
         if (auth.isAuthenticated) {
             setUser(auth.user);
-
         }
-    }, [auth.isAuthenticated,id,user]);
+    }, [auth.isAuthenticated, id, user]);
 
     if (loading) {
         return (
@@ -46,7 +42,6 @@ const CharityDetails = () => {
         );
     }
 
-    // Error state
     if (error) {
         return (
             <div className="flex items-center justify-center min-h-screen bg-black text-red-500">
@@ -55,8 +50,7 @@ const CharityDetails = () => {
         );
     }
 
-    // If user is null (just in case)
-    if (!charity ) {
+    if (!charity) {
         return (
             <div className="flex items-center justify-center min-h-screen bg-black text-white">
                 <p>No user data available.</p>
@@ -64,26 +58,29 @@ const CharityDetails = () => {
         );
     }
 
-
     const sliderSettings = {
         dots: true,
-        infinite: true,
+        infinite: events.length > 1,
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
-        autoplay: true,
+        autoplay: events.length > 1,
         arrows: false,
     };
 
+    // ✅ Updated renderCTA to scroll to events
     const renderCTA = () => {
         const baseClass =
             'w-full md:w-auto px-6 py-3 rounded-full shadow-md font-semibold transition-all hover:scale-105';
         if (user && user.roles.some(role => role.name === 'Volunteer')) {
             return (
                 <div className="flex flex-col items-center gap-4">
-                    <Link to="/volunteer" className={`${baseClass} bg-[#e2f0ff] text-[#24527a]`}>
+                    <button
+                        onClick={() => eventsRef.current?.scrollIntoView({ behavior: 'smooth' })}
+                        className={`${baseClass} bg-[#e2f0ff] text-[#24527a]`}
+                    >
                         Volunteer Now
-                    </Link>
+                    </button>
                 </div>
             );
         } else if (user && user.roles.some(role => role.name === 'Beneficiary')) {
@@ -167,7 +164,7 @@ const CharityDetails = () => {
             </section>
 
             {/* Events Slider */}
-            <section className="max-w-7xl mx-auto px-6 mb-12">
+            <section ref={eventsRef} className="max-w-7xl mx-auto px-6 mb-12">
                 <div className="bg-white p-6 rounded-lg shadow-md">
                     <h2 className="text-2xl font-bold text-center text-[#24527a] mb-6">Our Events</h2>
                     <Slider {...sliderSettings}>

@@ -23,6 +23,7 @@ export const useFetchCampaignByCharity = ({id}) => {
                             charity_id: item.charity_id,
                             title: item.title,
                             location: item.location,
+                            images:item.images,
                             status: item.status,
                             categoryName: item.categoryName,
                             updated_at:item.updated_at,

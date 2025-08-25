@@ -130,11 +130,10 @@ export default function BeneficiaryDashboard() {
 
             {isEditing && (
                 <EditProfileModal
+                    isOpen={isEditing}
+                    onClose={closeEdit}
+                    user={userData}
                     darkMode={darkMode}
-                    formEdit={formEdit}
-                    handleFormChange={handleFormChange}
-                    closeEdit={closeEdit}
-                    saveEdit={saveEdit}
                 />
             )}
         </div>

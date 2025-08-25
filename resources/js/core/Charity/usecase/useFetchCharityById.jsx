@@ -10,6 +10,7 @@ export const useFetchCharityById = () => {
     const fetchCharity = async (id) => {
         try {
             const result = await get(`/api/charity/${id}`);
+            console.log(result);
             if (result) {
                 const validatedCharity = new Charity({
                     id: result.charity.id,
@@ -18,7 +19,7 @@ export const useFetchCharityById = () => {
                     images: result.charity.images,
                     categoryName: result.charity.categoryName
                 });
-                setCharity(validatedCharity);
+                setCharity(result.charity);
                 setFetchError(null);
             } else {
                 setCharity(null);

@@ -1,39 +1,28 @@
-import React, {useContext, useEffect, useState} from "react";
-import {Link, useParams} from "react-router-dom";
-import {AuthContext} from "../../components/AuthContext";
-import {useFetchEventById} from "../../../core/Campaigns/usecase/useFetchEventById";
-import {useFetchCharityById} from "../../../core/Charity/usecase/useFetchCharityById";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { AuthContext } from "../../components/AuthContext";
+import { useFetchEventById } from "../../../core/Campaigns/usecase/useFetchEventById";
+import { useFetchCharityById } from "../../../core/Charity/usecase/useFetchCharityById";
+import VolunteerForm from "../volunteer/VolunteerForm";
 
 const CampaignDetails = () => {
     const [user, setUser] = useState(null);
+    const [showForm, setShowForm] = useState(false);
     const { auth } = useContext(AuthContext);
     const { id } = useParams();
 
-    const {
-        fetchEvent,
-        event,
-        eventLoading,
-        eventError
-    } = useFetchEventById();
-    const {
-        fetchCharity,
-        charity,
-         charityLoading,
-         charityError
-    } = useFetchCharityById();
-
+    const { fetchEvent, event, eventLoading, eventError } = useFetchEventById();
+    const { fetchCharity, charity, charityLoading, charityError } = useFetchCharityById();
 
     useEffect(() => {
         fetchEvent(id);
-    }, []);
+    }, [id]);
 
     useEffect(() => {
-
         if (auth.isAuthenticated) {
             setUser(auth.user);
-
         }
-    }, [auth.isAuthenticated,id,user]);
+    }, [auth.isAuthenticated, auth.user]);
 
     useEffect(() => {
         if (event && event.charityId) {
@@ -42,30 +31,32 @@ const CampaignDetails = () => {
     }, [event]);
 
     const getAction = () => {
-        if (!user && charity) return { label: "Donate Now", route: `/donate/${charity.id}?img=${charity.images}` };
-        if ( user && user.roles.some(role => role.name === 'Volunteer')) return { label: "Volunteer Now", route: "/volunteer/apply" };
-        if ( user && user.roles.some(role => role.name === 'Beneficiary')) return { label: "Apply Now", route: "/beneficiary/apply" };
-        return { label: "Support", route: "/" };
+        if (!user && charity) {
+            return { label: "Donate Now", route: `/donate/${charity.id}?img=${charity.images}`, openForm: false };
+        }
+        if (user && user.roles.some(role => role.name === "Volunteer")) {
+            return { label: "Volunteer Now", route: null, openForm: true };
+        }
+        if (user && user.roles.some(role => role.name === "Beneficiary")) {
+            return { label: "Apply Now", route: "/beneficiary/apply", openForm: false };
+        }
+        return { label: "Support", route: "/", openForm: false };
     };
 
-    const { label, route } = getAction();
+    const { label, route, openForm } = getAction();
 
-    // Loading state
-    if (eventLoading || charityLoading ) {
+    if (eventLoading || charityLoading) {
         return (
             <div className="flex items-center justify-center min-h-screen bg-black text-white">
-                <p>Loading profile...</p>
+                <p>Loading campaign...</p>
             </div>
         );
     }
 
-    // Error state
     if (eventError || charityError) {
         return (
             <div className="flex items-center justify-center min-h-screen bg-black text-red-500">
-                {(eventError || charityError) && (
-                    <p className="text-red-600">Error loading profile: {eventError || charityError}</p>
-                )}
+                <p>Error loading campaign: {eventError || charityError}</p>
             </div>
         );
     }
@@ -78,16 +69,12 @@ const CampaignDetails = () => {
         );
     }
 
-    console.log(event);
-
     return (
         <div className="bg-[#f8fafc] text-[#1e293b] font-sans antialiased">
             {/* Header Section */}
             <div
                 className="relative h-[350px] bg-cover bg-center"
-                style={{
-                    backgroundImage: `url(${event.images[0]})`,
-                }}
+                style={{ backgroundImage: `url(${event.images[0]})` }}
             >
                 <div className="absolute inset-0 bg-gradient-to-r from-[#002366]/40 to-[#0044cc]/40 flex flex-col justify-center items-center px-6 text-center">
                     <div className="max-w-4xl">
@@ -126,8 +113,13 @@ const CampaignDetails = () => {
 
                                 <h3 className="text-xl font-semibold text-[#002366] mt-8 mb-4">Gallery</h3>
                                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6">
-                                    {event.images && event.images.map((img, index) => 
-                                        <img src={img} key={index} className="rounded-lg shadow-md object-cover h-48 w-full" />
+                                    {event.images && event.images.map((img, index) =>
+                                        <img
+                                            src={img}
+                                            key={index}
+                                            className="rounded-lg shadow-md object-cover h-48 w-full"
+                                            alt={`event-${index}`}
+                                        />
                                     )}
                                 </div>
                             </div>
@@ -139,15 +131,26 @@ const CampaignDetails = () => {
                 <aside className="space-y-8">
                     <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
                         <div className="p-8 text-center">
-                            <h3 className="text-2xl font-bold text-[#002366] mb-6">Your Support Makes a Difference</h3>
+                            <h3 className="text-2xl font-bold text-[#002366] mb-6">
+                                Your Support Makes a Difference
+                            </h3>
 
-                            {/* Role-Based Action Button */}
-                            <Link
-                                to={route}
-                                className="block bg-[#002366] hover:bg-[#001a4d] text-white py-3 px-6 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg transform hover:scale-105"
-                            >
-                                {label}
-                            </Link>
+                            {/* Role-Based Action */}
+                            {openForm ? (
+                                <button
+                                    onClick={() => setShowForm(true)}
+                                    className="block w-full bg-[#002366] hover:bg-[#001a4d] text-white py-3 px-6 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg transform hover:scale-105"
+                                >
+                                    {label}
+                                </button>
+                            ) : (
+                                <Link
+                                    to={route}
+                                    className="block bg-[#002366] hover:bg-[#001a4d] text-white py-3 px-6 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg transform hover:scale-105"
+                                >
+                                    {label}
+                                </Link>
+                            )}
 
                             <div className="mt-8 text-[#161e24]">
                                 <p className="text-lg">Have a question?</p>
@@ -161,6 +164,14 @@ const CampaignDetails = () => {
                     </div>
                 </aside>
             </main>
+
+            {/* Volunteer Form Modal with AnimatePresence */}
+            <VolunteerForm
+                eventId={event.id}
+                isOpen={showForm}
+                onClose={() => setShowForm(false)}
+                onSuccess={() => setShowForm(false)}
+            />
         </div>
     );
 };

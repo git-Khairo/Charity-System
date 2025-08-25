@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Application\Volunteer\UseCases;
+use Exception;
 
 use App\Domain\Events\Repositories\EventRepositoryInterface;
 use App\Domain\Repositories\BaseRepositoryInterface;
@@ -27,11 +28,11 @@ class ApplyForEvents
 
         // Check for duplicate application
         if ($volunteer->participation()->where('event_id', $event->id)->exists()) {
-            return ['message' => 'You have already applied to this event.'];
+            throw new Exception('You have already applied to this event.');
         }
         // Check event status and capacity
         if ($event->status !== 'upcoming' || $event->NumOfVolunteer >= $event->capacity) {
-            return ['message' => 'Cannot apply: Event is closed or full.'];
+            throw new Exception('Cannot apply: Event is closed or full.');
         }
 
         $data['volunteer']=$volunteer;

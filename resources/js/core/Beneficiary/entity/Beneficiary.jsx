@@ -1,5 +1,5 @@
 export class Beneficiary {
-  constructor({ name, email, password, confirmPassword, phoneNumber, address, details, familyMembers, needs }) {
+  constructor({ name, email, password, confirmPassword, phoneNumber, address, details, familyMembers, needs }, options = {}) {
     this.name = name;
     this.email = email;
     this.password = password;
@@ -9,6 +9,8 @@ export class Beneficiary {
     this.details = details;
     this.familyMembers = familyMembers;
     this.needs = needs;
+
+      this.skipPasswordValidation = options.skipPasswordValidation || false;
   }
 
   // Validate the Beneficiary entity based on backend rules
@@ -27,14 +29,17 @@ export class Beneficiary {
     }
 
     // Password validation: required, minimum 8 characters
-    if (!this.password || typeof this.password !== 'string' || this.password.length < 8) {
-      errors.password = 'Password must be at least 8 characters long.';
-    }
+      if (!this.skipPasswordValidation) {
+          const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
 
-    // Confirm password validation
-    if (this.password !== this.confirmPassword) {
-      errors.password = 'Passwords do not match.';
-    }
+          if (!this.password || !passwordRegex.test(this.password)) {
+              errors.password = 'Password must be at least 8 characters long and contain both letters and numbers.';
+          }
+
+          if (this.password !== this.confirmPassword) {
+              errors.password = 'Passwords do not match.';
+          }
+      }
 
     // Phone number validation: required, string
     if (!this.phoneNumber || typeof this.phoneNumber !== 'string') {

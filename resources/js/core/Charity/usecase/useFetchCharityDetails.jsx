@@ -48,7 +48,7 @@ export const useFetchCharityDetails = () => {
                         images: JSON.parse(item.images[0]),
                         description : item.description,
                         capacity: item.capacity,
-                        NumOfVolunteer: item.NumOfvolunteer
+                        NumOfVolunteer: item.NumOfVolunteer
                     })
                 }catch (err) {
                     console.log(`Skipping invalid campaign: ${err.message}`);
