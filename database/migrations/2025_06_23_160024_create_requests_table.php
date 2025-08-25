@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('workStatus');
             $table->string('needs');
             $table->integer('numOfMembers');
+            $table->string('status');
             $table->timestamps();
         });
     }

@@ -42,6 +42,9 @@ class BeneficiarySeeder extends Seeder
                     'email' => $beneficiary->email,
                     'phonenumber' => $beneficiary->phonenumber,
                     'address' => $beneficiary->address,
+                    'status' => 'pending',
+                    'created_at' => now(),
+                    'updated_at' => now()
                 ]);
             }
         }

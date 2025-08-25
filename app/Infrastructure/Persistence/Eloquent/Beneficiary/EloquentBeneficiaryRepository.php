@@ -77,6 +77,7 @@ class EloquentBeneficiaryRepository implements BeneficiaryRepositoryInterface
             'workStatus'     => $data['workStatus'] ?? null,
             'needs'          => $data['needs'] ?? null,
             'numOfMembers'   => $data['numOfMembers'] ?? null,
+            'status' => 'pending'
         ]);
 
         return $request;

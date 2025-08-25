@@ -24,7 +24,8 @@ class Request extends Model
         'maritalStatus',
         'workStatus',
         'needs',
-        'numOfMembers'
+        'numOfMembers',
+        'status'
     ];
 
     public function beneficiary(){
