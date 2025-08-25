@@ -16,9 +16,6 @@ export const usePostBeneficiary = () => {
       confirmPassword: formData.password,
       phoneNumber: formData.phone,
       address: formData.address,
-      details: formData.otherDetails,
-      familyMembers: parseInt(formData.familyMembers, 10) || 0,
-      needs: formData.needs,
     });
 
     // Get validation errors from Beneficiary entity
@@ -29,14 +26,11 @@ export const usePostBeneficiary = () => {
       // Validate Step 1 fields: name, phone, familyMembers, address, otherDetails
       if (validationErrors.name) stepErrors.name = validationErrors.name;
       if (validationErrors.phonenumber) stepErrors.phone = validationErrors.phonenumber;
-      if (validationErrors.familyMember) stepErrors.familyMembers = validationErrors.familyMember;
       if (validationErrors.address) stepErrors.address = validationErrors.address;
-      if (validationErrors.details) stepErrors.otherDetails = validationErrors.details;
     } else if (stepNumber === 2) {
       // Validate Step 2 fields: email, password, needs
       if (validationErrors.email) stepErrors.email = validationErrors.email;
       if (validationErrors.password) stepErrors.password = validationErrors.password;
-      if (validationErrors.needs) stepErrors.needs = validationErrors.needs;
     }
 
     return stepErrors;
@@ -60,9 +54,6 @@ export const usePostBeneficiary = () => {
       confirmPassword: formData.password,
       phoneNumber: formData.phone,
       address: formData.address,
-      details: formData.otherDetails,
-      familyMembers: parseInt(formData.familyMembers, 10),
-      needs: formData.needs,
     });
 
     // Post the data to the API

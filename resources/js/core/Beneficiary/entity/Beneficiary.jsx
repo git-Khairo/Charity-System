@@ -1,14 +1,11 @@
 export class Beneficiary {
-  constructor({ name, email, password, confirmPassword, phoneNumber, address, details, familyMembers, needs }, options = {}) {
+  constructor({ name, email, password, confirmPassword, phoneNumber, address }, options = {}) {
     this.name = name;
     this.email = email;
     this.password = password;
     this.confirmPassword = confirmPassword;
     this.phoneNumber = phoneNumber;
     this.address = address;
-    this.details = details;
-    this.familyMembers = familyMembers;
-    this.needs = needs;
 
       this.skipPasswordValidation = options.skipPasswordValidation || false;
   }
@@ -51,22 +48,6 @@ export class Beneficiary {
       errors.address = 'Address is required and must be a string with a maximum length of 255 characters.';
     }
 
-    // Details validation: required, string, minimum 10 characters
-    if (!this.details || typeof this.details !== 'string' || this.details.length < 10) {
-      errors.details = 'Details are required and must be a string with a minimum length of 10 characters.';
-    }
-
-    // Family members validation: required, positive number
-    if (!this.familyMembers || isNaN(this.familyMembers) || this.familyMembers < 1) {
-      errors.familyMember = 'Number of family members is required and must be a positive number.';
-    }
-
-    // Needs validation: required, array of strings
-    if (!Array.isArray(this.needs) || this.needs.length === 0) {
-      errors.needs = 'Needs must be a non-empty array.';
-    } else if (!this.needs.every((need) => typeof need === 'string')) {
-      errors.needs = 'All needs must be strings.';
-    }
 
     return errors;
   }
@@ -80,9 +61,6 @@ export class Beneficiary {
       password_confirmation: this.confirmPassword,
       phonenumber: this.phoneNumber,
       address: this.address,
-      details: this.details,
-      familyMember: this.familyMembers,
-      needs: JSON.stringify(this.needs),
     };
   }
 }

@@ -11,12 +11,9 @@ const BeneficiaryForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
-    familyMembers: '',
     address: '',
     email: '',
     password: '',
-    needs: [],
-    otherDetails: '',
   });
 
   const handleChange = (e) => {
@@ -117,23 +114,6 @@ const BeneficiaryForm = () => {
             </div>
             <div>
               <input
-                type="number"
-                name="familyMembers"
-                placeholder="Number of Family Members"
-                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                  errors.familyMembers ? 'border-red-500' : 'border-gray-300'
-                }`}
-                value={formData.familyMembers}
-                onChange={handleChange}
-                required
-                min="1"
-              />
-              {errors.familyMembers && (
-                <p className="mt-1 text-sm text-red-600">{errors.familyMembers}</p>
-              )}
-            </div>
-            <div>
-              <input
                 type="text"
                 name="address"
                 placeholder="Address"
@@ -145,21 +125,6 @@ const BeneficiaryForm = () => {
                 required
               />
               {errors.address && <p className="mt-1 text-sm text-red-600">{errors.address}</p>}
-            </div>
-            <div>
-              <textarea
-                name="otherDetails"
-                placeholder="Additional information about your situation"
-                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                  errors.otherDetails ? 'border-red-500' : 'border-gray-300'
-                }`}
-                rows={4}
-                value={formData.otherDetails}
-                onChange={handleChange}
-              />
-              {errors.otherDetails && (
-                <p className="mt-1 text-sm text-red-600">{errors.otherDetails}</p>
-              )}
             </div>
           </div>
 
@@ -208,24 +173,6 @@ const BeneficiaryForm = () => {
               />
               {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
             </div>
-            <div>
-              <label className="block font-medium text-gray-700 mb-2">Select Your Needs:</label>
-              <div className="flex flex-wrap gap-4">
-                {['Food', 'Medical', 'Shelter'].map((need) => (
-                  <label key={need} className="inline-flex items-center">
-                    <input
-                      type="checkbox"
-                      value={need}
-                      checked={formData.needs.includes(need)}
-                      onChange={handleChange}
-                      className="form-checkbox text-blue-600"
-                    />
-                    <span className="ml-2 text-gray-700">{need}</span>
-                  </label>
-                ))}
-              </div>
-              {errors.needs && <p className="mt-1 text-sm text-red-600">{errors.needs}</p>}
-            </div>
           </div>
 
           <div className="flex justify-between mt-8">
@@ -255,11 +202,8 @@ const BeneficiaryForm = () => {
           <div className="text-left mb-6">
             <p><strong>Name:</strong> {formData.name}</p>
             <p><strong>Phone:</strong> {formData.phone}</p>
-            <p><strong>Family Members:</strong> {formData.familyMembers}</p>
             <p><strong>Address:</strong> {formData.address}</p>
             <p><strong>Email:</strong> {formData.email}</p>
-            <p><strong>Needs:</strong> {formData.needs.join(', ')}</p>
-            <p><strong>Details:</strong> {formData.otherDetails}</p>
           </div>
           <div className="flex justify-between">
             <button

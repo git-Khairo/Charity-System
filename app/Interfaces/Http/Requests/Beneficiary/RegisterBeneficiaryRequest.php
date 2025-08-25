@@ -27,9 +27,6 @@ class RegisterBeneficiaryRequest extends FormRequest
             'password'    => 'required|string|min:8|confirmed',
             'phonenumber' => 'required|string',
             'address'     => 'required|string|max:255',
-            'details'     => 'required|string',
-            'familyMember' => 'required|integer',
-            'needs' => 'required|string'
         ];
     }
 }

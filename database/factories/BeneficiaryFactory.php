@@ -25,8 +25,6 @@ class BeneficiaryFactory extends Factory
             'password' => Hash::make('password'),
             'phoneNumber' => $this->faker->phoneNumber(),
             'address' => $this->faker->address(),
-            'details' => $this->faker->paragraph(),
-            'familyMember' => $this->faker->numberBetween(1, 10)
         ];
     }
 }
