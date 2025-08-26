@@ -25,6 +25,7 @@ class BeneficiarySeeder extends Seeder
         $maritalStatuses = ["Single", "Married", "Divorced", "Widowed"];
         $workStatuses = ["Retired", "Employeed", "Unemployeed", "Student"];
         $needsOptions = ["Housing Support", "Food Assistance", "Medical Aid", "Education Grants"];
+        $statuses = ['Accepted', 'Rejected', 'Pending'];
 
         foreach ($beneficiaries as $beneficiary) {
             // Each volunteer will participate in 1 to 10 random events
@@ -42,7 +43,7 @@ class BeneficiarySeeder extends Seeder
                     'email' => $beneficiary->email,
                     'phonenumber' => $beneficiary->phonenumber,
                     'address' => $beneficiary->address,
-                    'status' => 'pending',
+                    'status' => $statuses[array_rand($statuses)],
                     'created_at' => now(),
                     'updated_at' => now()
                 ]);

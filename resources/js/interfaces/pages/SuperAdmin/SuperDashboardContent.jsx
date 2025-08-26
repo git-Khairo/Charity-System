@@ -13,7 +13,7 @@ const SuperDashboardContent = () => {
                 console.log(result);
                 
                 if(result){
-                    setStats(result);
+                    setStats(result.report);
                 }
 
             }catch(err){
