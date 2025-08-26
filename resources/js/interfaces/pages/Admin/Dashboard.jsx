@@ -75,7 +75,7 @@ const Dashboard = () => {
             ),
             subItems: [
                 { label: 'Volunteer Requests', path: `/dashboard/${id}/requests/volunteers` },
-                { label: 'Beneficiary Requests', path: '/requests/beneficiaries' },
+                { label: 'Beneficiary Requests', path: `/dashboard/${id}/requests/beneficiaries` },
                 { label: 'Accept Donations', path: `/dashboard/${id}/requests/donations` },
             ],
         },

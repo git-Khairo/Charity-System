@@ -101,6 +101,7 @@ Route::group(['middleware'=>['auth:sanctum']], function (){
         Route::get('/admin/charity/charity-info', [AdminController::class, 'charityInfo']);
         Route::put('/charity/update/{id}', [SuperAdminController::class, 'updateCharity']);
         Route::get('/admin/participation/{id}', [AdminController::class, 'Participation']);
+        Route::get('/admin/requests/{id}', [AdminController::class, 'requests']);
     });
 
     Route::middleware(RoleMiddleware::class.':SuperAdmin')->group(function () {

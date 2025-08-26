@@ -127,4 +127,12 @@ class AdminController extends Controller
 
     }
 
+    public function requests($id,AcceptBeneficiary $useCase){
+
+        $request=$useCase->getRequest($id);
+
+        return response()->json(['message' => 'all requests', 'request' => $request], 201);
+
+    }
+
 }
