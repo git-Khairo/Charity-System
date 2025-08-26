@@ -2,10 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Domain\Admins\Models\Admin;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class AdminSeeder extends Seeder
 {
@@ -22,5 +24,10 @@ class AdminSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
         ]);
+        $superAdmin = Admin::firstOrFail();
+        $superadminRole = Role::firstOrCreate(['name' => 'SuperAdmin','guard_name' => 'api']);
+
+        $superAdmin->assignRole($superadminRole);
+        
     }
 }
