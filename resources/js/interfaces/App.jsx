@@ -38,6 +38,13 @@ import SuperDashboardContent from './pages/SuperAdmin/SuperDashboardContent';
 import DonationRequests from './pages/Admin/DonationRequests';
 import DonationDetails from './components/Donation/DonationDetails';
 import BeneficiaryApplyForm from '../interfaces/components/Benficiry/BeneficiaryApplyForm';
+import VolunteerFeedback from '../interfaces/pages/SuperAdmin/VolunteerFeedback';
+import CreateCharity from '../interfaces/pages/SuperAdmin/CreateCharity';
+import UpdateCharity from '../interfaces/pages/SuperAdmin/UpdateCharity';
+import DeleteCharity from '../interfaces/pages/SuperAdmin/DeleteCharity';
+import BeneficiaryFeedback from '../interfaces/pages/SuperAdmin/BeneficiaryFeedback';
+import SuperActivityDashboard from '../interfaces/pages/SuperAdmin/SuperActivityDashboard';
+import SuperGovernmentReport from '../interfaces/pages/SuperAdmin/SuperGovernmentReport';
 
 const AdminLoginPassword = ({ children }) => {
     const { password } = useParams();
@@ -88,6 +95,13 @@ const App = () => {
                     } />
                     <Route path='/superadmin/dashboard' element={<SuperDashboard />} >
                         <Route  path='' element={<SuperDashboardContent />} />
+                        <Route  path="charity/delete"  element={<DeleteCharity />}/>
+                        <Route  path="charity/Update"  element={<UpdateCharity/>}/>
+                        <Route  path="charity/Create"  element={<CreateCharity/>}/>
+                        <Route  path="feedback/volunteers"  element={<VolunteerFeedback/>}/>
+                        <Route  path="feedback/beneficiary" element={<BeneficiaryFeedback />} />
+                        <Route  path="reports/activity"  element={<SuperActivityDashboard/>}/>
+                        <Route  path="reports/financial"  element={<SuperGovernmentReport/>}/>
                     </Route>
                     <Route path='/dashboard/:id' element={<Dashboard />}>
                         <Route  path='' element={<DashboardContent />} />

@@ -22,7 +22,7 @@ const SuperDashboard = () => {
     const navItems = [
         {
             label: 'Dashboard',
-            path: `/dashboard/${authUser.id}`,
+            path: '/superadmin/dashboard/',
             icon: (
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                     <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" strokeLinecap="round" strokeLinejoin="round"></path>
@@ -30,38 +30,28 @@ const SuperDashboard = () => {
             ),
         },
         {
-            label: 'Events',
+            label: 'Charity',
             icon: (
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                     <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" strokeLinecap="round" strokeLinejoin="round"></path>
                 </svg>
             ),
             subItems: [
-                { label: 'Create an Event', path: `/dashboard/events/Create` },
-                { label: 'Update an Event', path: `/dashboard/events/Update` },
-                { label: 'Delete an Event', path: `/dashboard/events/delete` },
+                { label: 'Create a Charity', path: `/superadmin/dashboard/charity/Create` },
+                { label: 'Update a Charity', path: `/superadmin/dashboard/charity/Update` },
+                { label: 'Delete a Charity', path: `/superadmin/dashboard/charity/delete` },
             ],
         },
         {
-            label: 'Charity Info',
-            action: () => setShowCharityModal(true), // open modal
-            icon: (
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" strokeLinejoin="round"></path>
-                </svg>
-            ),
-        },
-        {
-            label: 'Requests',
+            label: 'FeedBack',
             icon: (
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                     <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" strokeLinecap="round" strokeLinejoin="round"></path>
                 </svg>
             ),
             subItems: [
-                { label: 'Volunteer Requests', path: `/dashboard/requests/volunteers` },
-                { label: 'Beneficiary Requests', path: '/requests/beneficiaries' },
-                { label: 'Accept Donations', path: '/requests/donations' },
+                { label: 'Volunteer FeedBack', path: `/superadmin/dashboard/feedback/volunteers` },
+                { label: 'Beneficiary FeedBack', path: '/superadmin/dashboard/feedback/beneficiary' }
             ],
         },
         {
@@ -72,8 +62,8 @@ const SuperDashboard = () => {
                 </svg>
             ),
             subItems: [
-                { label: 'Activity Report', path: `/dashboard/reports/activity`},
-                { label: 'Financial Report', path: `/dashboard/reports/financial` },
+                { label: 'Activity Report', path: `/superadmin/dashboard/reports/activity`},
+                { label: 'Financial Report', path: `/superadmin/dashboard/reports/financial` },
             ],
         },
     ];
