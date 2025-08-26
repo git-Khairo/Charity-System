@@ -7,4 +7,6 @@ use App\Domain\Repositories\BaseRepositoryInterface;
 interface BeneficiaryRequestRepositoryInterface extends BaseRepositoryInterface
 {
 
+    public function getRequests($id);
+
 }

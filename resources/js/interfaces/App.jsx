@@ -45,6 +45,7 @@ import DeleteCharity from '../interfaces/pages/SuperAdmin/DeleteCharity';
 import BeneficiaryFeedback from '../interfaces/pages/SuperAdmin/BeneficiaryFeedback';
 import SuperActivityDashboard from '../interfaces/pages/SuperAdmin/SuperActivityDashboard';
 import SuperGovernmentReport from '../interfaces/pages/SuperAdmin/SuperGovernmentReport';
+import BeneficiaryRequest from "./pages/Admin/BeneficiaryRequest";
 
 const AdminLoginPassword = ({ children }) => {
     const { password } = useParams();
@@ -109,6 +110,7 @@ const App = () => {
                         <Route  path="events/Update"  element={<UpdateCampaigns/>}/>
                         <Route  path="events/Create"  element={<CreateCampaign/>}/>
                         <Route  path="requests/volunteers"  element={<ParticipationRequests/>}/>
+                        <Route  path="requests/beneficiaries"  element={<BeneficiaryRequest/>}/>
                         <Route  path="requests/donations" element={<DonationRequests />} />
                         <Route  path='donation/details/:don' element={<DonationDetails />} />
                         <Route  path="reports/activity"  element={<ActivityDashboard/>}/>

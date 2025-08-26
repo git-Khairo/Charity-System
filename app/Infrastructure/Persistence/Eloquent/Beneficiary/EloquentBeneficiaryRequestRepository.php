@@ -25,5 +25,26 @@ class EloquentBeneficiaryRequestRepository implements BeneficiaryRequestReposito
         return $volunteer->delete();
     }
 
+    public function getRequests($id)
+    {
+
+        $charityId=$id;
+
+        $requests = Request::with('beneficiary')
+            ->where('charity_id', $charityId)
+            ->withCount([
+                'beneficiary as accepted_count' => function ($q) use ($charityId) {
+                    $q->join('requests', 'beneficiaries.id', '=', 'requests.beneficiary_id')
+                        ->where('requests.charity_id', $charityId)
+                        ->where('requests.status', 'Accepted');
+                }
+            ])
+            ->where('requests.status', 'pending')
+            ->orderByDesc('accepted_count')
+            ->get();
+
+        return $requests;
+
+    }
 
 }

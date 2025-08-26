@@ -90,4 +90,9 @@ class AcceptBeneficiary
     }
 
 
+    public function getRequest($id){
+
+        return $this->requestRepo->getRequests($id);
+    }
+
 }
