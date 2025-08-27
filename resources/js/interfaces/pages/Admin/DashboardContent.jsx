@@ -28,9 +28,6 @@ const DashboardContent = () => {
     const { setChartData, chartData, metrics, checkboxes, setCheckboxes, loading, error } =
         useFetchCharityDashboardData(selectedYear);
 
-    console.log(chartData);
-
-
     const chartRef = useRef(null);
     const chartInstanceRef = useRef(null);
 
