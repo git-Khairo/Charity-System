@@ -2,8 +2,8 @@
 
 namespace App\Application\SuperAdmin\useCases;
 
+use App\Domain\Charity\Models\Charity;
 use App\Domain\Charity\Repositories\CharityRepositoryInterface;
-use App\Infrastructure\Persistence\Eloquent\Events\EloquentEventRepository;
 use App\Infrastructure\Persistence\Eloquent\Volunteer\EloquentVolunteerFeedbackRepository;
 
 class DisplayAllFeedback
@@ -23,14 +23,10 @@ class DisplayAllFeedback
 
     }
 
-    public function charityFeedback($id){
-
-        $charity=$this->charityRepo->find($id);
-
-        $charity->beneficiary_feedback;
-
-        return $charity['beneficiary_feedback'];
-
+    public function charityFeedback(){
+        $charities = Charity::with('beneficiary_feedback')->get();
+        
+        return $charities;
     }
 
 }

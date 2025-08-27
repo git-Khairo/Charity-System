@@ -71,9 +71,16 @@ class SuperAdminController extends Controller
 
     }
 
-    public function charityFeedback($id,DisplayAllFeedback $useCase){
+    public function charityFeedback(DisplayAllFeedback $useCase){
 
-        $feedback=$useCase->charityFeedback($id);
+        $feedback=$useCase->charityFeedback();
+
+        return  response()->json(['message' => 'this charity feedback', 'feedback' => $feedback], 201);
+    }
+
+    public function volunteerFeedback(DisplayAllFeedback $useCase){
+
+        $feedback=$useCase->allFeedbacks();
 
         return  response()->json(['message' => 'this charity feedback', 'feedback' => $feedback], 201);
     }

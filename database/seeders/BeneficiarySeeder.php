@@ -49,5 +49,26 @@ class BeneficiarySeeder extends Seeder
                 ]);
             }
         }
+
+        // Get existing beneficiary and charity IDs
+        $beneficiaryIds = DB::table('beneficiaries')->pluck('id')->toArray();
+        $charityIds = DB::table('charities')->pluck('id')->toArray();
+
+        // Generate 20 feedback entries
+        $feedbacks = [];
+        for ($i = 0; $i < 20; $i++) {
+            $feedbacks[] = [
+                'title' => $faker->sentence(4), // Random 4-word title
+                'rating' => $faker->numberBetween(1, 5), // Random rating between 1 and 5
+                'beneficiary_id' => $faker->randomElement($beneficiaryIds), // Random beneficiary ID
+                'charity_id' => $faker->randomElement($charityIds), // Random charity ID
+                'description' => $faker->paragraph(2), // Random 2-sentence description
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
+
+        // Insert feedback entries into the table
+        DB::table('beneficiary_feedback')->insert($feedbacks);
     }
 }

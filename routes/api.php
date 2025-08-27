@@ -111,6 +111,8 @@ Route::group(['middleware'=>['auth:sanctum']], function (){
         Route::get('/super_admin/charity/volunteer-in-events', [SuperAdminController::class, 'volunteerStat']);
         Route::get('/super_admin/charity/financialReport', [AdminController::class, 'financialReport']);
         Route::get('/super_admin/charity/charity_stat', [SuperAdminController::class, 'charityStat']);
+        Route::get('/super_admin/volunteer/feedbacks', [SuperAdminController::class, 'volunteerFeedback']);
+        Route::get('/super_admin/charity/feedbacks', [SuperAdminController::class, 'charityFeedback']);
     });
 });
 
