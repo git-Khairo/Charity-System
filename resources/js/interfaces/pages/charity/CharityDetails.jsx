@@ -104,6 +104,8 @@ const CharityDetails = () => {
     const upcomingEvents = events.filter(e => e.status === 'upcoming').slice(0, 3);
     const topFeedbacks = feedbacks.slice(0, 3);
 
+    console.log(feedbacks);
+
     return (
         <div className="min-h-screen bg-[#f9fafb] text-[#2c3e50] font-sans">
             {/* Cover Section */}
