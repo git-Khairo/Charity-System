@@ -53,9 +53,6 @@ class ApplyForEvents
 
         $participations = $volunteer->participation; // assuming this is a relationship
 
-        if ($participations->isEmpty()) {
-            return response()->json(['message' => 'No participation found'], 404);
-        }
 
         $fields = [
             "Developmental",
