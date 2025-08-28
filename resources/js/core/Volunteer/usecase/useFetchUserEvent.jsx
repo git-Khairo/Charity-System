@@ -12,7 +12,6 @@ export const useFetchUserEvents = () => {
         try {
             const result = await get(`/api/myEvents`); // adjust endpoint if needed
 
-            console.log(result);
             if (result && result["user events"]) {
                 setUserEvent(result["user events"]);
                 setFetchError(null);

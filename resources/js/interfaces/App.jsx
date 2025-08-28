@@ -74,8 +74,8 @@ const App = () => {
                     <Route path='/donate/:id' element={<DonationForm />} />
                     <Route path='/charity/:id' element={<CharityDetails />} />
                     <Route path="/campaign/:id" element={<CampaignDetails/>}/>
-                    <Route path="/beneficiary/:id" element={<BeneficiaryDashboard />}>
-                        <Route path='' element={<Applications />} />
+                    <Route path="/Beneficiary/:id" element={<BeneficiaryDashboard />}>
+                        <Route path='profile' element={<Applications />} />
                         <Route path="notifications" element={<Notifications />} />
                         <Route path="feedbacks" element={<Feedbacks />} />
                         <Route path="myCharities" element={<MyCharities />} />
@@ -97,7 +97,6 @@ const App = () => {
                     <Route path='/superadmin/dashboard' element={<SuperDashboard />} >
                         <Route  path='' element={<SuperDashboardContent />} />
                         <Route  path="charity/delete"  element={<DeleteCharity />}/>
-                        <Route  path="charity/Update"  element={<UpdateCharity/>}/>
                         <Route  path="charity/Create"  element={<CreateCharity/>}/>
                         <Route  path="feedback/volunteers"  element={<VolunteerFeedback/>}/>
                         <Route  path="feedback/beneficiary" element={<BeneficiaryFeedback />} />

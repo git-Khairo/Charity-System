@@ -81,7 +81,7 @@ export default function BeneficiaryDashboard() {
                 {/* Navigation */}
                 <div className="flex justify-center space-x-6 my-4 text-lg font-medium">
                     <NavLink
-                        to=""
+                        to="profile"
                         end
                         onClick={() => fetchDashboardData()}
                         className={({ isActive }) =>

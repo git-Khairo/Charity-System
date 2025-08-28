@@ -38,7 +38,6 @@ const SuperDashboard = () => {
             ),
             subItems: [
                 { label: 'Create a Charity', path: `/superadmin/dashboard/charity/Create` },
-                { label: 'Update a Charity', path: `/superadmin/dashboard/charity/Update` },
                 { label: 'Delete a Charity', path: `/superadmin/dashboard/charity/delete` },
             ],
         },
@@ -62,7 +61,7 @@ const SuperDashboard = () => {
                 </svg>
             ),
             subItems: [
-                { label: 'Activity Report', path: `/superadmin/dashboard/reports/activity`},
+                // { label: 'Activity Report', path: `/superadmin/dashboard/reports/activity`},
                 { label: 'Financial Report', path: `/superadmin/dashboard/reports/financial` },
             ],
         },
