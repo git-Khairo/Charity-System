@@ -52,7 +52,9 @@ class EloquentCharityRepository implements CharityRepositoryInterface
         $charity = Charity::findOrFail($id);
         
         $charity->delete();
-        return true;
+
+        return;
+
         } catch (ModelNotFoundException $e) {
             throw new \Exception("Charity with ID $id not found.");
         } catch (\Exception $e) {

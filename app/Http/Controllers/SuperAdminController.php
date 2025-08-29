@@ -39,8 +39,8 @@ class SuperAdminController extends Controller
     }
 
     public function deleteCharity($id, DeleteCharity $usecase){
-        $charity = $usecase->deleteCharity($id);
-        return response()->json(['message' => 'deleted charity', 'charity' => new CharityResource($charity)], 201);
+        $id = $usecase->deleteCharity($id);
+        return response()->json(['message' => 'deleted charity', 'id' => $id], 201);
     }
 
     public function volunteerStat( Statistics $useCase){
