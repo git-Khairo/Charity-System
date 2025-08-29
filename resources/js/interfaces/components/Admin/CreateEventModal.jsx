@@ -111,7 +111,7 @@ export default function CreateEventModal({ isOpen, onClose, charityId }) {
                 title: { en: eventData.titleEn, ar: eventData.titleAr },
                 description: { en: eventData.descriptionEn, ar: eventData.descriptionAr },
                 location: { en: eventData.locationEn, ar: eventData.locationAr },
-                images: uploadedImages,
+                images:[JSON.stringify(uploadedImages)],
                 status: "active",
                 capacity: Number(eventData.capacity),
                 NumOfVolunteer: Number(eventData.numOfVolunteers) || 0,
