@@ -109,7 +109,7 @@ Route::group(['middleware'=>['auth:sanctum']], function (){
         Route::delete('/charity/delete/{id}', [SuperAdminController::class, 'deleteCharity']);
         Route::get('/super_admin/charity/beneficiary-in-charity', [SuperAdminController::class, 'beneficiaryStat']);
         Route::get('/super_admin/charity/volunteer-in-events', [SuperAdminController::class, 'volunteerStat']);
-        Route::get('/super_admin/charity/financialReport', [AdminController::class, 'financialReport']);
+        Route::post('/super_admin/charity/financialReport', [AdminController::class, 'financialReport']);
         Route::get('/super_admin/charity/charity_stat', [SuperAdminController::class, 'charityStat']);
         Route::get('/super_admin/volunteer/feedbacks', [SuperAdminController::class, 'volunteerFeedback']);
         Route::get('/super_admin/charity/feedbacks', [SuperAdminController::class, 'charityFeedback']);

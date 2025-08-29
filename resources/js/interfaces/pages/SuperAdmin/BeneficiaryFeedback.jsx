@@ -1,11 +1,40 @@
 import { useEffect, useState } from 'react';
 import useGet from '../../../services/API/useGet';
 import { usePagination } from '../../../services/Hooks/usePagination';
+import useSort from '../../../services/Hooks/useSort';
 
 const BeneficiaryFeedback = () => {
   const { get, loading, error } = useGet();
   const [feedbacks, setFeedbacks] = useState([]);
-  const { currentPage, totalPages, paginatedData, paginate, nextPage, prevPage } = usePagination(feedbacks, 3); // 3 charities per page
+  const [lang, setLang] = useState(localStorage.getItem('lang'));
+  const [sortBy, setSortBy] = useState('newest');
+  
+  // Flatten feedback for sorting
+  const flattenedFeedbacks = feedbacks.flatMap(charity => 
+    charity.beneficiary_feedback.map(feedback => ({
+      ...feedback,
+      charityName: charity.name[lang],
+      charityAddress: charity.address[lang]
+    }))
+  );
+  
+  const { sortedData } = useSort({ data: flattenedFeedbacks, sortBy });
+  
+  // Reconstruct the charity structure after sorting
+  const sortedFeedbacks = feedbacks.map(charity => ({
+    ...charity,
+    beneficiary_feedback: sortedData
+      .filter(feedback => feedback.charityName === charity.name[lang])
+      .map(feedback => ({
+        id: feedback.id,
+        title: feedback.title,
+        rating: feedback.rating,
+        description: feedback.description,
+        created_at: feedback.created_at
+      }))
+  })).filter(charity => charity.beneficiary_feedback.length > 0);
+
+  const { currentPage, totalPages, paginatedData, paginate, nextPage, prevPage } = usePagination(sortedFeedbacks, 3);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,24 +52,45 @@ const BeneficiaryFeedback = () => {
     fetchData();
   }, []);
 
+  const handleSortChange = (e) => {
+    setSortBy(e.target.value);
+  };
+
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">Beneficiary Feedback</h1>
+    <div className="p-6 mx-auto">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold text-gray-800">Beneficiary Feedback</h1>
+        <div className="flex items-center space-x-2">
+          <label htmlFor="sort" className="text-gray-600">Sort by:</label>
+          <select
+            id="sort"
+            value={sortBy}
+            onChange={handleSortChange}
+            className="border rounded-md p-2 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="newest">Newest</option>
+            <option value="az">Title A-Z</option>
+            <option value="za">Title Z-A</option>
+            <option value="highestRating">Highest Rating</option>
+            <option value="lowestRating">Lowest Rating</option>
+          </select>
+        </div>
+      </div>
 
       {loading && <p className="text-gray-500">Loading feedback...</p>}
       {error && <p className="text-red-500 font-medium">Error: {error}</p>}
-      {!loading && !error && feedbacks.length === 0 && (
+      {!loading && !error && sortedFeedbacks.length === 0 && (
         <p className="text-gray-500">No feedback available.</p>
       )}
 
-      {!loading && !error && feedbacks.length > 0 && (
+      {!loading && !error && sortedFeedbacks.length > 0 && (
         <div className="space-y-8">
           {paginatedData.map((charity) => (
             <div key={charity.id} className="border rounded-lg p-5 shadow-md bg-white">
               <h2 className="text-xl font-semibold text-gray-700 mb-2">
-                {charity.name.en} - {charity.address.en}
+                {charity.name[lang]} - {charity.address[lang]}
               </h2>
-              {charity.beneficiary_feedback.length > 0 ? (
+              {charity.beneficiary_feedback && charity.beneficiary_feedback.length > 0 ? (
                 <ul className="space-y-4">
                   {charity.beneficiary_feedback.map((feedback) => (
                     <li
@@ -68,7 +118,6 @@ const BeneficiaryFeedback = () => {
         </div>
       )}
 
-      {/* Pagination Controls */}
       {totalPages > 1 && (
         <div className="mt-6 flex items-center justify-between">
           <button

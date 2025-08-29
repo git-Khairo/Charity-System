@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import useGet from '../../../services/API/useGet';
 import { usePagination } from '../../../services/Hooks/usePagination';
+import useSort from '../../../services/Hooks/useSort';
 
 const VolunteerFeedback = () => {
   const { get, loading, error } = useGet();
   const [feedbacks, setFeedbacks] = useState([]);
-  const { currentPage, totalPages, paginatedData, paginate, nextPage, prevPage } = usePagination(feedbacks, 6);
+  const [sortBy, setSortBy] = useState('newest');
+  const { sortedData } = useSort({ data: feedbacks, sortBy });
+  const { currentPage, totalPages, paginatedData, paginate, nextPage, prevPage } = usePagination(sortedData, 6);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,17 +28,38 @@ const VolunteerFeedback = () => {
     fetchData();
   }, []);
 
+  const handleSortChange = (e) => {
+    setSortBy(e.target.value);
+  };
+
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">Volunteer Feedback</h1>
+    <div className="p-6 mx-auto">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold text-gray-800">Volunteer Feedback</h1>
+        <div className="flex items-center space-x-2">
+          <label htmlFor="sort" className="text-gray-600">Sort by:</label>
+          <select
+            id="sort"
+            value={sortBy}
+            onChange={handleSortChange}
+            className="border rounded-md p-2 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="newest">Newest</option>
+            <option value="az">Title A-Z</option>
+            <option value="za">Title Z-A</option>
+            <option value="highestRating">Highest Rating</option>
+            <option value="lowestRating">Lowest Rating</option>
+          </select>
+        </div>
+      </div>
 
       {loading && <p className="text-gray-500">Loading feedback...</p>}
       {error && <p className="text-red-500 font-medium">Error: {error}</p>}
-      {!loading && !error && feedbacks.length === 0 && (
+      {!loading && !error && sortedData.length === 0 && (
         <p className="text-gray-500">No feedback available.</p>
       )}
 
-      {!loading && !error && feedbacks.length > 0 && (
+      {!loading && !error && sortedData.length > 0 && (
         <div className="space-y-6">
           {paginatedData.map((feedback) => (
             <div
@@ -48,7 +72,7 @@ const VolunteerFeedback = () => {
               </p>
               <p className="text-gray-700 mt-1">{feedback.description}</p>
               <p className="text-sm text-gray-500 mt-2">
-                Event ID: {feedback.event_name} | Volunteer ID: {feedback.volunteer_name}
+                Event Name: {feedback.event_name} | Volunteer Name: {feedback.volunteer_name}
               </p>
               <p className="text-sm text-gray-400">
                 Posted on: {new Date(feedback.created_at).toLocaleDateString()}

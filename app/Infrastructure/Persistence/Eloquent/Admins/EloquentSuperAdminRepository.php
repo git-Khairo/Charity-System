@@ -70,6 +70,8 @@ class EloquentSuperAdminRepository implements SuperAdminRepositoriesInterface
                     ->where('charity_id', $charity->id)
                     ->sum('amount');
 
+                $totalEvents = $charity->events->count();
+
                 return [
                     'id' => $charity->id,
                     'name' => $charity->name,
@@ -77,6 +79,7 @@ class EloquentSuperAdminRepository implements SuperAdminRepositoriesInterface
                     'report' => [
                         'total_volunteers' => $volunteerCount,
                         'total_beneficiaries' => $beneficiaryCount,
+                        'total_events' => $totalEvents,
                         'total_donors' => $donorCount,
                         'total_donation_amount' => round($totalDonations, 2),
                     ],

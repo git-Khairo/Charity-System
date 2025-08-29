@@ -26,9 +26,7 @@ class DisplayAllFeedback
     public function charityFeedback(){
         $charities = Charity::with('beneficiary_feedback')->get();
 
-       //dd( $charities);
-
-        return $charities->pluck('beneficiary_feedback')->flatten();
+        return $charities;
     }
 
 }

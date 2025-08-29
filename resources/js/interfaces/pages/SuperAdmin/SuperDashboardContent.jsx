@@ -1,5 +1,18 @@
 import { useEffect, useState } from 'react';
+import { Bar } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 import useGet from '../../../services/API/useGet';
+
+// Register Chart.js components
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const SuperDashboardContent = () => {
     const { get, loading, error } = useGet();
@@ -49,6 +62,43 @@ const SuperDashboardContent = () => {
         fetchData();
     }, []);
 
+    console.log(charitiesStats);
+
+    // Chart data
+    const chartData = {
+        labels: charitiesStats.map(charity => charity.name),
+        datasets: [
+            {
+                label: 'Total Volunteers',
+                data: charitiesStats.map(charity => charity.report?.total_volunteers || 0),
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1,
+            },
+            {
+                label: 'Total Beneficiaries',
+                data: charitiesStats.map(charity => charity.report?.total_beneficiaries || 0),
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1,
+            },
+        ],
+    };
+
+    // Chart options
+    const chartOptions = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Volunteers and Beneficiaries by Charity',
+            },
+        }
+    };
+
     return ( 
         <main>
             <header className="flex items-center justify-between">
@@ -79,6 +129,19 @@ const SuperDashboardContent = () => {
                 </div>
             </div>
 
+            <div className="mt-8 w-full bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">Volunteers and Beneficiaries</h2>
+                {loading ? (
+                    <p className="text-gray-600">Loading chart...</p>
+                ) : charitiesStats.length > 0 ? (
+                    <div className="w-full">
+                        <Bar data={chartData} options={chartOptions} />
+                    </div>
+                ) : (
+                    <p className="text-gray-600">No data available for chart.</p>
+                )}
+            </div>
+
             <div className="mt-8 bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">Charity Statistics</h2>
                 {loading ? (
@@ -89,6 +152,7 @@ const SuperDashboardContent = () => {
                             <thead className="bg-gray-50">
                                 <tr>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Charity Name</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Events</th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Volunteers</th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Beneficiaries</th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Donation Amount</th>
@@ -98,6 +162,7 @@ const SuperDashboardContent = () => {
                                 {charitiesStats.map((charity) => (
                                     <tr key={charity.id}>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{charity.name}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{charity.report?.total_events || 0}</td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{charity.report?.total_volunteers || 0}</td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{charity.report?.total_beneficiaries || 0}</td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{charity.report?.total_donation_amount ? `$${charity.report.total_donation_amount}` : '$0'}</td>

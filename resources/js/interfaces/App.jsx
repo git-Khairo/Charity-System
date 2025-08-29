@@ -40,7 +40,6 @@ import DonationDetails from './components/Donation/DonationDetails';
 import BeneficiaryApplyForm from '../interfaces/components/Benficiry/BeneficiaryApplyForm';
 import VolunteerFeedback from '../interfaces/pages/SuperAdmin/VolunteerFeedback';
 import CreateCharity from '../interfaces/pages/SuperAdmin/CreateCharity';
-import UpdateCharity from '../interfaces/pages/SuperAdmin/UpdateCharity';
 import DeleteCharity from '../interfaces/pages/SuperAdmin/DeleteCharity';
 import BeneficiaryFeedback from '../interfaces/pages/SuperAdmin/BeneficiaryFeedback';
 import SuperActivityDashboard from '../interfaces/pages/SuperAdmin/SuperActivityDashboard';
