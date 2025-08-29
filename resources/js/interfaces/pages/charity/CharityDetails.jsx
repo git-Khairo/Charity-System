@@ -102,9 +102,10 @@ const CharityDetails = () => {
     };
 
     const upcomingEvents = events.filter(e => e.status === 'upcoming').slice(0, 3);
+
     const topFeedbacks = feedbacks.slice(0, 3);
 
-    console.log(feedbacks);
+    console.log(topFeedbacks);
 
     return (
         <div className="min-h-screen bg-[#f9fafb] text-[#2c3e50] font-sans">
@@ -199,19 +200,32 @@ const CharityDetails = () => {
                     </Slider>
                 </div>
             </section>
-
             {/* Feedback Section */}
             <section className="max-w-7xl mx-auto px-6 mb-20">
                 <div className="bg-white p-8 rounded-lg shadow-md">
                     <h2 className="text-2xl font-bold text-center text-[#24527a] mb-8">User Feedback</h2>
                     <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                        {topFeedbacks.map((feedback) => (
-                            <div key={feedback.id} className="bg-[#f0f4f8] p-6 rounded-lg text-center">
-                                <p className="italic mb-4 text-[#4a5568]">"{feedback.description}"</p>
-                                <p className="font-semibold text-[#24527a]">{feedback.title}</p>
-                                <p className="text-xs text-gray-500">{new Date(feedback.created_at).toLocaleDateString()}</p>
-                            </div>
-                        ))}
+                        {feedbacks?.length > 0 ? (
+                            // Flatten all feedbacks across charities
+                            [].concat(...feedbacks.map(charity => charity.beneficiary_feedback || []))
+                                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at)) // most recent first
+                                .slice(0, 3) // take top 3
+                                .map(feedback => (
+                                    <div key={feedback.id} className="bg-[#f0f4f8] p-6 rounded-lg text-center">
+                                        <p className="italic mb-2 text-[#4a5568]">"{feedback.description}"</p>
+                                        <p className="font-semibold text-[#24527a]">{feedback.title}</p>
+                                        <div className="mb-2">
+                                            {/* Star rating */}
+                                            {Array.from({ length: 5 }, (_, i) => (
+                                                <span key={i} className={`inline-block ${i < feedback.rating ? 'text-yellow-400' : 'text-gray-300'}`}>★</span>
+                                            ))}
+                                        </div>
+                                        <p className="text-xs text-gray-500">{new Date(feedback.created_at).toLocaleDateString()}</p>
+                                    </div>
+                                ))
+                        ) : (
+                            <p className="col-span-3 text-center text-gray-500">No feedback available.</p>
+                        )}
                     </div>
                 </div>
             </section>
