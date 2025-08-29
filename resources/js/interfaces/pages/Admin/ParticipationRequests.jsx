@@ -4,7 +4,8 @@ import Pagination from "../../components/Pagination";
 import ParticipationCard from "../../components/Admin/ParticipationCard";
 
 import { useOutletContext } from "react-router-dom";
-import {useFetchParticipationRequests} from "../../../core/Admin/usecase/ useFetchParticipationRequests";
+import {useFetchParticipationRequests} from "../../../core/Admin/usecase/useFetchParticipationRequests";
+
 
 const ParticipationRequests = () => {
     const { charity } = useOutletContext();
