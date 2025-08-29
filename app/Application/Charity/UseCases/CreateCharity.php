@@ -53,7 +53,7 @@ class CreateCharity
             ],
             'phonenumber' => $data['phonenumber'],
             'email' => $data['email'],
-            'images' => '/storage' . $imagePath,
+            'images' => '/storage/' . $imagePath,
         ];
 
         // Create the charity
