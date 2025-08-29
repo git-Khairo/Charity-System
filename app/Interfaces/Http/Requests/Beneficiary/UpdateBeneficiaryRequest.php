@@ -21,11 +21,13 @@ class UpdateBeneficiaryRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->route('id') ?? $this->input('id');
+
         return [
             'name'        => 'sometimes|required|string|max:255',
             'email'       => 'sometimes|required|email|unique:beneficiaries,email,',
             'password'    => 'sometimes|nullable|string|min:8|confirmed',
-            'phonenumber' => 'sometimes|required|string|unique:beneficiaries,phonenumber,',
+            'phonenumber' => ['sometimes', 'required', 'string', "unique:volunteers,phoneNumber,$id"],
             'address'     => 'sometimes|required|string|max:255',
             'details'     => 'sometimes|required|string|min:10',
             'familyMember' => 'sometimes|required|integer',

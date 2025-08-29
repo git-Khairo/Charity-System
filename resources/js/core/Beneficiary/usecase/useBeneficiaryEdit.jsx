@@ -7,7 +7,7 @@ export const useBeneficiaryEdit = (id) => {
     const { put, loading, error } = usePut();
     const [validationErrors, setValidationErrors] = useState({});
 
-    const updateVolunteer = async (formData) => {
+    const updateBeneficiary = async (formData) => {
         const beneficiary = new Beneficiary(formData,{skipPasswordValidation: true});
       /*  const errors = beneficiary.validate();
         if (Object.keys(errors).length > 0) {
@@ -16,7 +16,7 @@ export const useBeneficiaryEdit = (id) => {
         }
 */
         try {
-            await put(`/beneficiary/update/${id}`, formData);
+            await put(`/api/beneficiary/update/${id}`, formData);
             setValidationErrors({});
             return { success: true };
         } catch (err) {
@@ -29,5 +29,5 @@ export const useBeneficiaryEdit = (id) => {
         }
     };
 
-    return { updateVolunteer, loading, error, validationErrors };
+    return { updateBeneficiary, loading, error, validationErrors };
 };

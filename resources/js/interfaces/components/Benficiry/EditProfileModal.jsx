@@ -9,7 +9,7 @@ export default function EditBeneficiaryModal({ isOpen, onClose, user }) {
 
     const [formData, setFormData] = useState({
         name: "",
-        phone: "",
+        phonenumber: "",
         address: "",
     });
 
@@ -18,7 +18,7 @@ export default function EditBeneficiaryModal({ isOpen, onClose, user }) {
         if (user) {
             setFormData({
                 name: user.name || "",
-                phone: user.phone || "",
+                phonenumber: user.phonenumber || "",
                 address: user.address || "",
             });
         }
@@ -96,7 +96,7 @@ export default function EditBeneficiaryModal({ isOpen, onClose, user }) {
                         <input
                             type="tel"
                             name="phone"
-                            value={formData.phone}
+                            value={formData.phonenumber}
                             onChange={handleChange}
                             className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                             placeholder="Enter phone number"
