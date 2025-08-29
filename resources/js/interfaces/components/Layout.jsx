@@ -134,63 +134,117 @@ const Layout = () => {
 
             {/* Log in / Sign up */}
             {auth.isAuthenticated ? (
+            <>
+                {["Beneficiary", "Volunteer"].includes(auth.user.roles[0].name) ? (
+                // Beneficiary or Volunteer → Profile dropdown
                 <div className="relative dropdown-container">
-                <button onClick={toggleProfileDropdown}>
+                    <button onClick={toggleProfileDropdown}>
                     <FaUser className="text-3xl border-2 rounded-full p-1 border-light-primary" />
-                </button>
+                    </button>
 
-                {/* Dropdown Menu */}
-                {isProfileDropDownOpen && (
+                    {/* Dropdown Menu */}
+                    {isProfileDropDownOpen && (
                     <div className="absolute -right-10 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-10">
-                    <ul className="py-1">
+                        <ul className="py-1">
                         <li>
-                        <Link
+                            <Link
                             to={`/${auth.user.roles[0].name}/${auth.user.id}/profile`}
                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                            onClick={() => setIsProfileDropDownOpen(false)} // Close dropdown on click
-                        >
+                            onClick={() => setIsProfileDropDownOpen(false)}
+                            >
                             Profile
-                        </Link>
+                            </Link>
                         </li>
                         <li>
-                        <Link
+                            <Link
                             to={`/${auth.user.roles[0].name}/${auth.user.id}/notifications`}
                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                             onClick={() => setIsProfileDropDownOpen(false)}
-                        >
+                            >
                             Notifications
-                        </Link>
+                            </Link>
                         </li>
                         <li>
-                        <Link
+                            <Link
                             to="/logout"
                             className="block border-t-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                             onClick={() => setIsProfileDropDownOpen(false)}
-                        >
+                            >
                             Logout
-                        </Link>
+                            </Link>
                         </li>
-                    </ul>
+                        </ul>
                     </div>
-                )}
+                    )}
                 </div>
-            ) : (
-            <>
-                <Link
+                ) : ["Admin", "SuperAdmin"].includes(auth.user.roles[0].name) ? (
+                // Admin or Super → different dropdown or same
+                <div className="relative dropdown-container">
+                    <button onClick={toggleProfileDropdown}>
+                    <FaUser className="text-3xl border-2 rounded-full p-1 border-light-primary" />
+                    </button>
+
+                    {isProfileDropDownOpen && (
+                    <div className="absolute -right-10 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+                        <ul className="py-1">
+                        <li>
+                            <Link
+                            to={auth.user.roles[0].name == 'Admin' ? `/dashboard/${auth.user.id}` : '/superadmin/dashboard'}
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            onClick={() => setIsProfileDropDownOpen(false)}
+                            >
+                            Dashboard
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                            to="/logout"
+                            className="block border-t-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            onClick={() => setIsProfileDropDownOpen(false)}
+                            >
+                            Logout
+                            </Link>
+                        </li>
+                        </ul>
+                    </div>
+                    )}
+                </div>
+                ) : (
+                <>
+                    <Link
                     to={'/login'}
                     className="text-gray-700 border-2 border-gray-700 rounded-md px-4 py-1.5 hover:border-blue-700 hover:text-blue-700 transition duration-200 font-medium"
-                >
+                    >
                     Log in
-                </Link>
-                <Link
+                    </Link>
+                    <Link
                     to={'/userSelection'}
                     className="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition duration-200 font-medium"
-                >
+                    >
                     Sign up
+                    </Link>
+                </>
+                )}
+            </>
+            ) : (
+            // Not authenticated → Log in / Sign up
+            <>
+                <Link
+                to={'/login'}
+                className="text-gray-700 border-2 border-gray-700 rounded-md px-4 py-1.5 hover:border-blue-700 hover:text-blue-700 transition duration-200 font-medium"
+                >
+                Log in
+                </Link>
+                <Link
+                to={'/userSelection'}
+                className="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition duration-200 font-medium"
+                >
+                Sign up
                 </Link>
             </>
             )}
             </div>
+
             <button
                 className="block md:hidden text-light-secondary2 dark:text-gray-200 mr-4 hover:text-light-primary hover:dark:text-dark-primary transition-colors duration-500"
                 onClick={(e) => {

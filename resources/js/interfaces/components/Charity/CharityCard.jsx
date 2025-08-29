@@ -1,5 +1,7 @@
 import { FaChevronRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../AuthContext";
+import { useContext, useEffect, useState } from "react";
 
 const CharityCard = ({ charity, categories }) => {
     // Helper to get category name
@@ -7,6 +9,14 @@ const CharityCard = ({ charity, categories }) => {
         const category = categories.find((cat) => cat.id === categoryId);
         return category ? category.name : "Unknown";
     };
+    const { auth } = useContext(AuthContext);
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        if (auth.isAuthenticated) {
+            setUser(auth.user);
+        }
+    }, [auth.isAuthenticated, user]);
 
     // Helper to get category color class (consider moving these colors to a config/utility file)
     const getCategoryColorClass = (categoryId) => {
@@ -53,10 +63,37 @@ const CharityCard = ({ charity, categories }) => {
                       View Details
                       <FaChevronRight />
                     </button>
-                    <Link to={`/donate/${charity.id}?img=${charity.images}`} className="!rounded-button whitespace-nowrap bg-[#97c9ea] hover:bg-[#7ab9e0] text-[#002366] py-2 px-4 rounded-lg transition-colors duration-300 cursor-pointer">
-                      Donate
-                    </Link>
-                  </div>
+                    {user && (() => {
+                    if (user.roles.some(role => role.name === 'Volunteer')) {
+                    return (
+                        <Link
+                        to={`/charity/${charity.id}`}
+                        className="!rounded-button whitespace-nowrap bg-[#97c9ea] hover:bg-[#7ab9e0] text-[#002366] py-2 px-4 rounded-lg transition-colors duration-300 cursor-pointer"
+                        >
+                        Volunteer
+                        </Link>
+                    );
+                    } else if (user.roles.some(role => role.name === 'Beneficiary')) {
+                    return (
+                        <Link
+                        to={`/beneficiary/apply/${user.id}`}
+                        className="!rounded-button whitespace-nowrap bg-[#97c9ea] hover:bg-[#7ab9e0] text-[#002366] py-2 px-4 rounded-lg transition-colors duration-300 cursor-pointer"
+                        >
+                        Apply
+                        </Link>
+                    );
+                    } else {
+                    return (
+                        <Link
+                        to={`/donate/${charity.id}?img=${charity.images}`}
+                        className="!rounded-button whitespace-nowrap bg-[#97c9ea] hover:bg-[#7ab9e0] text-[#002366] py-2 px-4 rounded-lg transition-colors duration-300 cursor-pointer"
+                        >
+                        Donate
+                        </Link>
+                    );
+                    }
+                })()}
+                </div>
             </div>
         </Link>
     );
