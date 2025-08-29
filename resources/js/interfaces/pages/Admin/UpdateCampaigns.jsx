@@ -4,11 +4,15 @@ import { useFetchCampaignByCharity } from "../../../core/Campaigns/usecase/useFe
 import { useCampaign } from "../../../core/Campaigns/usecase/useCampaign";
 import Pagination from "../../components/Pagination";
 import EventEditModal from "../../components/Admin/EventEditModal";
+import EventPhotoEditModal from "../../components/Admin/EventPhotoEditModal";
 
 
 const UpdateCampaigns = () => {
     const [campaignToEdit, setCampaignToEdit] = useState(null);
     const [isEditOpen, setIsEditOpen] = useState(false);
+    const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false);
+    const [campaignToUpdatePhotos, setCampaignToUpdatePhotos] = useState(null);
+
 
     const { charity } = useOutletContext();
     const id = charity.id;
@@ -49,6 +53,13 @@ const UpdateCampaigns = () => {
         });
         setIsEditOpen(true);
     };
+
+    const closePhotoModal = () => {
+        setIsPhotoModalOpen(false);
+        setCampaignToUpdatePhotos(null);
+        fetchCampaigns(); // refresh list after photo update
+    };
+
 
     const closeEditModal = () => {
         setIsEditOpen(false);
@@ -91,12 +102,23 @@ const UpdateCampaigns = () => {
                         : "Recently added"}
                   </span>
                                 </div>
+                                <div className="flex">
                                 <button
                                     onClick={() => openEditModal(campaign)}
                                     className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm"
                                 >
                                     Edit
                                 </button>
+                                <button
+                                    onClick={() => {
+                                        setCampaignToUpdatePhotos(campaign);
+                                        setIsPhotoModalOpen(true);
+                                    }}
+                                    className="px-4 py-2 text-sm font-medium text-white bg-green-600 hover:bg-green-700 rounded-lg shadow-sm ml-2"
+                                >
+                                    Update Photos
+                                </button>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -140,6 +162,15 @@ const UpdateCampaigns = () => {
                     eventId={campaignToEdit.eventId}
                     initialData={campaignToEdit.initialData}
                     onClose={closeEditModal}
+                />
+            )}
+
+            {/* Event Photo Edit Modal */}
+            {isPhotoModalOpen && campaignToUpdatePhotos && (
+                <EventPhotoEditModal
+                    eventId={campaignToUpdatePhotos.id}
+                    initialData={campaignToUpdatePhotos}
+                    onClose={closePhotoModal}
                 />
             )}
         </div>
