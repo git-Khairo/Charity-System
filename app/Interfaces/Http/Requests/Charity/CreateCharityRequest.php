@@ -22,23 +22,18 @@ class CreateCharityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'admin_id' => 'required|exists:admins,id',
-            'category_id' => 'required|exists:categories,id',
-
-            // translations are arrays with locale keys
-            'name.en' => 'required|string|max:255',
-            'name.ar' => 'required|string|max:255',
-
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'password' => 'required|string|min:8',
+            'phonenumber' => 'required|string',
+            'category' => 'required|in:Health,Education,Food,Shelter,Disaster Relief',
+            'name_translations.en' => 'required|string|max:255',
+            'name_translations.ar' => 'required|string|max:255',
             'address.en' => 'required|string|max:500',
             'address.ar' => 'required|string|max:500',
-
             'description.en' => 'required|string',
             'description.ar' => 'required|string',
-
-            'images' => 'required|array',
-            'images.*' => 'string',
-            'phonenumber' => 'required|string',
-            'email' => 'required|email',
+            'images' => 'file|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }
 }
