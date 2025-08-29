@@ -8,14 +8,12 @@ import {useFetchParticipationRequests} from "../../../core/Admin/usecase/useFetc
 const DashboardContent = () => {
     const { authUser } = useOutletContext();
     const { id } = useParams();
-    console.log(authUser);
 
     const currentYear = new Date().getFullYear();
     const availableYears = Array.from({ length: 5 }, (_, i) => `${currentYear - i}`);
     const [selectedYear, setSelectedYear] = useState(`${currentYear}`);
 
     const { fetchParticipationRequests, participationData } = useFetchParticipationRequests({ id });
-    console.log(participationData);
     const [selectedParticipationRequest, setSelectedParticipationRequest] = useState(null);
 
     useEffect(() => {
@@ -98,13 +96,12 @@ const DashboardContent = () => {
         );
     };
 
-    // Auth check
-    if (authUser.id !== parseInt(id) || authUser.roles.every(role => role.name !== 'Admin')) {
-        return (
-            <div className="flex items-center justify-center min-h-screen bg-black text-white">
-                <p>Access Denied</p>
-            </div>
-        );
+    if (!authUser) {
+    return (
+        <div className="flex items-center justify-center min-h-screen bg-black text-white">
+        <p>Access Denied</p>
+        </div>
+    );
     }
 
     if (loading) return <div className="flex items-center justify-center min-h-screen bg-black text-white">Loading profile...</div>;

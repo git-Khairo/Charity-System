@@ -9,10 +9,11 @@ const Dashboard = () => {
     const [openMenus, setOpenMenus] = useState({});
     const location = useLocation();
     const [authUser, setAuthUser] = useState({});
-    const [charity, setCharity] = useState(null);
+    const [charity, setCharity] = useState({});
     const { auth } = useContext(AuthContext);
     const { id } = useParams();
     const [showCharityModal, setShowCharityModal] = useState(false); // modal state
+    const lang = localStorage.getItem('lang') || 'en';
 
 
     useEffect(() => {
@@ -27,7 +28,7 @@ const Dashboard = () => {
     useEffect(() => {
 
         if (authUser) {
-            setCharity( authUser.charity);
+            setCharity(authUser.charity || {});
         }
 
     }, [authUser]);
@@ -106,14 +107,6 @@ const Dashboard = () => {
         }));
     };
 
-    if (!authUser || !charity) {
-        return (
-            <div className="flex items-center justify-center min-h-screen bg-black text-white">
-                <p>No user data available.</p>
-            </div>
-        );
-    }
-
     if(!authUser){
         return (
             <div className="flex items-center justify-center min-h-screen bg-black text-white">
@@ -137,8 +130,8 @@ const Dashboard = () => {
                         </svg>
                     </div>
                     <div className="flex flex-col">
-                        <h1 className="text-lg font-bold text-gray-900">{charity.name.en}</h1>
-                        <p className="text-xs text-gray-500">Admin Panel</p>
+                        <h1 className="text-lg font-bold text-gray-900">{charity?.name && lang && charity.name[lang] ? charity.name[lang] : ''}</h1>
+                        <p className="text-xs text-gray-500">Admin {authUser.name}</p>
                     </div>
                 </div>
                 <nav className="flex flex-col gap-2 p-4">

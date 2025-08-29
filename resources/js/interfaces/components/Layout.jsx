@@ -7,7 +7,7 @@ import { AuthContext } from "./AuthContext";
 const Layout = () => {
     const [darkmode, setDarkmode] = useState(false);
     const [isLanguageDropDownOpen, setIsLanguageDropDownOpen] = useState(false);
-    const [language, setLanguage] = useState('en');
+    const [language, setLanguage] = useState(localStorage.getItem('lang') || 'en');
     const dropdownRef = useRef(null);
     const [showSidebar, setShowSidebar] = useState(false);
     const { auth } = useContext(AuthContext);
@@ -21,6 +21,7 @@ const Layout = () => {
         setLanguage(lang);
         setIsLanguageDropDownOpen(false);
         localStorage.setItem('lang', lang);
+        window.location.reload();
     };
 
     const handleClickOutside = (event) => {
