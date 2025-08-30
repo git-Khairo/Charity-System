@@ -55,7 +55,7 @@ const Charities = () => {
   } = useCharity(charities || []); // Fallback to empty array
 
   return (
-    <div className="min-h-screen bg-[#f9f9f9]">
+    <div className="min-h-screen bg-[#f9f9f9] dark:bg-dark-background">
       {/* Header Section */}
       <header className="bg-[#002366] py-16 px-4 text-white text-center">
         <div className="max-w-6xl mx-auto">

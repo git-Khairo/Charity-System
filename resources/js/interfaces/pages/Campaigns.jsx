@@ -51,11 +51,11 @@ const { fetchCampaigns, campaigns, loading, error } = useFetchCampaigns();
   } = useCampaign(campaigns || []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-dark-background">
       {/* Header */}
-      <header className="bg-white shadow-sm py-12 px-4">
+      <header className="bg-white dark:bg-dark-background shadow-sm py-12 px-4">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl font-bold text-gray-900 text-center">
+          <h1 className="text-4xl font-bold text-gray-600 dark:bg-dark-background text-center">
             All Campaigns
           </h1>
           <p className="mt-2 text-lg text-gray-600 text-center max-w-3xl mx-auto">

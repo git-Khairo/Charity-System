@@ -19,7 +19,7 @@ const CharityFilters = ({
     setCurrentPage, // لتغيير الصفحة إلى 1 عند تطبيق فلتر جديد
 }) => {
     return (
-        <div className="sticky top-0 z-10 bg-white rounded-lg shadow-md p-4 mb-8">
+        <div className="sticky top-0 z-10 bg-white rounded-lg shadow-md p-4 mb-8 dark:bg-dark-background2">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 {/* Search Bar */}
                 <div className="relative w-full md:w-1/3">

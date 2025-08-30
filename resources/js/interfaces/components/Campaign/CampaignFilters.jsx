@@ -18,7 +18,7 @@ const CampaignFilters = ({
   sortOptions,
 }) => {
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
+    <div className="bg-white rounded-lg shadow-sm p-6 mb-8 dark:bg-dark-background2">
       <div className="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-4">
         <div className="relative flex-grow">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">

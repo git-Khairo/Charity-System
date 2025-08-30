@@ -3,7 +3,7 @@ import React from "react";
 
 const LatestCampaigns = () => {
   return (
-    <section className="py-20 px-8 bg-white">
+    <section className="py-20 px-8 bg-white dark:bg-dark-background dark:text-dark-text">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold text-center font-['Montserrat',_sans-serif] mb-16">
           Latest Campaigns

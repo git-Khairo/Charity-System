@@ -70,7 +70,7 @@ const CampaignDetails = () => {
     }
 
     return (
-        <div className="bg-[#f8fafc] text-[#1e293b] font-sans antialiased">
+        <div className="bg-[#f8fafc] text-[#1e293b] font-sans antialiased dark:bg-dark-background dark:text-dark-text">
             {/* Header Section */}
             <div
                 className="relative h-[350px] bg-cover bg-center"
@@ -78,7 +78,7 @@ const CampaignDetails = () => {
             >
                 <div className="absolute inset-0 bg-gradient-to-r from-[#002366]/40 to-[#0044cc]/40 flex flex-col justify-center items-center px-6 text-center">
                     <div className="max-w-4xl">
-                        <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">
+                        <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg dark:text-dark-text">
                             {event.title}
                         </h1>
                         <p className="text-[#e0f2fe] text-xl md:text-2xl font-light mb-8">
@@ -95,15 +95,15 @@ const CampaignDetails = () => {
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 grid lg:grid-cols-3 gap-12">
                 {/* Left Column */}
                 <section className="lg:col-span-2 space-y-12">
-                    <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+                    <div className="bg-white rounded-2xl shadow-xl overflow-hidden dark:bg-dark-background dark:text-dark-text">
                         <div className="p-8">
-                            <h2 className="text-3xl font-bold text-[#002366] mb-6 pb-4 border-b border-gray-100">
+                            <h2 className="text-3xl dark:bg-dark-background dark:text-dark-text font-bold text-[#002366] mb-6 pb-4 border-b border-gray-100">
                                 Campaign Overview
                             </h2>
-                            <div className="prose prose-lg text-gray-700 max-w-none">
+                            <div className="prose prose-lg text-gray-700 dark:bg-dark-background dark:text-dark-text max-w-none">
                                 <p className="whitespace-pre-line">{event.description}</p>
 
-                                <h3 className="text-xl font-semibold text-[#002366] mt-8 mb-4">Event Details</h3>
+                                <h3 className="text-xl dark:bg-dark-background dark:text-dark-text font-semibold text-[#002366] mt-8 mb-4">Event Details</h3>
                                 <ul className="space-y-3 list-disc pl-5 marker:text-[#97c9ea]">
                                     <li>Status: <strong>{event.status}</strong></li>
                                     <li>Location: <strong>{event.location}</strong></li>
@@ -111,7 +111,7 @@ const CampaignDetails = () => {
                                     <li>Volunteers Needed: <strong>{event.NumOfVolunteer}</strong></li>
                                 </ul>
 
-                                <h3 className="text-xl font-semibold text-[#002366] mt-8 mb-4">Gallery</h3>
+                                <h3 className="text-xl font-semibold text-[#002366] dark:bg-dark-background dark:text-dark-text mt-8 mb-4">Gallery</h3>
                                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6">
                                     {event.images && event.images.map((img, index) =>
                                         <img
@@ -129,9 +129,9 @@ const CampaignDetails = () => {
 
                 {/* Sidebar */}
                 <aside className="space-y-8">
-                    <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+                    <div className="bg-white rounded-2xl dark:bg-dark-background dark:text-dark-text shadow-xl overflow-hidden">
                         <div className="p-8 text-center">
-                            <h3 className="text-2xl font-bold text-[#002366] mb-6">
+                            <h3 className="text-2xl font-bold text-[#002366] dark:bg-dark-background dark:text-dark-text mb-6">
                                 Your Support Makes a Difference
                             </h3>
 
@@ -139,20 +139,20 @@ const CampaignDetails = () => {
                             {openForm ? (
                                 <button
                                     onClick={() => setShowForm(true)}
-                                    className="block w-full bg-[#002366] hover:bg-[#001a4d] text-white py-3 px-6 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg transform hover:scale-105"
+                                    className="block w-full dark:bg-dark-background dark:text-dark-text bg-[#002366] hover:bg-[#001a4d] text-white py-3 px-6 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg transform hover:scale-105"
                                 >
                                     {label}
                                 </button>
                             ) : (
                                 <Link
                                     to={route}
-                                    className="block bg-[#002366] hover:bg-[#001a4d] text-white py-3 px-6 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg transform hover:scale-105"
+                                    className="block bg-[#002366] dark:bg-dark-background dark:text-dark-text hover:bg-[#001a4d] text-white py-3 px-6 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg transform hover:scale-105"
                                 >
                                     {label}
                                 </Link>
                             )}
 
-                            <div className="mt-8 text-[#161e24]">
+                            <div className="mt-8 text-[#161e24] dark:bg-dark-background dark:text-dark-text">
                                 <p className="text-lg">Have a question?</p>
                                 <p className="text-lg">Contact us:</p>
                                 <div className="mt-3">

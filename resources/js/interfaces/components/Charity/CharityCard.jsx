@@ -35,7 +35,7 @@ const CharityCard = ({ charity, categories }) => {
 
     return (
         <Link to={`/charity/${charity.id}`}
-            className="bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:shadow-lg border border-[#97c9ea]"
+            className="bg-white dark:bg-dark-background2 rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:shadow-lg border border-[#97c9ea]"
         >
             <div className="h-48 overflow-hidden">
                 <img
@@ -52,14 +52,14 @@ const CharityCard = ({ charity, categories }) => {
                         {getCategoryName(charity.categoryName)}
                     </span>
                 </div>
-                <h3 className="text-xl font-bold text-[#000111] mb-2 line-clamp-2">
+                <h3 className="text-xl font-bold text-[#000111] dark:text-white mb-2 line-clamp-2">
                     {charity.name}
                   </h3>
-                  <p className="text-[#000111] mb-4 line-clamp-3">
+                  <p className="text-[#000111] mb-4 line-clamp-3 dark:text-white">
                     {charity.description}
                   </p>
                <div className="flex justify-between items-center mt-auto">
-                    <button className="flex justify-center items-center !rounded-button whitespace-nowrap text-[#002366] py-2 px-4 rounded-lg transition-colors duration-300 cursor-pointer">
+                    <button className="flex justify-center items-center dark:text-white !rounded-button whitespace-nowrap text-[#002366] py-2 px-4 rounded-lg transition-colors duration-300 cursor-pointer">
                       View Details
                       <FaChevronRight />
                     </button>

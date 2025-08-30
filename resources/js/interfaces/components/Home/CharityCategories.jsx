@@ -3,9 +3,9 @@ import React from "react";
 
 const CharityCategories = () => {
   return (
-    <section className="py-20 px-8">
+    <section className="py-20 px-8 dark:bg-dark-background">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-center font-['Montserrat',_sans-serif] mb-16">
+        <h2 className="text-3xl dark:text-dark-text md:text-4xl font-bold text-center font-['Montserrat',_sans-serif] mb-16">
           Our Charity Categories
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

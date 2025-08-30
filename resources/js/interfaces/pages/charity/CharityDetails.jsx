@@ -106,7 +106,7 @@ const CharityDetails = () => {
     const topFeedbacks = feedbacks.slice(0, 3);
 
     return (
-        <div className="min-h-screen bg-[#f9fafb] text-[#2c3e50] font-sans">
+        <div className="min-h-screen bg-[#f9fafb] text-[#2c3e50] dark:bg-dark-background dark:text-dark-text font-sans">
             {/* Cover Section */}
             <div
                 className="relative h-72 bg-cover bg-center"
@@ -131,27 +131,27 @@ const CharityDetails = () => {
             </div>
 
             {/* About + CTA Section */}
-            <section className="max-w-7xl mx-auto px-6 py-12 grid md:grid-cols-5 gap-8">
+            <section className="max-w-7xl mx-auto px-6 py-12 grid md:grid-cols-5 gap-8 dark:bg-dark-background dark:text-dark-text">
                 {/* About */}
-                <div className="md:col-span-3 bg-white p-8 rounded-lg shadow-md space-y-6">
-                    <h2 className="text-3xl font-bold text-[#24527a] border-b-2 pb-3 border-[#e1e1e1]">About {charity.name}</h2>
-                    <p className="text-lg leading-relaxed whitespace-pre-line text-[#2c3e50]">{charity.description}</p>
+                <div className="md:col-span-3 bg-white p-8 rounded-lg shadow-md space-y-6 dark:bg-dark-background dark:text-dark-text">
+                    <h2 className="text-3xl font-bold text-[#24527a] border-b-2 pb-3 border-[#e1e1e1] dark:bg-dark-background dark:text-dark-text">About {charity.name}</h2>
+                    <p className="text-lg leading-relaxed whitespace-pre-line text-[#2c3e50] dark:bg-dark-background dark:text-dark-text">{charity.description}</p>
                     <div className="space-y-2 text-base text-[#555e6d]">
-                        <p className="flex items-center gap-2"><FaMapMarkerAlt /> {charity.address}</p>
-                        <p className="flex items-center gap-2"><FaPhone /> {charity.phonenumber}</p>
-                        <p className="flex items-center gap-2"><FaEnvelope /> {charity.email}</p>
+                        <p className="flex items-center gap-2 dark:bg-dark-background dark:text-dark-text"><FaMapMarkerAlt /> {charity.address}</p>
+                        <p className="flex items-center gap-2 dark:bg-dark-background dark:text-dark-text"><FaPhone /> {charity.phonenumber}</p>
+                        <p className="flex items-center gap-2 dark:bg-dark-background dark:text-dark-text"><FaEnvelope /> {charity.email}</p>
                     </div>
                 </div>
 
                 {/* CTA + Events */}
                 <div className="md:col-span-2 flex flex-col gap-8">
-                    <div className="bg-white p-6 rounded-lg shadow-md space-y-6">
-                        <h3 className="text-2xl font-bold text-[#24527a] text-center">Get Involved</h3>
+                    <div className="bg-white p-6 rounded-lg shadow-md space-y-6 dark:bg-dark-background dark:text-dark-text">
+                        <h3 className="text-2xl font-bold text-[#24527a] text-center dark:bg-dark-background dark:text-dark-text">Get Involved</h3>
                         {renderCTA()}
                     </div>
 
-                    <div className="bg-white p-6 rounded-lg shadow-md">
-                        <h3 className="text-xl font-bold text-[#24527a] mb-4 border-b border-gray-200 pb-2">Upcoming Events</h3>
+                    <div className="bg-white p-6 rounded-lg shadow-md dark:bg-dark-background dark:text-dark-text">
+                        <h3 className="text-xl font-bold text-[#24527a] mb-4 border-b border-gray-200 dark:bg-dark-background dark:text-dark-text pb-2">Upcoming Events</h3>
                         <ul className="space-y-3 text-sm text-[#555e6d]">
                             {upcomingEvents.map((event) => (
                                 <li key={event.id}>
@@ -165,8 +165,8 @@ const CharityDetails = () => {
             </section>
 
             {/* Events Slider */}
-            <section ref={eventsRef} className="max-w-7xl mx-auto px-6 mb-12">
-                <div className="bg-white p-6 rounded-lg shadow-md">
+            <section ref={eventsRef} className="max-w-7xl mx-auto px-6 mb-12 dark:bg-dark-background dark:text-dark-text">
+                <div className="bg-white p-6 rounded-lg shadow-md dark:bg-dark-background dark:text-dark-text">
                     <h2 className="text-2xl font-bold text-center text-[#24527a] mb-6">Our Events</h2>
                     <Slider {...sliderSettings}>
                         {events.map((event) => (
@@ -200,7 +200,7 @@ const CharityDetails = () => {
             </section>
             {/* Feedback Section */}
             <section className="max-w-7xl mx-auto px-6 mb-20">
-                <div className="bg-white p-8 rounded-lg shadow-md">
+                <div className="bg-white p-8 rounded-lg shadow-md dark:bg-dark-background dark:text-dark-text">
                     <h2 className="text-2xl font-bold text-center text-[#24527a] mb-8">User Feedback</h2>
                     <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                         {feedbacks?.length > 0 ? (
@@ -222,7 +222,7 @@ const CharityDetails = () => {
                                     </div>
                                 ))
                         ) : (
-                            <p className="col-span-3 text-center text-gray-500">No feedback available.</p>
+                            <p className="col-span-3 text-center text-gray-500 dark:bg-dark-background dark:text-dark-text">No feedback available.</p>
                         )}
                     </div>
                 </div>

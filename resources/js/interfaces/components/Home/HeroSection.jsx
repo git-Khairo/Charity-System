@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 const HeroSection = ({ currentSlide, heroImages }) => {
 
   return (
-    <section className="relative h-screen flex flex-col md:flex-row">
+    <section className="relative h-screen flex flex-col md:flex-row dark:bg-dark-background">
       <div className="md:w-1/2 flex flex-col justify-center px-8 md:px-16 py-12 z-10">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-['Montserrat',_sans-serif] mb-6">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-['Montserrat',_sans-serif] mb-6 dark:text-dark-text">
           Making a Difference Together
         </h1>
-        <p className="text-lg md:text-xl mb-8 max-w-xl">
+        <p className="text-lg md:text-xl mb-8 max-w-xl dark:text-dark-text">
           Join our mission to create positive change in communities worldwide.
           Your support can transform lives and build a better future for those
           in need.
@@ -38,7 +38,7 @@ const HeroSection = ({ currentSlide, heroImages }) => {
               />
             </div>
           ))}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#f9f9f9] to-transparent md:block hidden"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#f9f9f9] dark:from-dark-background to-transparent md:block hidden"></div>
           <div className="absolute inset-0 bg-black bg-opacity-30 md:hidden"></div>
         </div>
       </div>
