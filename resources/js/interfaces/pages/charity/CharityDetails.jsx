@@ -94,7 +94,7 @@ const CharityDetails = () => {
         }
         return (
             <div className="flex justify-center">
-                <Link to={`/donate/${charity.id}`} className={`${baseClass} bg-[#24527a] text-white`}>
+                <Link to={`/donate/${id}?img=${charity.images}`} className={`${baseClass} bg-[#24527a] text-white`}>
                     Donate Now
                 </Link>
             </div>
@@ -104,8 +104,6 @@ const CharityDetails = () => {
     const upcomingEvents = events.filter(e => e.status === 'upcoming').slice(0, 3);
 
     const topFeedbacks = feedbacks.slice(0, 3);
-
-    console.log(topFeedbacks);
 
     return (
         <div className="min-h-screen bg-[#f9fafb] text-[#2c3e50] font-sans">

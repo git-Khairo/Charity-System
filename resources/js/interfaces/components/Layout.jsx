@@ -60,6 +60,8 @@ const Layout = () => {
 
     const handleDarkmode = () => setDarkmode((prev) => !prev);
 
+    console.log(auth);
+
 
     return (
     <>
@@ -179,7 +181,7 @@ const Layout = () => {
                 </div>
                 ) : ["Admin", "SuperAdmin"].includes(auth.user.roles[0].name) ? (
                 // Admin or Super → different dropdown or same
-                <div className="relative dropdown-container">
+                <div className="flex relative dropdown-container">
                     <button onClick={toggleProfileDropdown}>
                     <FaUser className="text-3xl border-2 rounded-full p-1 border-light-primary" />
                     </button>
@@ -282,7 +284,7 @@ const Layout = () => {
                 Home
             </a>
             </li>
-        {["Products", "Projects", "Categories", "About Us"].map((item) => (
+        {["Charities", "Campaigns", "About Us"].map((item) => (
             <li key={item}>
             <a
                 href={`/${item}`}
@@ -293,7 +295,59 @@ const Layout = () => {
             </a>
             </li>
         ))}
+        {auth.isAuthenticated &&
+        <Link to={'/logout'} className="block py-2 border-t-2 px-4 font-Montserrat text-light-text dark:text-dark-text hover:bg-light-secondary dark:hover:bg-dark-secondary rounded-md transition-colors">
+            <span>Logout</span>
+        </Link>
+        }
         </ul>
+
+        <div className="flex justify-evenly items-center border-t-2">
+        <div className="relative">
+        <button
+        onClick={toggleDropdown}
+        className="text-gray-700 hover:text-blue-700 text-4xl transition duration-200 focus:outline-none"
+        aria-label="Toggle Language"
+        >
+        <FaLanguage />
+        </button>
+
+        {isLanguageDropDownOpen && (
+        <div className="absolute -right-10 mt-2 bg-white border border-gray-200 rounded-md shadow-lg z-50 w-28">
+            <button
+            onClick={() => changeLanguage('ar')}
+            className={`block w-full text-center px-4 py-2 text-sm hover:bg-gray-100 ${
+                language === 'ar' ? 'text-blue-600 font-semibold' : 'text-gray-700'
+            }`}
+            >
+            AR
+            </button>
+            <button
+            onClick={() => changeLanguage('en')}
+            className={`block w-full text-center px-4 py-2 text-sm hover:bg-gray-100 ${
+                language === 'en' ? 'text-blue-600 font-semibold' : 'text-gray-700'
+            }`}
+            >
+            EN
+            </button>
+        </div>
+        )}
+            </div>
+
+            {/* Dark mode toggle */}
+            {darkmode ? (
+                <FaMoon
+                onClick={handleDarkmode}
+                className="text-gray-600 text-xl hover:text-blue-700 cursor-pointer transition duration-200"
+                />
+            ) : (
+                <FaSun
+                onClick={handleDarkmode}
+                className="text-gray-600 text-xl hover:text-yellow-500 cursor-pointer transition duration-200"
+                />
+            )}
+            </div>
+
     </div>
 
 

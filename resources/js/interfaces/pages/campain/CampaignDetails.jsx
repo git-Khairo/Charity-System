@@ -38,7 +38,7 @@ const CampaignDetails = () => {
             return { label: "Volunteer Now", route: null, openForm: true };
         }
         if (user && user.roles.some(role => role.name === "Beneficiary")) {
-            return { label: "Apply Now", route: `/beneficiary/apply/${charity.id}`, openForm: false };
+            return { label: "Apply Now", route: `/beneficiary/apply/${charity?.id}`, openForm: false };
         }
         return { label: "Support", route: "/", openForm: false };
     };

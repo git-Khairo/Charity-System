@@ -45,6 +45,7 @@ import BeneficiaryFeedback from '../interfaces/pages/SuperAdmin/BeneficiaryFeedb
 import SuperActivityDashboard from '../interfaces/pages/SuperAdmin/SuperActivityDashboard';
 import SuperGovernmentReport from '../interfaces/pages/SuperAdmin/SuperGovernmentReport';
 import BeneficiaryRequest from "./pages/Admin/BeneficiaryRequest";
+import Logout from '../interfaces/components/Logout';
 
 const AdminLoginPassword = ({ children }) => {
     const { password } = useParams();
@@ -67,6 +68,7 @@ const App = () => {
                     <Route path="/campaigns" element={<Campaigns />} />
                     <Route path="/about us" element={<About/>} />
                     <Route path='/login' element={<Login />} />
+                    <Route path='/logout' element={<Logout />} />
                     <Route path='/userSelection' element={<UserTypeSelection />} />
                     <Route path='/volunteer/signup' element={<VolunteerForm />} />
                     <Route path='/beneficiary/signup' element={<BeneficiaryForm />} />

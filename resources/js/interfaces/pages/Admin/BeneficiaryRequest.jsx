@@ -9,7 +9,7 @@ import RequestCard from "../../components/Admin/RequestCard";
 
 const BeneficiaryRequest  = () => {
     const { charity } = useOutletContext();
-    const id = charity.id;
+    const id = charity?.id;
 
     const { fetchBeneficiaryRequests, participationData, loading, error } =
         useFetchBeneficiaryRequest({ id });

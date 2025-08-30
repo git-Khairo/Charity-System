@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useOutletContext } from "react-router-dom";
 import usePost from "../../../services/API/usePost";
+import { AuthContext } from "../../components/AuthContext";
 
 const Modal = ({ open, title, message, onClose, loading }) => {
     if (!open) return null;
@@ -37,8 +38,8 @@ const GovernmentReport = () => {
     const [data, setData] = useState(null);
     const [page, setPage] = useState(1);
     const [modal, setModal] = useState({ open: false, title: "", message: "", loading: false });
-    const { charity } = useOutletContext();
-    const charityId = charity.id;
+    const { auth } = useContext(AuthContext);
+    const charity = auth?.user?.charity;
 
     const itemsPerPage = 10;
     const { post } = usePost();
@@ -68,7 +69,7 @@ const GovernmentReport = () => {
             const result = await post("/api/admin/charity/financialReport", {
                 start,
                 end,
-                charity_id: charityId,
+                charity_id: charity.id,
             });
 
             setData(result);

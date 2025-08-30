@@ -56,6 +56,7 @@ Route::get('/charity-feedback/{id}', [SuperAdminController::class, 'charityFeedb
 
 Route::group(['middleware'=>['auth:sanctum']], function (){
     Route::get('/user', [AdminController::class, 'verifyUser']);
+    Route::post('/logout', [VolunteerController::class, 'logout']);
 
 
     Route::middleware(RoleMiddleware::class.':Beneficiary')->group(function () {
@@ -71,8 +72,7 @@ Route::group(['middleware'=>['auth:sanctum']], function (){
 
 
     Route::middleware(RoleMiddleware::class.':Volunteer')->group(function () {
-        Route::put('/volunteer/update', [VolunteerController::class, 'updateVolunteer']);//
-        Route::post('/logout', [VolunteerController::class, 'logout']);//
+        Route::put('/volunteer/update', [VolunteerController::class, 'updateVolunteer']);
         Route::post('/feedback', [VolunteerController::class, 'makeFeedback']);
         Route::get('/myFeedbacks', [VolunteerController::class, 'myFeedbacks']);
         Route::post('/events/{id}/apply', [VolunteerController::class, 'applyForEvent']);
