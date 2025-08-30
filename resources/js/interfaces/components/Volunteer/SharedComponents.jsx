@@ -4,14 +4,14 @@ import React from 'react';
 export const Info = ({ label, value }) => (
   <div>
     <p className="text-gray-400 text-sm font-medium">{label}</p>
-    <p className="text-white mt-1">{value}</p>
+    <p className="text-light-text mt-1">{value}</p>
   </div>
 );
 
 export const StatCard = ({ title, count }) => (
-  <div className="bg-[#111111] p-6 rounded-lg">
-    <h3 className="text-gray-400 text-sm font-medium">{title}</h3>
-    <p className="text-3xl font-bold mt-2 text-white">{count}</p>
+  <div className="bg-light-background p-6 rounded-lg">
+    <h3 className="text-light-text text-sm font-medium">{title}</h3>
+    <p className="text-3xl font-bold mt-2 text-light-text">{count}</p>
   </div>
 );
 

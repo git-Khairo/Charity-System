@@ -99,7 +99,7 @@ const VolunteerLayout = () => {
     const handleCloseSidebar = () => setSidebarOpen(false);
 
     return (
-        <div className="flex min-h-screen bg-black text-white flex-col lg:flex-row ">
+        <div className="flex min-h-screen bg-white text-black flex-col lg:flex-row ">
             {/* Toggle Button */}
             <button
                 onClick={() => setSidebarOpen(true)}
@@ -110,7 +110,7 @@ const VolunteerLayout = () => {
 
             {/* Sidebar */}
             <aside
-                className={`  fixed top-16 bottom-0 left-0 z-0 w-64 bg-[#111111] p-6 flex flex-col justify-between transform transition-transform duration-300 ease-in-out ${
+                className={`  fixed top-16 bottom-0 left-0 z-0 w-64 bg-light-background p-6 flex flex-col justify-between transform transition-transform duration-300 ease-in-out ${
                     sidebarOpen ? 'translate-x-0' : '-translate-x-full'
                 } lg:translate-x-0  lg:overflow-y-auto lg:static lg:flex  `}
             >
@@ -122,8 +122,8 @@ const VolunteerLayout = () => {
                             alt="User avatar"
                         />
                         <div>
-                            <p className="font-semibold text-white">{user.name}</p>
-                            <p className="text-sm text-gray-400">{user.email}</p>
+                            <p className="font-semibold text-black">{user.name}</p>
+                            <p className="text-sm text-black">{user.email}</p>
                         </div>
                     </div>
 
@@ -136,7 +136,7 @@ const VolunteerLayout = () => {
                                     handleCloseSidebar();
                                     if (label === 'Edit Profile') setEditModalOpen(true);
                                 }}
-                                className="flex items-center w-full text-left py-2 px-4 rounded-lg text-gray-400 hover:bg-gray-700"
+                                className="flex items-center w-full text-left py-2 px-4 rounded-lg text-gray-400 hover:bg-gray-100"
                             >
                                 <Icon className="w-5 h-5 mr-3" />
                                 {path ? <Link to={path}>{label}</Link> : label}

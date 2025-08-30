@@ -44,10 +44,10 @@ const ProfilePage = () => {
 
   return (
     <>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        <div className="lg:col-span-2 bg-[#111111] p-6 rounded-lg">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 bg-light-background">
+        <div className="lg:col-span-2 bg-light-background p-6 rounded-lg">
           <h3 className="text-lg font-semibold mb-4">User Information</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-light-text">
             <Info label="Name" value={user.name} />
             <Info label="Email" value={user.email} />
             <Info label="Phone Number" value={user.phone} />
@@ -58,11 +58,11 @@ const ProfilePage = () => {
           </div>
         </div>
 
-        <div className="bg-[#111111] p-6 rounded-lg">
+        <div className="bg-light-background p-6 rounded-lg">
           <h3 className="text-lg font-semibold mb-4">Skills</h3>
           <div className="flex flex-wrap gap-2">
             { user.skills.map((skill) => (
-              <span key={skill} className="bg-blue-600 text-white text-xs font-semibold px-2.5 py-1 rounded-full">
+              <span key={skill} className="bg-light-background2 text-black text-xs font-semibold px-2.5 py-1 rounded-full">
                 {skill}
               </span>
             ))}
@@ -70,13 +70,13 @@ const ProfilePage = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 bg-light-background">
         <StatCard title="Events Applied" count={user.stats.eventsApplied} />
         <StatCard title="Accepted Events" count={user.stats.acceptedEvents} />
         <StatCard title="Rejected Events" count={user.stats.rejectedEvents} />
       </div>
 
-      <div className="bg-[#111111] p-6 rounded-lg">
+      <div className="bg-light-background p-6 rounded-lg">
         <h3 className="text-lg font-semibold mb-4">Monthly Event Applications</h3>
         <canvas ref={chartRef} className="w-full" />
       </div>

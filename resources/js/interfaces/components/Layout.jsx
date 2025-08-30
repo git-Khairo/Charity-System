@@ -141,7 +141,7 @@ const Layout = () => {
                 // Beneficiary or Volunteer → Profile dropdown
                 <div className="relative dropdown-container">
                     <button onClick={toggleProfileDropdown}>
-                    <FaUser className="text-3xl border-2 rounded-full p-1 border-light-primary" />
+                        <FaUser className="text-3xl border-2 rounded-full p-1 border-dark-text dark:text-dark-text" />
                     </button>
 
                     {/* Dropdown Menu */}

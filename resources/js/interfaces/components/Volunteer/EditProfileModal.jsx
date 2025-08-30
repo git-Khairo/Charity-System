@@ -80,16 +80,16 @@ const EditProfileModal = ({ isOpen, onClose, user }) => {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-            <div className="bg-[#111518] rounded-2xl p-8 w-full max-w-xl shadow-xl overflow-y-auto max-h-[90vh] relative">
+            <div className="bg-light-background rounded-2xl p-8 w-full max-w-xl shadow-xl overflow-y-auto max-h-[90vh] relative">
                 <button
-                    className="absolute top-4 right-4 text-white hover:text-gray-400"
+                    className="absolute top-4 right-4 text-black hover:text-gray-400"
                     onClick={onClose}
                     type="button"
                 >
                     ✕
                 </button>
 
-                <h2 className="text-white text-[28px] font-bold text-center pb-6 pt-2">
+                <h2 className="text-black text-[28px] font-bold text-center pb-6 pt-2">
                     Edit Profile
                 </h2>
 
@@ -101,7 +101,7 @@ const EditProfileModal = ({ isOpen, onClose, user }) => {
                         { label: 'Study', name: 'study', type: 'text' },
                     ].map(({ label, name, type }) => (
                         <div key={name}>
-                            <label className="block text-white font-medium mb-2" htmlFor={name}>
+                            <label className="block text-black font-medium mb-2" htmlFor={name}>
                                 {label}
                             </label>
                             <input
@@ -110,7 +110,7 @@ const EditProfileModal = ({ isOpen, onClose, user }) => {
                                 type={type}
                                 value={formData[name] || ''}
                                 onChange={handleChange}
-                                className="w-full rounded-xl bg-[#283139] text-white placeholder:text-[#9cabba] p-4 h-14 focus:ring-2 focus:ring-blue-500 outline-none"
+                                className="w-full rounded-xl text-black placeholder:text-[#9cabba] p-4 h-14 focus:ring-2 focus:ring-blue-500 outline-none"
                                 placeholder={label}
                             />
                             {renderError(name)}
@@ -128,7 +128,7 @@ const EditProfileModal = ({ isOpen, onClose, user }) => {
                             value={formData.address || ''}
                             onChange={handleChange}
                             rows="3"
-                            className="w-full rounded-xl bg-[#283139] text-white placeholder:text-[#9cabba] p-4 focus:ring-2 focus:ring-blue-500 outline-none resize-none"
+                            className="w-full rounded-xl text-black placeholder:text-[#9cabba] p-4 focus:ring-2 focus:ring-blue-500 outline-none resize-none"
                             placeholder="Your Address"
                         />
                         {renderError('address')}
@@ -145,7 +145,7 @@ const EditProfileModal = ({ isOpen, onClose, user }) => {
                             type="text"
                             value={formData.skills || ''}
                             onChange={handleChange}
-                            className="w-full rounded-xl bg-[#283139] text-white placeholder:text-[#9cabba] p-4 h-14 focus:ring-2 focus:ring-blue-500 outline-none"
+                            className="w-full rounded-xl text-black placeholder:text-[#9cabba] p-4 h-14 focus:ring-2 focus:ring-blue-500 outline-none"
                             placeholder="e.g. communication, teamwork"
                         />
                         {renderError('skills')}

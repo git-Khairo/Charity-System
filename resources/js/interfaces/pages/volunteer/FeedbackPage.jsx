@@ -49,7 +49,7 @@ const FeedbackPage = () => {
 
     if (error) {
         return (
-            <div className="flex items-center justify-center min-h-screen bg-black text-red-500">
+            <div className="flex items-center justify-center min-h-screen text-red-500">
                 <p>Error loading profile: {error}</p>
             </div>
         );
@@ -57,7 +57,7 @@ const FeedbackPage = () => {
 
     if (!user) {
         return (
-            <div className="flex items-center justify-center min-h-screen bg-black text-white">
+            <div className="flex items-center justify-center min-h-screen text-black">
                 <p>No user data available.</p>
             </div>
         );
@@ -65,7 +65,7 @@ const FeedbackPage = () => {
 
     if (!feedbackModels || feedbackModels.length === 0) {
         return (
-            <div className="flex items-center justify-center min-h-screen bg-black text-white">
+            <div className="flex items-center justify-center min-h-screen text-black">
                 <p>No feedbacks available.</p>
             </div>
         );
@@ -77,7 +77,7 @@ const FeedbackPage = () => {
                 {paginatedData.map((feedback, index) => (
                     <div
                         key={feedback.id || index}
-                        className="bg-[#111111] rounded-lg shadow-md p-6 transition-transform duration-150 hover:shadow-lg flex flex-col h-full"
+                        className="bg-light-background rounded-lg shadow-md p-6 transition-transform duration-150 hover:shadow-lg flex flex-col h-full"
                     >
                         <div className="flex-grow">
                             <p className="text-sm font-medium text-blue-600 mb-2 flex items-center">

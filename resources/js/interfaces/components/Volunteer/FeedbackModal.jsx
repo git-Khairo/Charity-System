@@ -6,13 +6,13 @@ const FeedbackModal = ({ isOpen, onClose, feedback }) => {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60">
-            <div className="bg-[#111111] rounded-2xl p-8 shadow-2xl w-full max-w-2xl">
+            <div className="bg-light-background rounded-2xl p-8 shadow-2xl w-full max-w-2xl">
                 <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-2xl font-bold text-white">{feedback.title}</h2>
+                    <h2 className="text-2xl font-bold text-black">{feedback.title}</h2>
                     <button
                         onClick={onClose}
                         aria-label="Close modal"
-                        className="text-gray-400 hover:text-white"
+                        className="text-black hover:text-white"
                     >
                         <CloseIcon className="w-6 h-6" />
                     </button>

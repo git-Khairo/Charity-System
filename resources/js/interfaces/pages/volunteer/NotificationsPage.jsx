@@ -83,14 +83,14 @@ const NotificationsPage = () => {
                 {paginatedData.map((notification, index) => (
                     <div
                         key={index}
-                        className="bg-[#111111] rounded-lg shadow-md p-6 transition-transform duration-150 hover:shadow-lg flex flex-col h-full"
+                        className="bg-light-background rounded-lg shadow-md p-6 transition-transform duration-150 hover:shadow-lg flex flex-col h-full"
                     >
                         <div className="flex-grow">
                             <p className="text-sm font-medium text-blue-600 mb-2 flex items-center">
                                 <NotificationIcon className="w-5 h-5 mr-2" />
                                 Notification
                             </p>
-                            <h3 className="text-xl font-semibold text-white mb-2">
+                            <h3 className="text-xl font-semibold text-black mb-2">
                                 {notification.title}
                             </h3>
                             <p className="text-sm text-gray-400 line-clamp-3 mb-4">
