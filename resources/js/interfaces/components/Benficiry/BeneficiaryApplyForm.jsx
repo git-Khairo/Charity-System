@@ -136,8 +136,8 @@ const BeneficiaryApplyForm = () => {
           disabled={loading}
           className={`w-full py-2 rounded-md font-semibold shadow-md transition duration-200 ${
             loading
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-primary text-white hover:bg-[#001a4d] hover:shadow-lg'
+              ? 'bg-light-primary text-white cursor-not-allowed'
+              : 'bg-light-primary text-white hover:bg-[#001a4d] hover:shadow-lg'
           }`}
         >
           {loading ? 'Submitting...' : 'Submit'}
